@@ -3,11 +3,10 @@
     <q-card flat style="width: 500px; height: 250px" class="flex flex-center">
       <q-card-section>
         <q-btn
-          v-if="authUrl"
           :label="$t('auth.loginWithDiscord')"
-          :href="authUrl"
           color="primary"
           unelevated
+          @click="handleClick"
         />
       </q-card-section>
     </q-card>
@@ -18,22 +17,25 @@
 import { uid } from 'quasar'
 import { defineComponent } from 'vue'
 
+const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
+
 export default defineComponent({
-  computed: {
-    authUrl() {
-      const envUrl = process.env.DISCORD_OAUTH_URL
-      if (!envUrl) {
-        return null
+  methods: {
+    handleClick() {
+      if (!DISCORD_OAUTH_URL) {
+        console.warn(
+          'OAuth URL not found in env. Was there a misconfiguration?'
+        )
+        return
       }
 
-      const url = new URL(envUrl)
+      const url = new URL(DISCORD_OAUTH_URL)
+      const state = uid()
+      url.searchParams.append('state', state)
+      this.$q.localStorage.set('state', state)
 
-      const state = this.$q.localStorage.getItem<string>('state')
-      if (state) {
-        url.searchParams.append('state', state)
-      }
-
-      return url.toString()
+      console.debug('Changing location to the OAuth URL')
+      window.location.assign(url)
     },
   },
 
