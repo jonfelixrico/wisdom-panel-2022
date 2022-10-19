@@ -20,8 +20,9 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/auth/DiscordAuthPage.vue'),
           },
           {
+            name: 'auth-discord-redirect',
             path: 'redirect',
-            component: () => import('pages/auth/DiscordAuthPage.vue'),
+            component: () => import('pages/auth/DiscordRedirectPage.vue'),
           },
         ],
       },
