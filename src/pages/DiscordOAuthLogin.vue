@@ -4,9 +4,10 @@
       <q-card-section>
         <q-btn
           :label="$t('auth.loginWithDiscord')"
-          color="primary"
+          color="discord"
           unelevated
           :href="DISCORD_OAUTH_URL"
+          no-caps
         />
       </q-card-section>
     </q-card>
