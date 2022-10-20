@@ -8,23 +8,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         redirect: {
-          name: 'auth-discord',
+          name: 'login',
         },
       },
       {
-        path: 'auth/discord',
-        children: [
-          {
-            name: 'auth-discord',
-            path: '',
-            component: () => import('pages/auth/DiscordAuthPage.vue'),
-          },
-          {
-            name: 'auth-discord-redirect',
-            path: 'redirect',
-            component: () => import('pages/auth/DiscordRedirectPage.vue'),
-          },
-        ],
+        name: 'login',
+        path: 'login',
+        component: () => import('pages/DiscordOAuthLogin.vue'),
       },
     ],
   },
