@@ -1,7 +1,7 @@
 import { useDiscordDataStore } from 'src/stores/discord-data-store'
 import { onMounted } from 'vue'
 
-export function useDiscordUserDataLoader() {
+export function useDiscordUserLoader() {
   const store = useDiscordDataStore()
   onMounted(async () => {
     if (store.user) {
