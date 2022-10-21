@@ -1,3 +1,3 @@
-<q-page>
-  hi
-</q-page>
+<template>
+  <q-page> hi </q-page>
+</template>
