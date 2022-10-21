@@ -65,6 +65,9 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
+    meta: {
+      publicRoute: true,
+    },
   },
 ]
 
