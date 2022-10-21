@@ -11,7 +11,7 @@ export default defineComponent({
   async mounted() {
     const { code, redirect, ...otherQuery } = this.$route.query
 
-    this.$axios.post('auth/oauth/discord', {
+    await this.$api.post('auth/oauth/discord', {
       code,
     })
 
