@@ -3,10 +3,12 @@
     <!-- We want one more wrapping div to avoid any possible interference with this div -->
     <div class="relative-position fit">
       <q-resize-observer @resize="size = $event" />
-      <slot
+      <div
         class="absolute"
         :style="{ width: `${size.width}px`, height: `${size.height}px` }"
-      />
+      >
+        <slot v-bind="size" />
+      </div>
     </div>
   </div>
 </template>
