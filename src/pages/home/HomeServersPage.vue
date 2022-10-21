@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ServersLayout from 'layouts/ServersLayout.vue'
-import ResizeObserverWrapper from 'components/ResizeObserverWrapper.vue'
+import ResizeObserverWrapper from 'components/common/ResizeObserverWrapper.vue'
 import { useDiscordUserGuildsLoader } from 'src/composables/use-discord-user-guilds-loader.composable'
 
 export default defineComponent({
