@@ -5,6 +5,7 @@ import { API_TOKEN } from 'src/composables/use-api.composable'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance
+    $api: AxiosInstance
   }
 }
 
