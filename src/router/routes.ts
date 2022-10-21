@@ -10,11 +10,17 @@ const routes: RouteRecordRaw[] = [
         redirect: {
           name: 'login',
         },
+        name: 'index',
       },
       {
         name: 'login',
         path: 'login',
         component: () => import('pages/LoginPage.vue'),
+      },
+      {
+        name: 'discord-oauth-callback',
+        path: 'auth/oauth/discord/callback',
+        component: () => import('pages/DiscordAuthCallbackPage.vue'),
       },
     ],
   },
