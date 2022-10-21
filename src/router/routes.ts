@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/home',
+    name: 'home',
     component: () => import('layouts/HomeLayout.vue'),
     children: [
       {
@@ -33,19 +34,28 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         redirect: {
-          name: 'login',
+          name: 'home',
         },
         name: 'index',
+        meta: {
+          publicRoute: true,
+        },
       },
       {
         name: 'login',
         path: 'login',
         component: () => import('pages/LoginPage.vue'),
+        meta: {
+          publicRoute: true,
+        },
       },
       {
         name: 'discord-oauth-callback',
         path: 'auth/oauth/discord/callback',
         component: () => import('pages/DiscordAuthCallbackPage.vue'),
+        meta: {
+          publicRoute: true,
+        },
       },
     ],
   },
