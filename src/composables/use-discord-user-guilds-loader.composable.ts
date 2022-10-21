@@ -11,7 +11,7 @@ export function useDiscordUserGuildsLoader() {
 
     console.debug('No server list found -- now loading')
     try {
-      await store.loadUser()
+      await store.loadServers()
       console.debug('User server list loaded')
     } catch (err) {
       console.error('Error encountered while loading user server list: %o', err)
