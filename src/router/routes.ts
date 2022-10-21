@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'login',
         path: 'login',
-        component: () => import('pages/DiscordOAuthLogin.vue'),
+        component: () => import('pages/auth/DiscordOAuthLogin.vue'),
       },
     ],
   },
