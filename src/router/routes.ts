@@ -2,6 +2,31 @@ import { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/home',
+    component: () => import('layouts/HomeLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'home-index',
+        redirect: {
+          name: 'home-servers',
+        },
+      },
+      {
+        path: 'servers',
+        name: 'home-servers',
+        component: () => import('layouts/ServersLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'servers-index',
+            component: () => import('pages/home/servers/ServersIndexPage.vue'),
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: '/',
     component: () => import('layouts/EmptyLayout.vue'),
     children: [
