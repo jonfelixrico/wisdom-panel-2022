@@ -1,6 +1,7 @@
 import { NavigationGuard } from 'vue-router'
 import { Pinia } from 'pinia'
 import { useDiscordDataStore } from 'src/stores/discord-data-store'
+import { api } from 'src/boot/axios'
 
 export const isAuthenticatedGuard: (ctx: {
   store: Pinia
@@ -17,7 +18,7 @@ export const isAuthenticatedGuard: (ctx: {
     }
 
     try {
-      await discordStore.loadUser()
+      await api.get('session')
       return
     } catch (e) {
       // TODO use logger
