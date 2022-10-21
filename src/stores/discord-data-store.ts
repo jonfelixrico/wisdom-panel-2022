@@ -4,6 +4,7 @@ import {
   RESTGetAPICurrentUserGuildsResult,
   RESTAPIPartialCurrentUserGuild,
 } from 'discord-api-types/v10'
+import { api } from 'src/boot/axios'
 
 interface DiscordData {
   user?: RESTGetAPICurrentUserResult
@@ -39,6 +40,14 @@ export const useDiscordDataStore = defineStore('discord-data', {
 
     setServers(servers: RESTGetAPICurrentUserGuildsResult) {
       this.servers = servers
+    },
+
+    async loadUser() {
+      const { data } = await api.get<RESTGetAPICurrentUserResult>(
+        'discord/user/@me'
+      )
+      this.user = data
+      return data
     },
   },
 })
