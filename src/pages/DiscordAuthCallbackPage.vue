@@ -5,39 +5,31 @@
 </template>
 
 <script lang="ts">
-import { useApi } from 'src/composables/use-api.composable'
-import { defineComponent, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  setup() {
-    const route = useRoute()
-    const { code, redirect, ...otherQuery } = route.query
+  async mounted() {
+    const { code, redirect, ...otherQuery } = this.$route.query
 
-    const api = useApi()
-    const router = useRouter()
-
-    onMounted(async () => {
-      api.post('auth/oauth/discord', {
-        code,
-      })
-
-      const location = {
-        query: otherQuery,
-      }
-
-      if (redirect) {
-        await router.push({
-          ...location,
-          path: JSON.stringify(redirect),
-        })
-      } else {
-        await router.push({
-          ...location,
-          name: 'index',
-        })
-      }
+    this.$axios.post('auth/oauth/discord', {
+      code,
     })
+
+    const location = {
+      query: otherQuery,
+    }
+
+    if (redirect) {
+      await this.$router.push({
+        ...location,
+        path: JSON.stringify(redirect),
+      })
+    } else {
+      await this.$router.push({
+        ...location,
+        name: 'index',
+      })
+    }
   },
 
   beforeRouteEnter(to, from, next) {
