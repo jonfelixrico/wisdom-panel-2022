@@ -49,5 +49,13 @@ export const useDiscordDataStore = defineStore('discord-data', {
       this.user = data
       return data
     },
+
+    async loadServers() {
+      const { data } = await api.get<RESTGetAPICurrentUserGuildsResult>(
+        'discord/user/@me/server'
+      )
+      this.servers = data
+      return data
+    },
   },
 })
