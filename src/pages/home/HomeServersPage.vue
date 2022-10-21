@@ -12,8 +12,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import ServersLayout from 'layouts/ServersLayout.vue'
 
 export default defineComponent({
+  components: { ServersLayout },
   setup() {
     const size = ref({
       width: 0,
