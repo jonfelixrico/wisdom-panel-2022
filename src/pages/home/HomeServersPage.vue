@@ -1,30 +1,21 @@
 <template>
   <q-page class="relative-position">
-    <q-resize-observer @resize="size = $event" />
-    <ServersLayout
-      class="absolute"
-      :style="{ width: `${size.width}px`, height: `${size.height}px` }"
-    >
-      <router-view />
-    </ServersLayout>
+    <ResizeObserverWrapper class="absolute fit">
+      <template #default="{ width, height }">
+        <ServersLayout :style="{ width: `${width}px`, height: `${height}px` }">
+          <router-view />
+        </ServersLayout>
+      </template>
+    </ResizeObserverWrapper>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import ServersLayout from 'layouts/ServersLayout.vue'
+import ResizeObserverWrapper from 'components/ResizeObserverWrapper.vue'
 
 export default defineComponent({
-  components: { ServersLayout },
-  setup() {
-    const size = ref({
-      width: 0,
-      height: 0,
-    })
-
-    return {
-      size,
-    }
-  },
+  components: { ServersLayout, ResizeObserverWrapper },
 })
 </script>
