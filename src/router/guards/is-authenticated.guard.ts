@@ -12,7 +12,7 @@ export const isAuthenticatedGuard: (ctx: {
     }
 
     const discordStore = useDiscordStore(store)
-    if (discordStore.isAuthenticated) {
+    if (discordStore.user) {
       // allow navigation
       return
     }

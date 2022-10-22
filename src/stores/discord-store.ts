@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import {
   RESTGetAPICurrentUserResult,
   RESTGetAPICurrentUserGuildsResult,
-  RESTAPIPartialCurrentUserGuild,
 } from 'discord-api-types/v10'
 import { api } from 'src/boot/axios'
 
@@ -19,22 +18,6 @@ export const useDiscordStore = defineStore('discord', {
     user: undefined,
     servers: undefined,
   }),
-
-  getters: {
-    isAuthenticated(): boolean {
-      return !!this.user
-    },
-
-    serversIndexedById(): Record<string, RESTAPIPartialCurrentUserGuild> {
-      const map: Record<string, RESTAPIPartialCurrentUserGuild> = {}
-
-      for (const server of this.servers ?? []) {
-        map[server.id] = server
-      }
-
-      return map
-    },
-  },
 
   actions: {
     setUser(user: RESTGetAPICurrentUserResult) {
