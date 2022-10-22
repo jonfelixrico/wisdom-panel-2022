@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import {
   RESTGetAPICurrentUserResult,
   RESTGetAPICurrentUserGuildsResult,
-  RESTGetAPIGuildResult,
   RESTGetAPIGuildMembersResult,
 } from 'discord-api-types/v10'
 
@@ -10,7 +9,6 @@ interface DiscordData {
   user?: RESTGetAPICurrentUserResult
   userServers?: RESTGetAPICurrentUserGuildsResult
 
-  serverMap: Record<string, RESTGetAPIGuildResult>
   serverMembersMap: Record<string, RESTGetAPIGuildMembersResult>
 }
 
@@ -22,7 +20,6 @@ export const useDiscordStore = defineStore('discord', {
     user: undefined,
     userServers: undefined,
 
-    serverMap: {},
     serverMembersMap: {},
   }),
 
@@ -31,12 +28,8 @@ export const useDiscordStore = defineStore('discord', {
       this.user = user
     },
 
-    setServers(servers: RESTGetAPICurrentUserGuildsResult) {
+    setUserServers(servers: RESTGetAPICurrentUserGuildsResult) {
       this.userServers = servers
-    },
-
-    addToServerMap(server: RESTGetAPIGuildResult) {
-      this.serverMap[server.id] = server
     },
 
     addToServerMembersMap(
