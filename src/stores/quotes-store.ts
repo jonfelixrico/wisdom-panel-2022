@@ -2,21 +2,16 @@ import { defineStore } from 'pinia'
 import { Quote } from 'src/types/quote.interface'
 
 interface QuoteStore {
-  quotes: Quote[] | null
+  quotes: Quote[]
 }
 
 export const useQuotesStore = defineStore('quotes', {
   state: (): QuoteStore => ({
-    quotes: null,
+    quotes: [],
   }),
 
   actions: {
     addQuotes(quotes: Quote[]) {
-      if (!this.quotes) {
-        this.quotes = quotes
-        return
-      }
-
       quotes.push(...quotes)
     },
   },
