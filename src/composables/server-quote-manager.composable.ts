@@ -1,7 +1,7 @@
 import { useQuotesStore } from 'src/stores/quotes-store'
 import { Quote } from 'src/types/quote.interface'
 import { computed } from 'vue'
-import { useApi } from './use-api.composable'
+import { useApi } from './api.composable'
 
 export function useServerQuoteManager(serverId: string) {
   const store = useQuotesStore()
