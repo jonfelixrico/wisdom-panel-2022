@@ -11,16 +11,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import ServersLayout from 'layouts/ServersLayout.vue'
 import ResizeObserverWrapper from 'components/common/ResizeObserverWrapper.vue'
-import { useDiscordUserGuildsLoader } from 'src/composables/use-discord-user-guilds-loader.composable'
+import { useUserServersLoader } from 'src/composables/user-servers-loader.composable'
 
 export default defineComponent({
   components: { ServersLayout, ResizeObserverWrapper },
 
   setup() {
-    useDiscordUserGuildsLoader()
+    const { load } = useUserServersLoader()
+    onMounted(load)
   },
 })
 </script>

@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" container>
     <q-drawer side="left" v-model="showDrawer" class="relative-position">
-      <ServerDrawerList class="absolute fit" :servers="servers ?? []" />
+      <ServerDrawerList class="absolute fit" :servers="servers" />
     </q-drawer>
     <q-page-container>
       <slot />
@@ -12,17 +12,17 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import ServerDrawerList from 'src/components/servers-layout/ServerDrawerList.vue'
-import { useDiscordDataStore } from 'src/stores/discord-data-store'
+import { useDiscordStore } from 'src/stores/discord-store'
 
 export default defineComponent({
   setup() {
     const showDrawer = ref(true)
 
-    const discordData = useDiscordDataStore()
+    const discordData = useDiscordStore()
 
     return {
       showDrawer,
-      servers: computed(() => discordData.servers),
+      servers: computed(() => discordData.userServers ?? []),
     }
   },
   components: { ServerDrawerList },
