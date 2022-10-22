@@ -12,7 +12,7 @@ export const useQuotesStore = defineStore('quotes', {
 
   actions: {
     addQuotes(quotes: Quote[]) {
-      quotes.push(...quotes)
+      this.quotes.push(...quotes)
     },
   },
 })
