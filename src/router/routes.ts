@@ -10,18 +10,22 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'home-index',
         redirect: {
-          name: 'home-servers',
+          name: 'server-index',
         },
       },
       {
         path: 'servers',
-        name: 'home-servers',
         component: () => import('pages/home/HomeServersPage.vue'),
         children: [
           {
             path: '',
-            name: 'servers-index',
+            name: 'server-index',
             component: () => import('pages/home/servers/ServersIndexPage.vue'),
+          },
+          {
+            path: ':serverId',
+            name: 'server-quotes',
+            component: () => import('pages/home/servers/ServerQuotePage.vue'),
           },
         ],
       },
