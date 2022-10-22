@@ -2,12 +2,16 @@ import { defineStore } from 'pinia'
 import {
   RESTGetAPICurrentUserResult,
   RESTGetAPICurrentUserGuildsResult,
+  RESTGetAPIGuildResult,
+  RESTGetAPIGuildMembersResult,
 } from 'discord-api-types/v10'
-import { api } from 'src/boot/axios'
 
 interface DiscordData {
   user?: RESTGetAPICurrentUserResult
-  servers?: RESTGetAPICurrentUserGuildsResult
+  userServers?: RESTGetAPICurrentUserGuildsResult
+
+  serverMap: Record<string, RESTGetAPIGuildResult>
+  serverMembersMap: Record<string, RESTGetAPIGuildMembersResult>
 }
 
 /**
@@ -16,7 +20,10 @@ interface DiscordData {
 export const useDiscordStore = defineStore('discord', {
   state: (): DiscordData => ({
     user: undefined,
-    servers: undefined,
+    userServers: undefined,
+
+    serverMap: {},
+    serverMembersMap: {},
   }),
 
   actions: {
@@ -25,23 +32,18 @@ export const useDiscordStore = defineStore('discord', {
     },
 
     setServers(servers: RESTGetAPICurrentUserGuildsResult) {
-      this.servers = servers
+      this.userServers = servers
     },
 
-    async loadUser() {
-      const { data } = await api.get<RESTGetAPICurrentUserResult>(
-        'discord/user/@me'
-      )
-      this.user = data
-      return data
+    addToServerMap(server: RESTGetAPIGuildResult) {
+      this.serverMap[server.id] = server
     },
 
-    async loadServers() {
-      const { data } = await api.get<RESTGetAPICurrentUserGuildsResult>(
-        'discord/user/@me/server'
-      )
-      this.servers = data
-      return data
+    addToServerMembersMap(
+      serverId: string,
+      members: RESTGetAPIGuildMembersResult
+    ) {
+      this.serverMembersMap[serverId] = members
     },
   },
 })
