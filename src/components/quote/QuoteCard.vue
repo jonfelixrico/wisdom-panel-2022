@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="q-pa-sm q-gutter-y-sm">
+  <q-card flat class="q-pa-sm">
     <div>
       <template v-if="quote">
         <div class="text-h5">{{ quote.content }}</div>
@@ -26,7 +26,7 @@
       </template>
     </div>
 
-    <q-separator />
+    <q-separator class="q-my-sm" />
 
     <div>
       <i18n-t
