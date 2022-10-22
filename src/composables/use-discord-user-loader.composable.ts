@@ -1,8 +1,8 @@
-import { useDiscordDataStore } from 'src/stores/discord-data-store'
+import { useDiscordStore } from 'src/stores/discord-store'
 import { onMounted } from 'vue'
 
 export function useDiscordUserLoader() {
-  const store = useDiscordDataStore()
+  const store = useDiscordStore()
   onMounted(async () => {
     if (store.user) {
       console.debug('User already found; no need to load.')

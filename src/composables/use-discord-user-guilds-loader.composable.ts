@@ -1,8 +1,8 @@
-import { useDiscordDataStore } from 'src/stores/discord-data-store'
+import { useDiscordStore } from 'src/stores/discord-store'
 import { onMounted } from 'vue'
 
 export function useDiscordUserGuildsLoader() {
-  const store = useDiscordDataStore()
+  const store = useDiscordStore()
   onMounted(async () => {
     if (store.servers) {
       console.debug('Server list already found; no need to load.')

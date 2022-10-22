@@ -11,7 +11,7 @@ interface DiscordData {
   servers?: RESTGetAPICurrentUserGuildsResult
 }
 
-export const useDiscordDataStore = defineStore('discord-data', {
+export const useDiscordStore = defineStore('discord-data', {
   state: (): DiscordData => ({
     user: undefined,
     servers: undefined,

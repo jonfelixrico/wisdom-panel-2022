@@ -1,6 +1,6 @@
 import { NavigationGuard } from 'vue-router'
 import { Pinia } from 'pinia'
-import { useDiscordDataStore } from 'src/stores/discord-data-store'
+import { useDiscordStore } from 'src/stores/discord-store'
 import { api } from 'src/boot/axios'
 
 export const isAuthenticatedGuard: (ctx: {
@@ -11,7 +11,7 @@ export const isAuthenticatedGuard: (ctx: {
       return
     }
 
-    const discordStore = useDiscordDataStore(store)
+    const discordStore = useDiscordStore(store)
     if (discordStore.isAuthenticated) {
       // allow navigation
       return
