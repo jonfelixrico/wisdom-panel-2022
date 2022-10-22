@@ -8,7 +8,9 @@
             <span v-if="author !== undefined">{{ author }}</span>
             <q-skeleton v-else />
           </template>
-          <template #year>{{ quote.submitDt.getFullYear() }}</template>
+          <template #year>{{
+            new Date(quote.submitDt).getFullYear()
+          }}</template>
         </i18n-t>
       </template>
 
@@ -30,8 +32,13 @@ export default defineComponent({
       type: Object as PropType<Quote>,
     },
 
-    author: String,
-    submitter: String,
+    author: {
+      type: String as PropType<string | null>,
+    },
+
+    submitter: {
+      type: String as PropType<string | null>,
+    },
   },
 })
 </script>
