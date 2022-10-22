@@ -6,14 +6,15 @@ export function useServerMembersLoader(serverId: string) {
   const store = useDiscordStore()
   const api = useApi()
 
-  async function load() {
+  async function doLoad() {
     const { data } = await api.get<RESTGetAPIGuildMembersResult>(
       `discord/server/${serverId}/member`
     )
     store.addToServerMembersMap(serverId, data)
+    return data
   }
 
-  async function forceLoad() {
+  async function load() {
     if (!store.serverMembersMap[serverId]) {
       console.debug(
         'Did not load members for server %s: already loaded',
@@ -22,12 +23,13 @@ export function useServerMembersLoader(serverId: string) {
       return
     }
 
-    await load()
+    const data = await doLoad()
     console.debug('Member data loaded for server %s', serverId)
+    return data
   }
 
   return {
     load,
-    forceLoad,
+    forceLoad: doLoad,
   }
 }
