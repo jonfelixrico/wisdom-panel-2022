@@ -1,9 +1,12 @@
+import { RESTGetAPICurrentUserResult } from 'discord-api-types/v10'
 import { useDiscordStore } from 'src/stores/discord-store'
-import { onMounted } from 'vue'
+import { useApi } from './api.composable'
 
 export function useDiscordUserLoader() {
   const store = useDiscordStore()
-  onMounted(async () => {
+  const api = useApi()
+
+  async function load() {
     if (store.user) {
       console.debug('User already found; no need to load.')
       return
@@ -11,10 +14,18 @@ export function useDiscordUserLoader() {
 
     console.debug('No user data found -- now loading')
     try {
-      await store.loadUser()
+      const { data } = await api.get<RESTGetAPICurrentUserResult>(
+        'discord/user/@me'
+      )
       console.debug('User data loaded')
+
+      store.setUser(data)
     } catch (err) {
       console.error('Error encountered while loading user data: %o', err)
     }
-  })
+  }
+
+  return {
+    load,
+  }
 }

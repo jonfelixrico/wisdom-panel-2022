@@ -1,20 +1,30 @@
+import { RESTGetAPICurrentUserGuildsResult } from 'discord-api-types/v10'
 import { useDiscordStore } from 'src/stores/discord-store'
-import { onMounted } from 'vue'
+import { useApi } from './api.composable'
 
 export function useDiscordUserGuildsLoader() {
   const store = useDiscordStore()
-  onMounted(async () => {
-    if (store.servers) {
+  const api = useApi()
+
+  async function load() {
+    if (store.userServers) {
       console.debug('Server list already found; no need to load.')
       return
     }
 
     console.debug('No server list found -- now loading')
     try {
-      await store.loadServers()
+      const { data } = await api.get<RESTGetAPICurrentUserGuildsResult>(
+        'discord/user/@me/server'
+      )
       console.debug('User server list loaded')
+      store.setUserServers(data)
     } catch (err) {
       console.error('Error encountered while loading user server list: %o', err)
     }
-  })
+  }
+
+  return {
+    load,
+  }
 }
