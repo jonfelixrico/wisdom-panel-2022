@@ -1,13 +1,17 @@
 <template>
-  <q-page class="q-pa-md column items-center">
-    <QuoteCard
-      v-for="quote of quotes"
-      class="card-width"
-      :key="quote.id"
-      :quote="quote"
-      :author="names[quote.authorId]"
-      :submitter="names[quote.submitterId]"
-    />
+  <q-page class="relative-position">
+    <q-scroll-area class="absolute fit">
+      <div class="q-gutter-y-sm q-py-sm">
+        <div v-for="quote of quotes" :key="quote.id" class="row justify-center">
+          <QuoteCard
+            class="card-width"
+            :quote="quote"
+            :author="names[quote.authorId]"
+            :submitter="names[quote.submitterId]"
+          />
+        </div>
+      </div>
+    </q-scroll-area>
   </q-page>
 </template>
 
