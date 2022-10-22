@@ -14,7 +14,7 @@ interface DiscordData {
 /**
  * Store for everything related to Discord.
  */
-export const useDiscordStore = defineStore('discord-data', {
+export const useDiscordStore = defineStore('discord', {
   state: (): DiscordData => ({
     user: undefined,
     servers: undefined,
