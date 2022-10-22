@@ -7,19 +7,33 @@ export function useServerQuoteManager(serverId: string) {
   const store = useQuotesStore()
   const api = useApi()
 
-  async function load() {
+  async function doLoad() {
     const { data } = await api.get<Quote[]>(`server/${serverId}/quote`)
-    if (data) {
-      store.addQuotes(data)
-    }
+    store.addQuotes(data)
+    data
   }
 
   const serverQuotes = computed(() =>
     store.quotes?.filter((q) => q.serverId === serverId)
   )
 
+  async function load() {
+    if (serverQuotes.value?.length) {
+      console.debug(
+        'Did not proceed with load -- quotes for server %s are already loaded',
+        serverId
+      )
+      return
+    }
+
+    const data = await doLoad()
+    console.debug('Loaded quotes for server %s', serverId)
+    return data
+  }
+
   return {
-    load,
+    forceLoad: doLoad,
     quotes: serverQuotes,
+    load,
   }
 }
