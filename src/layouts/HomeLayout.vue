@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { useUserLoader } from 'src/composables/discord-user-loader.composable'
+import { useUserLoader } from 'src/composables/user-loader.composable'
 import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({

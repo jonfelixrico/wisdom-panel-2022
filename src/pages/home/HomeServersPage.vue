@@ -14,7 +14,7 @@
 import { defineComponent, onMounted } from 'vue'
 import ServersLayout from 'layouts/ServersLayout.vue'
 import ResizeObserverWrapper from 'components/common/ResizeObserverWrapper.vue'
-import { useUserServersLoader } from 'src/composables/discord-user-servers-loader.composable'
+import { useUserServersLoader } from 'src/composables/user-servers-loader.composable'
 
 export default defineComponent({
   components: { ServersLayout, ResizeObserverWrapper },
