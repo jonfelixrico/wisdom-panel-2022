@@ -1,24 +1,48 @@
 <template>
-  <q-card flat>
-    <q-card-section>
+  <q-card flat class="q-pa-sm q-gutter-y-sm">
+    <div>
       <template v-if="quote">
-        <div>{{ quote.content }}</div>
-        <i18n-t keypath="quote.authorFormat">
+        <div class="text-h5">{{ quote.content }}</div>
+
+        <i18n-t
+          v-if="author"
+          class="text-caption"
+          tag="div"
+          keypath="quote.authorFormat"
+        >
           <template #author>
-            <span v-if="author !== undefined">{{ author }}</span>
-            <q-skeleton v-else />
+            <span class="text-weight-bold">{{ author }}</span>
           </template>
-          <template #year>{{
-            new Date(quote.submitDt).getFullYear()
-          }}</template>
+          <template #year>
+            {{ new Date(quote.submitDt).getFullYear() }}
+          </template>
         </i18n-t>
+        <q-skeleton v-else style="width: 50%" />
       </template>
 
       <template v-else>
         <q-skeleton type="rect" />
-        <q-skeleton type="text" />
+        <q-skeleton type="text" style="width: 50%" />
       </template>
-    </q-card-section>
+    </div>
+
+    <q-separator />
+
+    <div>
+      <i18n-t
+        v-if="quote && submitter"
+        keypath="quote.submitterFormat"
+        tag="div"
+        class="text-caption"
+      >
+        <template #submitter>
+          <span class="text-weight-bold">{{ submitter }}</span>
+        </template>
+
+        <template #date>{{ quote.submitDt }}</template>
+      </i18n-t>
+      <q-skeleton v-else />
+    </div>
   </q-card>
 </template>
 
