@@ -15,7 +15,7 @@ export function useServerMembersLoader(serverId: string) {
   }
 
   async function load() {
-    if (!store.serverMembersMap[serverId]) {
+    if (store.serverMembersMap[serverId]) {
       console.debug(
         'Did not load members for server %s: already loaded',
         serverId
