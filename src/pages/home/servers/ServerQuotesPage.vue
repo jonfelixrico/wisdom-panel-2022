@@ -1,8 +1,8 @@
 <template>
-  <q-page class="column items-center">
+  <q-page class="q-pa-md column items-center">
     <QuoteCard
-      style="width: 500px"
       v-for="quote of quotes"
+      class="card-width"
       :key="quote.id"
       :quote="quote"
       :author="names[quote.authorId]"
@@ -37,3 +37,9 @@ export default defineComponent({
   components: { QuoteCard },
 })
 </script>
+
+<style lang="scss" scoped>
+.card-width {
+  width: 500px;
+}
+</style>
