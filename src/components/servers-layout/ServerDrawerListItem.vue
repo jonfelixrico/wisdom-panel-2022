@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable>
+  <q-item clickable @click="redirectToServerPage" :active="isActive">
     <q-item-section avatar>
       <q-avatar>
         <q-img v-if="iconUrl" :src="iconUrl" />
@@ -39,6 +39,25 @@ export default defineComponent({
       )
 
       return url.toString()
+    },
+
+    isActive() {
+      const { $route } = this
+      return (
+        $route.name === 'server-quotes' &&
+        $route.params.serverId === this.server.id
+      )
+    },
+  },
+
+  methods: {
+    redirectToServerPage() {
+      this.$router.push({
+        name: 'server-quotes',
+        params: {
+          serverId: this.server.id,
+        },
+      })
     },
   },
 })
