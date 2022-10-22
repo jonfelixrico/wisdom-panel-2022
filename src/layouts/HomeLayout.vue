@@ -14,12 +14,13 @@
 </template>
 
 <script lang="ts">
-import { useDiscordUserLoader } from 'src/composables/use-discord-user-loader.composable'
-import { defineComponent } from 'vue'
+import { useUserLoader } from 'src/composables/discord-user-loader.composable'
+import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
   setup() {
-    useDiscordUserLoader()
+    const { load } = useUserLoader()
+    onMounted(load)
   },
 })
 </script>

@@ -2,7 +2,7 @@ import { RESTGetAPICurrentUserGuildsResult } from 'discord-api-types/v10'
 import { useDiscordStore } from 'src/stores/discord-store'
 import { useApi } from './api.composable'
 
-export function useDiscordUserGuildsLoader() {
+export function useUserServersLoader() {
   const store = useDiscordStore()
   const api = useApi()
 
