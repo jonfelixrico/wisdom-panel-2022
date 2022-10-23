@@ -1,9 +1,9 @@
 <template>
-  <q-avatar v-if="memberAvatarUrl">
+  <q-avatar v-if="memberAvatarUrl" :size="size">
     <q-img :src="memberAvatarUrl" />
   </q-avatar>
 
-  <UserAvatar v-else :user="userObject" />
+  <UserAvatar v-else :user="userObject" :size="size" />
 </template>
 
 <script lang="ts">
@@ -23,10 +23,12 @@ export default defineComponent({
       type: Object as PropType<APIGuildMember>,
     },
 
-    severId: {
+    serverId: {
       type: String,
       required: true,
     },
+
+    size: String,
   },
 
   computed: {
@@ -39,7 +41,7 @@ export default defineComponent({
       const supportsGif = member.avatar.startsWith('a_')
       const url = new URL(
         CDNRoutes.guildMemberAvatar(
-          this.severId,
+          this.serverId,
           this.userObject.id,
           member.avatar,
           supportsGif ? ImageFormat.GIF : ImageFormat.WebP

@@ -1,5 +1,5 @@
 <template>
-  <q-avatar>
+  <q-avatar :size="size">
     <q-img :src="avatarUrl" />
   </q-avatar>
 </template>
@@ -20,6 +20,8 @@ export default defineComponent({
       type: Object as PropType<APIUser>,
       required: true,
     },
+
+    size: String,
   },
 
   computed: {
