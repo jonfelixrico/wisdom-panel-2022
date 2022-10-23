@@ -9,7 +9,9 @@
       <ServerDrawerList class="absolute fit" :servers="servers" />
     </q-drawer>
     <q-page-container>
-      <slot />
+      <slot>
+        <router-view />
+      </slot>
     </q-page-container>
   </q-layout>
 </template>

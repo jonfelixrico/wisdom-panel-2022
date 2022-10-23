@@ -7,7 +7,9 @@
     </q-header>
 
     <q-page-container class="bg-grey-3">
-      <router-view />
+      <slot>
+        <router-view />
+      </slot>
     </q-page-container>
   </q-layout>
 </template>
