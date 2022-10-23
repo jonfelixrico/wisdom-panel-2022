@@ -6,8 +6,8 @@
           <QuoteCard
             class="card-width"
             :quote="quote"
-            :author="names[quote.authorId]"
-            :submitter="names[quote.submitterId]"
+            :author-data="members[quote.authorId]"
+            :submitter-data="members[quote.submitterId]"
           />
         </div>
       </div>
@@ -16,12 +16,30 @@
 </template>
 
 <script lang="ts">
-import { useServerMemberNameMap } from 'src/composables/server-member-name-map.composable'
 import { useServerMembersLoader } from 'src/composables/server-members-loader.composable'
 import { useServerQuoteManager } from 'src/composables/server-quote-manager.composable'
-import { defineComponent, onMounted } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import QuoteCard from 'src/components/quote/QuoteCard.vue'
+import { useDiscordStore } from 'src/stores/discord-store'
+import { APIGuildMember } from 'discord-api-types/v10'
+
+function useServerMembersMap(serverId: string) {
+  const discordStore = useDiscordStore()
+  return computed(() => {
+    const membersList = discordStore.serverMembersMap[serverId] ?? []
+
+    const asMap: Record<string, APIGuildMember> = {}
+    for (const member of membersList) {
+      if (!member.user) {
+        continue
+      }
+
+      asMap[member.user.id] = member
+    }
+    return asMap
+  })
+}
 
 export default defineComponent({
   setup() {
@@ -29,13 +47,14 @@ export default defineComponent({
     const serverId = route.params.serverId.toString()
     const quoteManager = useServerQuoteManager(serverId)
     const membersLoader = useServerMembersLoader(serverId)
-    const map = useServerMemberNameMap(serverId)
+
     onMounted(async () => {
       await Promise.all([quoteManager.load(), membersLoader.load()])
     })
+
     return {
       quotes: quoteManager.quotes,
-      names: map,
+      members: useServerMembersMap(serverId),
     }
   },
   components: { QuoteCard },
