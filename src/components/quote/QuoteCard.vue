@@ -13,16 +13,7 @@
           keypath="quote.authorFormat"
         >
           <template #author>
-            <div class="row items-center q-gutter-x-xs">
-              <ServerMemberAvatar
-                :serverId="quote.serverId"
-                :member="authorData"
-                size="xs"
-              />
-              <span class="text-weight-bold">{{
-                authorData?.nick ?? authorData?.user?.username
-              }}</span>
-            </div>
+            <ServerMemberChip :serverId="quote.serverId" :member="authorData" />
           </template>
           <template #year>
             {{ new Date(quote.submitDt).getFullYear() }}
@@ -47,16 +38,10 @@
         class="row items-center white-space-pre"
       >
         <template #submitter>
-          <div class="row items-center q-gutter-x-xs">
-            <ServerMemberAvatar
-              :serverId="quote.serverId"
-              :member="submitterData"
-              size="xs"
-            />
-            <div class="text-weight-bold">
-              {{ submitterData?.nick ?? submitterData?.user?.username }}
-            </div>
-          </div>
+          <ServerMemberChip
+            :serverId="quote.serverId"
+            :member="submitterData"
+          />
         </template>
 
         <template #date>{{ quote.submitDt }}</template>
@@ -70,7 +55,7 @@
 import { defineComponent, PropType } from 'vue'
 import { Quote } from 'src/types/quote.interface'
 import { APIGuildMember } from 'discord-api-types/v10'
-import ServerMemberAvatar from 'components/server/ServerMemberAvatar.vue'
+import ServerMemberChip from '../server/ServerMemberChip.vue'
 
 export default defineComponent({
   props: {
@@ -84,6 +69,6 @@ export default defineComponent({
       type: Object as PropType<APIGuildMember | null>,
     },
   },
-  components: { ServerMemberAvatar },
+  components: { ServerMemberChip },
 })
 </script>
