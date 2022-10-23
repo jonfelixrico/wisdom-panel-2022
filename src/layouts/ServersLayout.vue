@@ -1,6 +1,11 @@
 <template>
   <q-layout view="lHh Lpr lFf" container>
-    <q-drawer side="left" v-model="showDrawer" class="relative-position">
+    <q-drawer
+      :mini="true"
+      side="left"
+      v-model="showDrawer"
+      class="relative-position"
+    >
       <ServerDrawerList class="absolute fit" :servers="servers" />
     </q-drawer>
     <q-page-container>
