@@ -5,6 +5,7 @@
       side="left"
       v-model="showDrawer"
       class="relative-position"
+      bordered
     >
       <ServerSelectionList class="absolute fit" :servers="servers" />
     </q-drawer>
