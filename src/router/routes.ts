@@ -3,7 +3,6 @@ import { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/home',
-    name: 'home',
     component: () => import('layouts/home/HomeLayout.vue'),
     children: [
       {
@@ -11,6 +10,7 @@ const routes: RouteRecordRaw[] = [
         name: 'home-index',
         redirect: {
           name: 'server-index',
+          replace: true,
         },
       },
       {
@@ -39,7 +39,8 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         redirect: {
-          name: 'home',
+          name: 'home-index',
+          replace: true,
         },
         name: 'index',
         meta: {
