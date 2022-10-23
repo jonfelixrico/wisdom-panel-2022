@@ -14,10 +14,12 @@ import {
 } from 'discord-api-types/v10'
 import { defineComponent, PropType } from 'vue'
 
+type AvatarProps = Pick<APIUser, 'id' | 'avatar' | 'discriminator'>
+
 export default defineComponent({
   props: {
     user: {
-      type: Object as PropType<APIUser>,
+      type: Object as PropType<AvatarProps>,
       required: true,
     },
   },
