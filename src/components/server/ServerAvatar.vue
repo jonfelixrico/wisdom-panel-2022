@@ -31,10 +31,17 @@ export default defineComponent({
       if (!server.icon) {
         return null
       }
+
+      const supportsGif = server.icon.startsWith('a_')
       const url = new URL(
-        CDNRoutes.guildIcon(server.id, server.icon, ImageFormat.PNG),
+        CDNRoutes.guildIcon(
+          server.id,
+          server.icon,
+          supportsGif ? ImageFormat.GIF : ImageFormat.WebP
+        ),
         RouteBases.cdn
       )
+
       return url.toString()
     },
   },
