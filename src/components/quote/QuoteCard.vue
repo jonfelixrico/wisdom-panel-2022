@@ -1,5 +1,5 @@
 <template>
-  <q-card flat class="q-pa-sm">
+  <q-card flat bordered class="q-pa-sm">
     <div class="q-gutter-y-sm">
       <template v-if="quote">
         <div class="text-h4">
