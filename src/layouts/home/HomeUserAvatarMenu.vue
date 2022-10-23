@@ -21,7 +21,7 @@
 
         <q-separator />
 
-        <q-item clickable>
+        <q-item clickable @click="logOut">
           <q-item-section class="text-negative text-weight-bold">
             {{ $t('user.session.logOut') }}
           </q-item-section>
@@ -35,6 +35,7 @@
 import UserAvatar from 'src/components/user/UserAvatar.vue'
 import { useDiscordStore } from 'src/stores/discord-store'
 import { computed, defineComponent } from 'vue'
+import { useResetStore } from 'src/composables/reset-store.composable'
 
 export default defineComponent({
   components: { UserAvatar },
@@ -42,9 +43,29 @@ export default defineComponent({
     const discord = useDiscordStore()
     const user = computed(() => discord.user)
 
+    const resetStores = useResetStore()
+
     return {
       user,
+      clearStores: resetStores.all,
     }
+  },
+
+  methods: {
+    async logOut() {
+      this.$q.loading.show({
+        message: this.$t('user.session.logOutLoading'),
+      })
+      try {
+        await this.$api.delete('session')
+        await this.$router.push({
+          name: 'index',
+        })
+        this.clearStores()
+      } finally {
+        this.$q.loading.hide()
+      }
+    },
   },
 })
 </script>
