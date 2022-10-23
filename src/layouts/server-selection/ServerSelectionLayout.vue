@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="lHh Lpr lFf" container>
+  <ContainerizedLayoutWrapper view="lHh Lpr lFf">
     <q-drawer
       :mini="true"
       side="left"
-      v-model="showDrawer"
+      :model-value="true"
       class="relative-position"
       bordered
     >
@@ -15,26 +15,27 @@
         <router-view />
       </slot>
     </q-page-container>
-  </q-layout>
+  </ContainerizedLayoutWrapper>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import ServerSelectionList from './ServerSelectionList.vue'
 import { useDiscordStore } from 'src/stores/discord-store'
+import { useUserServersLoader } from 'src/composables/user-servers-loader.composable'
+import ContainerizedLayoutWrapper from 'src/components/common/ContainerizedLayoutWrapper.vue'
 
 export default defineComponent({
   setup() {
-    const showDrawer = ref(true)
+    const { load } = useUserServersLoader()
+    onMounted(load)
 
     const discordData = useDiscordStore()
-
     return {
-      showDrawer,
       servers: computed(() => discordData.userServers ?? []),
     }
   },
 
-  components: { ServerSelectionList },
+  components: { ServerSelectionList, ContainerizedLayoutWrapper },
 })
 </script>

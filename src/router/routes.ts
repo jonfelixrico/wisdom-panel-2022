@@ -15,7 +15,8 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'servers',
-        component: () => import('pages/home/servers/ServerSelectionPage.vue'),
+        component: () =>
+          import('layouts/server-selection/ServerSelectionLayout.vue'),
         children: [
           {
             path: '',
