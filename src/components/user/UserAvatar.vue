@@ -30,8 +30,13 @@ export default defineComponent({
       let url: URL
 
       if (user.avatar) {
+        const supportsGif = user.avatar.startsWith('a_')
         url = new URL(
-          CDNRoutes.userAvatar(user.id, user.avatar, ImageFormat.WebP),
+          CDNRoutes.userAvatar(
+            user.id,
+            user.avatar,
+            supportsGif ? ImageFormat.GIF : ImageFormat.WebP
+          ),
           RouteBases.cdn
         )
       } else {
