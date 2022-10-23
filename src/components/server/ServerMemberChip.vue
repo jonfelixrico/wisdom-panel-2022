@@ -1,9 +1,9 @@
 <template>
   <div class="row items-center">
     <ServerMemberAvatar :serverId="serverId" :member="member" size="xs" />
-    <span class="text-weight-bold q-ml-xs">{{
-      member?.nick ?? member?.user?.username
-    }}</span>
+    <div class="text-weight-bold q-pl-xs">
+      {{ member?.nick ?? member?.user?.username }}
+    </div>
   </div>
 </template>
 
