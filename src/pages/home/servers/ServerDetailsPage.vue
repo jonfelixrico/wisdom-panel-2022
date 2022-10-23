@@ -13,20 +13,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 import ResizeObserverWrapper from 'components/common/ResizeObserverWrapper.vue'
-import { useUserServersLoader } from 'src/composables/user-servers-loader.composable'
 import ServerDetailsLayout from 'src/layouts/server-details/ServerDetailsLayout.vue'
 
 export default defineComponent({
   components: {
     ResizeObserverWrapper,
     ServerDetailsLayout,
-  },
-
-  setup() {
-    const { load } = useUserServersLoader()
-    onMounted(load)
   },
 })
 </script>
