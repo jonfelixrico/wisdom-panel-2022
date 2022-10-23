@@ -23,21 +23,9 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/home/servers/ServersIndexPage.vue'),
           },
           {
-            path: ':serverId',
-            name: 'server-details',
-            component: () => import('pages/home/servers/ServerDetailsPage.vue'),
-            children: [
-              {
-                path: '',
-                redirect: 'server-quotes',
-              },
-              {
-                path: 'quotes',
-                name: 'server-quotes',
-                component: () =>
-                  import('pages/home/servers/ServerQuotesPage.vue'),
-              },
-            ],
+            path: ':serverId/quotes',
+            name: 'server-quotes',
+            component: () => import('pages/home/servers/ServerQuotesPage.vue'),
           },
         ],
       },
