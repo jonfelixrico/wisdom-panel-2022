@@ -2,7 +2,7 @@
   <q-item clickable @click="redirectToServerPage" :active="isActive">
     <q-item-section avatar>
       <q-avatar>
-        <q-img v-if="iconUrl" :src="iconUrl" />
+        <ServerIcon :server="server" />
       </q-avatar>
     </q-item-section>
     <q-item-section>{{ server.name }}</q-item-section>
@@ -10,15 +10,12 @@
 </template>
 
 <script lang="ts">
-import {
-  RESTAPIPartialCurrentUserGuild,
-  RouteBases,
-  CDNRoutes,
-  ImageFormat,
-} from 'discord-api-types/v10'
+import { RESTAPIPartialCurrentUserGuild } from 'discord-api-types/v10'
 import { defineComponent, PropType } from 'vue'
+import ServerIcon from 'components/server/ServerIcon.vue'
 
 export default defineComponent({
+  components: { ServerIcon },
   props: {
     server: {
       type: Object as PropType<RESTAPIPartialCurrentUserGuild>,
@@ -27,20 +24,6 @@ export default defineComponent({
   },
 
   computed: {
-    iconUrl() {
-      const { server } = this
-      if (!server.icon) {
-        return null
-      }
-
-      const url = new URL(
-        CDNRoutes.guildIcon(server.id, server.icon, ImageFormat.PNG),
-        RouteBases.cdn
-      )
-
-      return url.toString()
-    },
-
     isActive() {
       const { $route } = this
       return (
