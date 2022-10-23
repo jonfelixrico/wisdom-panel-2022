@@ -1,6 +1,10 @@
 <template>
-  <q-img v-if="avatarUrl" :src="avatarUrl" />
-  <q-icon name="groups_2" />
+  <q-avatar v-if="avatarUrl">
+    <q-img :src="avatarUrl" />
+  </q-avatar>
+  <q-avatar v-else color="grey" text-color="white">
+    <q-icon name="groups_2" size="lg" />
+  </q-avatar>
 </template>
 
 <script lang="ts">

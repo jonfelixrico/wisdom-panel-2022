@@ -1,9 +1,7 @@
 <template>
   <q-item clickable @click="redirectToServerPage" :active="isActive">
     <q-item-section avatar>
-      <q-avatar>
-        <ServerIcon :server="server" />
-      </q-avatar>
+      <ServerAvatar :server="server" />
     </q-item-section>
     <q-item-section>{{ server.name }}</q-item-section>
   </q-item>
@@ -12,10 +10,10 @@
 <script lang="ts">
 import { RESTAPIPartialCurrentUserGuild } from 'discord-api-types/v10'
 import { defineComponent, PropType } from 'vue'
-import ServerIcon from 'components/server/ServerIcon.vue'
+import ServerAvatar from 'components/server/ServerAvatar.vue'
 
 export default defineComponent({
-  components: { ServerIcon },
+  components: { ServerAvatar },
   props: {
     server: {
       type: Object as PropType<RESTAPIPartialCurrentUserGuild>,
