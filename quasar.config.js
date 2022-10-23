@@ -97,6 +97,11 @@ module.exports = configure(function (/* ctx */) {
       // https: true
       open: false, // opens browser window automatically
       port: 9080,
+      hmr: {
+        clientPort: env?.HMR_PORT ? parseInt(env?.HMR_PORT) : undefined,
+        //   host: 'https://wp-test.jonfelixrico.dev',
+        //   protocol: 'wss',
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
