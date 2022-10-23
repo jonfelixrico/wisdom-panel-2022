@@ -1,5 +1,3 @@
 export default {
-  navigation: {
-    allQuotes: 'Show all quotes',
-  },
+  selectToStart: 'Select a server to get started',
 }
