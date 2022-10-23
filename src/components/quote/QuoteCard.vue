@@ -1,19 +1,28 @@
 <template>
   <q-card flat class="q-pa-sm">
-    <div>
+    <div class="q-gutter-y-sm">
       <template v-if="quote">
-        <div class="text-h5">{{ quote.content }}</div>
+        <div class="text-h4">
+          {{ quote.content }}
+        </div>
 
         <i18n-t
           v-if="authorData"
-          class="text-caption"
+          class="row white-space-pre items-center text-body1"
           tag="div"
           keypath="quote.authorFormat"
         >
           <template #author>
-            <span class="text-weight-bold">{{
-              authorData?.nick ?? authorData?.user?.username
-            }}</span>
+            <div class="row items-center q-gutter-x-xs">
+              <ServerMemberAvatar
+                :serverId="quote.serverId"
+                :member="authorData"
+                size="xs"
+              />
+              <span class="text-weight-bold">{{
+                authorData?.nick ?? authorData?.user?.username
+              }}</span>
+            </div>
           </template>
           <template #year>
             {{ new Date(quote.submitDt).getFullYear() }}
@@ -35,12 +44,19 @@
         v-if="quote && submitterData"
         keypath="quote.submitterFormat"
         tag="div"
-        class="text-caption"
+        class="row items-center white-space-pre"
       >
         <template #submitter>
-          <span class="text-weight-bold">{{
-            submitterData?.nick ?? submitterData?.user?.username
-          }}</span>
+          <div class="row items-center q-gutter-x-xs">
+            <ServerMemberAvatar
+              :serverId="quote.serverId"
+              :member="submitterData"
+              size="xs"
+            />
+            <div class="text-weight-bold">
+              {{ submitterData?.nick ?? submitterData?.user?.username }}
+            </div>
+          </div>
         </template>
 
         <template #date>{{ quote.submitDt }}</template>
@@ -54,20 +70,20 @@
 import { defineComponent, PropType } from 'vue'
 import { Quote } from 'src/types/quote.interface'
 import { APIGuildMember } from 'discord-api-types/v10'
+import ServerMemberAvatar from 'components/server/ServerMemberAvatar.vue'
 
 export default defineComponent({
   props: {
     quote: {
       type: Object as PropType<Quote>,
     },
-
     authorData: {
       type: Object as PropType<APIGuildMember | null>,
     },
-
     submitterData: {
       type: Object as PropType<APIGuildMember | null>,
     },
   },
+  components: { ServerMemberAvatar },
 })
 </script>
