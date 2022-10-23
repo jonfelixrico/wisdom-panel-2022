@@ -56,10 +56,11 @@ export default defineComponent({
       this.$q.loading.show({
         message: this.$t('user.session.logOutLoading'),
       })
+
       try {
         await this.$api.delete('session')
         await this.$router.push({
-          name: 'index',
+          name: 'login',
         })
         this.clearStores()
       } finally {
