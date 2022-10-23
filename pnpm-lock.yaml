@@ -16,7 +16,6 @@ specifiers:
   eslint: ^8.10.0
   eslint-config-prettier: ^8.1.0
   eslint-plugin-vue: ^9.0.0
-  initials: ^3.1.2
   pinia: ^2.0.11
   prettier: ^2.5.1
   quasar: ^2.6.0
@@ -29,7 +28,6 @@ dependencies:
   '@quasar/extras': 1.15.5
   axios: 0.21.4
   discord-api-types: 0.37.14
-  initials: 3.1.2
   pinia: 2.0.23_l7r24p6nevbtlimqmqcwa3ouhu
   quasar: 2.10.0
   vue: 3.2.41
@@ -2847,10 +2845,6 @@ packages:
     resolution: {integrity: sha512-7PnF4oN3CvZF23ADhA5wRaYEQpJ8qygSkbtTXWBeXWXmEVRXK+1ITciHWwHhsjv1TmW0MgacIv6hEi5pX5NQdA==}
     engines: {node: '>=10'}
     dev: true
-
-  /initials/3.1.2:
-    resolution: {integrity: sha512-Sltg35nx8+GX1w4U86rmbxFEmqFiSuMJviS6cB2KChB+jcT2/8Td+nlImXD74HkqpZF5PMv8hN57AyrA/7ltXw==}
-    dev: false
 
   /inquirer/8.2.4:
     resolution: {integrity: sha512-nn4F01dxU8VeKfq192IjLsxu0/OmMZ4Lg3xKAns148rCaXP6ntAoEkVYZThWjwON8AlzdZZi6oqnhNbxUG9hVg==}
