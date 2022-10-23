@@ -25,7 +25,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: ':serverId',
             name: 'server-quotes',
-            component: () => import('pages/home/servers/ServerQuotesPage.vue'),
+            component: () => import('pages/home/servers/ServerDetailsPage.vue'),
           },
         ],
       },
