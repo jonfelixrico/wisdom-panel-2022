@@ -63,6 +63,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .card-width {
-  width: 500px;
+  width: 80%;
+  max-width: 1200px;
 }
 </style>
