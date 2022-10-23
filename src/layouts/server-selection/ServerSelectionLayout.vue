@@ -6,8 +6,9 @@
       v-model="showDrawer"
       class="relative-position"
     >
-      <ServerDrawerList class="absolute fit" :servers="servers" />
+      <ServerSelectionList class="absolute fit" :servers="servers" />
     </q-drawer>
+
     <q-page-container>
       <slot>
         <router-view />
@@ -18,7 +19,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
-import ServerDrawerList from 'src/components/servers-layout/ServerDrawerList.vue'
+import ServerSelectionList from './ServerSelectionList.vue'
 import { useDiscordStore } from 'src/stores/discord-store'
 
 export default defineComponent({
@@ -32,6 +33,7 @@ export default defineComponent({
       servers: computed(() => discordData.userServers ?? []),
     }
   },
-  components: { ServerDrawerList },
+
+  components: { ServerSelectionList },
 })
 </script>

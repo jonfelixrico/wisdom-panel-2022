@@ -2,9 +2,11 @@
   <q-page class="relative-position">
     <ResizeObserverWrapper class="absolute fit">
       <template #default="{ width, height }">
-        <ServersLayout :style="{ width: `${width}px`, height: `${height}px` }">
+        <ServerSelectionLayout
+          :style="{ width: `${width}px`, height: `${height}px` }"
+        >
           <router-view />
-        </ServersLayout>
+        </ServerSelectionLayout>
       </template>
     </ResizeObserverWrapper>
   </q-page>
@@ -12,12 +14,12 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
-import ServersLayout from 'layouts/ServersLayout.vue'
 import ResizeObserverWrapper from 'components/common/ResizeObserverWrapper.vue'
 import { useUserServersLoader } from 'src/composables/user-servers-loader.composable'
+import ServerSelectionLayout from 'src/layouts/server-selection/ServerSelectionLayout.vue'
 
 export default defineComponent({
-  components: { ServersLayout, ResizeObserverWrapper },
+  components: { ResizeObserverWrapper, ServerSelectionLayout },
 
   setup() {
     const { load } = useUserServersLoader()
