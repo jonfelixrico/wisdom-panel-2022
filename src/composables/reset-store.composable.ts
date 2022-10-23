@@ -1,4 +1,4 @@
-// Code taken from
+// Code taken from https://lobotuerto.com/notes/til-how-to-reset-all-stores-in-pinia
 
 import { getActivePinia, Pinia, Store } from 'pinia'
 
