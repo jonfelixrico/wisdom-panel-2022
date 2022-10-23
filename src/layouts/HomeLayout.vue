@@ -2,13 +2,14 @@
   <q-layout view="lHh Lpr lFf">
     <q-header>
       <q-toolbar>
-        <!-- TODO i18nize this -->
-        <q-toolbar-title>Wisdom Panel</q-toolbar-title>
+        <q-toolbar-title>{{ $t('common.appName') }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-page-container class="bg-grey-3">
-      <router-view />
+      <slot>
+        <router-view />
+      </slot>
     </q-page-container>
   </q-layout>
 </template>
