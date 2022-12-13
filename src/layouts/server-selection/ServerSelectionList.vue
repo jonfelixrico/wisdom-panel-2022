@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area>
-    <ServerDrawerListItem
+    <ServerSelectionListItem
       v-for="server of servers"
       :server="server"
       :key="server.id"
@@ -10,7 +10,7 @@
 <script lang="ts">
 import { RESTAPIPartialCurrentUserGuild } from 'discord-api-types/v10'
 import { defineComponent, PropType } from 'vue'
-import ServerDrawerListItem from './ServerDrawerListItem.vue'
+import ServerSelectionListItem from './ServerSelectionListItem.vue'
 
 export default defineComponent({
   props: {
@@ -19,6 +19,6 @@ export default defineComponent({
     },
   },
 
-  components: { ServerDrawerListItem },
+  components: { ServerSelectionListItem },
 })
 </script>

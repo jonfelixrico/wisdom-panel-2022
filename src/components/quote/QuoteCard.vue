@@ -1,17 +1,19 @@
 <template>
-  <q-card flat class="q-pa-sm">
-    <div>
+  <q-card flat bordered class="q-pa-sm">
+    <div class="q-gutter-y-sm">
       <template v-if="quote">
-        <div class="text-h5">{{ quote.content }}</div>
+        <div class="text-h4">
+          {{ quote.content }}
+        </div>
 
         <i18n-t
-          v-if="author"
-          class="text-caption"
+          v-if="authorData"
+          class="row white-space-pre items-center text-body1"
           tag="div"
           keypath="quote.authorFormat"
         >
           <template #author>
-            <span class="text-weight-bold">{{ author }}</span>
+            <ServerMemberChip :serverId="quote.serverId" :member="authorData" />
           </template>
           <template #year>
             {{ new Date(quote.submitDt).getFullYear() }}
@@ -30,13 +32,16 @@
 
     <div>
       <i18n-t
-        v-if="quote && submitter"
+        v-if="quote && submitterData"
         keypath="quote.submitterFormat"
         tag="div"
-        class="text-caption"
+        class="row items-center white-space-pre"
       >
         <template #submitter>
-          <span class="text-weight-bold">{{ submitter }}</span>
+          <ServerMemberChip
+            :serverId="quote.serverId"
+            :member="submitterData"
+          />
         </template>
 
         <template #date>{{ quote.submitDt }}</template>
@@ -49,20 +54,21 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { Quote } from 'src/types/quote.interface'
+import { APIGuildMember } from 'discord-api-types/v10'
+import ServerMemberChip from '../server/ServerMemberChip.vue'
 
 export default defineComponent({
   props: {
     quote: {
       type: Object as PropType<Quote>,
     },
-
-    author: {
-      type: String as PropType<string | null>,
+    authorData: {
+      type: Object as PropType<APIGuildMember | null>,
     },
-
-    submitter: {
-      type: String as PropType<string | null>,
+    submitterData: {
+      type: Object as PropType<APIGuildMember | null>,
     },
   },
+  components: { ServerMemberChip },
 })
 </script>
