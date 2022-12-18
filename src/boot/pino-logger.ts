@@ -1,26 +1,28 @@
 import { boot } from 'quasar/wrappers'
 import pino, { Logger } from 'pino'
-import { InjectionKey, provide } from 'vue'
+import { inject, InjectionKey } from 'vue'
 
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $logger: Logger
-  }
-}
-
-export const logger = pino({
+const pinoInstance = pino({
   level: 'debug', // TODO let the env vars dicate this
 })
 
-export const LOGGER_TOKEN: InjectionKey<Logger> = Symbol('logger token')
+export function getLogger(context?: string) {
+  return pinoInstance.child({
+    mode: 'static',
+    context,
+  })
+}
+
+const LOGGER_TOKEN: InjectionKey<Logger> = Symbol('logger token')
+export function useLogger(context?: string) {
+  const logger = inject(LOGGER_TOKEN, pinoInstance)
+  return logger.child({
+    context,
+    mode: 'inject',
+  })
+}
 
 export default boot(({ app }) => {
-  app.config.globalProperties.$logger = logger
-  app.provide(LOGGER_TOKEN, logger)
-
-  logger.debug('pino logger ready')
+  app.provide(LOGGER_TOKEN, pinoInstance)
+  getLogger('boot').debug('pino initialied')
 })
-
-export function useLogger() {
-  return provide(LOGGER_TOKEN, logger)
-}
