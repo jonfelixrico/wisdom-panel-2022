@@ -19,6 +19,7 @@ export default defineComponent({
 
     const store = useDiscordStore()
 
+    // check server access
     let server = store.servers[serverId]
     if (!server) {
       try {
@@ -26,6 +27,7 @@ export default defineComponent({
         server = data
       } catch (e) {
         // TODO only do next if 404 is detected
+        logger.error(e, `Error encountered while retrieving server ${serverId}`)
         next(false)
         return
       }
@@ -35,6 +37,16 @@ export default defineComponent({
       )
       next(false)
       return
+    }
+
+    // check quote access
+    try {
+      await api.head(`server/${serverId}/receive/${receiveId}`)
+      next()
+    } catch (e) {
+      // TODO check if 404 was encountered
+      logger.error(e, `Error encountered while checking receive ${receiveId}`)
+      next(false)
     }
   },
 })
