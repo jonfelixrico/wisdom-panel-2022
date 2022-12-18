@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
 import { API_TOKEN } from 'src/composables/use-api.composable'
-import { useLogger } from './pino-logger'
+import { getLogger } from './pino-logger'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -30,7 +30,7 @@ export default boot(({ app }) => {
 
   app.provide(API_TOKEN, api)
 
-  useLogger('boot').debug('axios initialized')
+  getLogger('boot').debug('axios initialized')
 })
 
 export { api }

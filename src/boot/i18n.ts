@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import { createI18n } from 'vue-i18n'
 
 import messages from 'src/i18n'
-import { useLogger } from './pino-logger'
+import { getLogger } from './pino-logger'
 
 export type MessageLanguages = keyof typeof messages
 // Type-define 'en-US' as the master schema for the resource
@@ -32,5 +32,5 @@ export default boot(({ app }) => {
   // Set i18n instance on app
   app.use(i18n)
 
-  useLogger('boot').debug('i18n initialized')
+  getLogger('boot').debug('i18n initialized')
 })
