@@ -4,9 +4,11 @@ import {
   createRouter,
   createWebHashHistory,
   createWebHistory,
+  isNavigationFailure,
 } from 'vue-router'
 
 import routes from './routes'
+import { getLogger } from 'src/boot/pino-logger'
 
 /*
  * If not building with SSR mode, you can
@@ -24,7 +26,7 @@ export default route(function (/* { store, ssrContext } */) {
     ? createWebHistory
     : createWebHashHistory
 
-  const Router = createRouter({
+  const router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
@@ -34,5 +36,20 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   })
 
-  return Router
+  const logger = getLogger('vue-router:navigation')
+
+  router.beforeEach((to, from, next) => {
+    logger.debug(`Attempted: ${from.fullPath} to ${to.fullPath}`)
+    next()
+  })
+
+  router.afterEach((to, from, failure) => {
+    if (isNavigationFailure(failure)) {
+      logger.info(failure, `Failed: ${from.fullPath} to ${to.fullPath}`)
+    } else {
+      logger.info(`Completed: ${from.fullPath} to ${to.fullPath}`)
+    }
+  })
+
+  return router
 })
