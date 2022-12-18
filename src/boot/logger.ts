@@ -8,14 +8,16 @@ declare module '@vue/runtime-core' {
   }
 }
 
-export const logger = pino()
+export const loggerInstance = pino({
+  // TODO add configs here
+})
 export const LOGGER_TOKEN: InjectionKey<Logger> = Symbol('logger token')
 
 export default boot(({ app }) => {
-  app.config.globalProperties.$logger = logger
-  app.provide(LOGGER_TOKEN, logger)
+  app.config.globalProperties.$logger = loggerInstance
+  app.provide(LOGGER_TOKEN, loggerInstance)
 })
 
 export function useLogger() {
-  return provide(LOGGER_TOKEN, logger)
+  return provide(LOGGER_TOKEN, loggerInstance)
 }
