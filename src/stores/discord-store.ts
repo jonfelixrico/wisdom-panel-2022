@@ -1,26 +1,23 @@
 import { defineStore } from 'pinia'
-
-export interface Server {
-  name: string
-}
+import { APIGuild } from 'discord-api-types/v10'
 
 export type InaccessibleServer = 'NO_ACCESS'
 
 interface ServerMap {
-  [serverId: string]: Server | InaccessibleServer
+  [serverId: string]: APIGuild | InaccessibleServer
 }
 
 interface Store {
   servers: ServerMap
 }
 
-export const useCounterStore = defineStore('discord', {
+export const useDiscordStore = defineStore('discord', {
   state: (): Store => ({
     servers: {},
   }),
 
   actions: {
-    setServer(id: string, serverData: Server | InaccessibleServer) {
+    setServer(id: string, serverData: APIGuild | InaccessibleServer) {
       this.servers[id] = serverData
     },
   },
