@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center bg-deep-purple-6">
-    <CQuoteCard v-if="quote" :quote="quote" />
+    <CQuoteCard v-if="quote" :quote="quote" style="width: 50%" />
   </q-page>
 </template>
 
