@@ -4,15 +4,47 @@
 
 <script lang="ts">
 import { api } from 'src/boot/axios'
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useDiscordStore } from 'src/stores/discord-store'
 import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
-import { Dialog } from 'quasar'
+import { Dialog, useQuasar } from 'quasar'
 import axios from 'axios'
 import { i18n } from 'src/boot/i18n'
+import { useRoute } from 'vue-router'
+import { useApi } from 'src/composables/use-api.composable'
+import { Quote } from 'src/models/quote.interface'
 
 export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const serverId = route.params.serverId as string
+    const quoteId = route.params.quoteId as string
+
+    const api = useApi()
+    const { loading } = useQuasar()
+
+    const quote = ref<Quote | null>(null)
+
+    onMounted(async () => {
+      loading.show()
+      try {
+        const { data } = await api.get<Quote>(
+          `server/${serverId}/quote/${quoteId}`
+        )
+        quote.value = data
+      } catch (e) {
+        // TODO add logging and handling
+      } finally {
+        loading.hide()
+      }
+    })
+
+    return {
+      quote,
+    }
+  },
+
   async beforeRouteEnter(to, from, next) {
     const logger = getLogger('receive-quick-preview:beforeRouteEnter')
 
