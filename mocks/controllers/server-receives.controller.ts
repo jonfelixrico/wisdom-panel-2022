@@ -7,6 +7,15 @@ export function serverReceivesController(app: Router) {
     res.sendStatus(404)
   })
 
+  router.get('/dummy', (req, res) => {
+    res.json({
+      receiveId: 'dummy',
+      content: 'This is a dummy quote',
+      authorId: 'author',
+      submitterId: 'subimtter',
+    })
+  })
+
   router.get('/:receiveId', (req, res) => {
     res.json({
       receiveId: req.params.receiveId,
