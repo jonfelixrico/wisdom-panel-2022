@@ -1,6 +1,6 @@
-import { Router, Express } from 'express'
+import { Router } from 'express'
 
-export default function (app: Express) {
+export function serverController(app: Router) {
   const router = Router()
 
   router.get('/no-access', (req, res) => {
