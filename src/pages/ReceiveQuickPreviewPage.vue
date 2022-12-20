@@ -9,7 +9,7 @@ import { useDiscordStore } from 'src/stores/discord-store'
 import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
 import { Dialog } from 'quasar'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 
 export default defineComponent({
   async beforeRouteEnter(to, from, next) {
