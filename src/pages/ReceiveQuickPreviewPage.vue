@@ -25,6 +25,7 @@ export default defineComponent({
       try {
         const { data } = await api.get<APIGuild>(`/server/${serverId}`)
         server = data
+        store.setServer(data.id, data)
       } catch (e) {
         // TODO only do next if 404 is detected
         logger.error(e, `Error encountered while retrieving server ${serverId}`)
