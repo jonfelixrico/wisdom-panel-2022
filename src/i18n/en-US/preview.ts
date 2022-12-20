@@ -3,7 +3,7 @@ export default {
     receiveEnter: {
       title: 'Oops!',
       serverNoAccess: 'You are not a member of this server.',
-      receiveNonExistent: "Can't seem to find the requested receive",
+      generic: 'An unexpected error was encountered. Please try again later.',
     },
   },
 }
