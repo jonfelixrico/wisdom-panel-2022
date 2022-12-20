@@ -1,5 +1,7 @@
 <template>
-  <q-page> initial page </q-page>
+  <q-page class="flex flex-center">
+    <CQuoteCard v-if="quote" :quote="quote" />
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -14,18 +16,16 @@ import { i18n } from 'src/boot/i18n'
 import { useRoute } from 'vue-router'
 import { useApi } from 'src/composables/use-api.composable'
 import { Quote } from 'src/models/quote.interface'
+import CQuoteCard from 'src/components/CQuoteCard.vue'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
     const serverId = route.params.serverId as string
     const quoteId = route.params.quoteId as string
-
     const api = useApi()
     const { loading } = useQuasar()
-
     const quote = ref<Quote | null>(null)
-
     onMounted(async () => {
       loading.show()
       try {
@@ -39,21 +39,16 @@ export default defineComponent({
         loading.hide()
       }
     })
-
     return {
       quote,
     }
   },
-
   async beforeRouteEnter(to, from, next) {
     const logger = getLogger('receive-quick-preview:beforeRouteEnter')
-
     const { params } = to
     const serverId = params.serverId as string
     const quoteId = params.quoteId as string
-
     const store = useDiscordStore()
-
     // check server access
     let server = store.servers[serverId]
     if (!server) {
@@ -71,15 +66,12 @@ export default defineComponent({
           next(false)
         }
       }
-
       store.setServer(serverId, server)
     }
-
     if (server === 'NO_ACCESS') {
       logger.warn(
         `User has no acccess to server ${serverId}, aborting navigation`
       )
-
       Dialog.create({
         title: i18n.t('preview.errors.receiveEnter.title'),
         message: i18n.t('preview.errors.receiveEnter.serverNoAccess'),
@@ -93,7 +85,6 @@ export default defineComponent({
       })
       return
     }
-
     // check quote access
     try {
       await api.head(`server/${serverId}/quote/${quoteId}`)
@@ -113,5 +104,6 @@ export default defineComponent({
       })
     }
   },
+  components: { CQuoteCard },
 })
 </script>
