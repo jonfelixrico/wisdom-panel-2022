@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center bg-deep-purple-6">
+  <q-page class="column justify-center items-center bg-deep-purple-6">
     <div class="column q-gutter-y-sm" style="width: 50%">
       <CQuoteCard v-if="quote" :quote="quote" />
       <q-btn unelevated color="white" text-color="black" no-caps>
