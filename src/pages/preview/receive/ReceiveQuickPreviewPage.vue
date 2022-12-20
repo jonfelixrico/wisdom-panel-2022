@@ -2,13 +2,9 @@
   <q-page class="flex flex-center bg-deep-purple-6">
     <div class="column q-gutter-y-sm" style="width: 50%">
       <CQuoteCard v-if="quote" :quote="quote" />
-      <q-card flat>
-        <q-card-section class="row justify-between">
-          <div>Submitted by {{ quote?.authorId }} on {{ quote?.submitDt }}</div>
-
-          <div>Received {{ quote?.receives.length }} times</div>
-        </q-card-section>
-      </q-card>
+      <q-btn unelevated color="white" text-color="black" no-caps>
+        Click for more info
+      </q-btn>
     </div>
   </q-page>
 </template>
