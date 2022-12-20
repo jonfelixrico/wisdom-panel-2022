@@ -13,6 +13,7 @@ export function serverReceivesController(app: Router) {
       content: 'This is a dummy quote',
       authorId: 'author',
       submitterId: 'subimtter',
+      quoteId: 'dummy',
     })
   })
 
