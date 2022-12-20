@@ -1,6 +1,6 @@
 <template>
   <q-page class="column justify-center items-center bg-deep-purple-6">
-    <div class="column q-gutter-y-sm" style="width: 50%">
+    <div class="column q-gutter-y-sm q-ma-md" style="width: 50%">
       <CQuoteCard v-if="quote" :quote="quote" />
       <q-btn unelevated color="white" text-color="black" no-caps>
         Click for more info
