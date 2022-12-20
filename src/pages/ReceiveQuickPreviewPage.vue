@@ -10,6 +10,7 @@ import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
 import { Dialog } from 'quasar'
 import axios from 'axios'
+import { i18n } from 'src/boot/i18n'
 
 export default defineComponent({
   async beforeRouteEnter(to, from, next) {
@@ -48,8 +49,8 @@ export default defineComponent({
       )
 
       Dialog.create({
-        title: 'Server restricted',
-        message: 'You have no access to the server',
+        title: i18n.t('preview.errors.receiveEnter.title'),
+        message: i18n.t('preview.errors.receiveEnter.serverNoAccess'),
         ok: {
           unelevated: true,
           color: 'primary',
@@ -68,8 +69,8 @@ export default defineComponent({
     } catch (e) {
       logger.error(e, `Error encountered while checking receive ${receiveId}`)
       Dialog.create({
-        title: 'Error',
-        message: 'An error was encoutered while trying to retrieve the data',
+        title: i18n.t('preview.errors.receiveEnter.title'),
+        message: i18n.t('preview.errors.receiveEnter.generic'),
         ok: {
           unelevated: true,
           color: 'primary',
