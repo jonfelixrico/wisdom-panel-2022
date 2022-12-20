@@ -18,7 +18,7 @@ export default defineComponent({
 
     const { params } = to
     const serverId = params.serverId as string
-    const receiveId = params.receiveId as string
+    const quoteId = params.quoteId as string
 
     const store = useDiscordStore()
 
@@ -64,10 +64,10 @@ export default defineComponent({
 
     // check quote access
     try {
-      await api.head(`server/${serverId}/receive/${receiveId}`)
+      await api.head(`server/${serverId}/quote/${quoteId}`)
       next()
     } catch (e) {
-      logger.error(e, `Error encountered while checking receive ${receiveId}`)
+      logger.error(e, `Error encountered while retrieving quote ${quoteId}`)
       Dialog.create({
         title: i18n.t('preview.errors.receiveEnter.title'),
         message: i18n.t('preview.errors.receiveEnter.generic'),
