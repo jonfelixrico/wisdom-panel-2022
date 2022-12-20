@@ -13,5 +13,5 @@ export function serverReceivesController(app: Router) {
     })
   })
 
-  app.use('/server/:serverId/receives', router)
+  app.use('/server/:serverId/receive', router)
 }
