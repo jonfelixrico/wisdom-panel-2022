@@ -25,7 +25,8 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'receive-preview',
         path: '/preview/server/:serverId/receive/:receiveId',
-        component: () => import('pages/ReceiveQuickPreviewPage.vue'),
+        component: () =>
+          import('pages/preview/receive/ReceiveQuickPreviewPage.vue'),
       },
     ],
   },
