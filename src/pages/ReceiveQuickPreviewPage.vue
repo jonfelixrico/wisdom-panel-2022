@@ -8,6 +8,8 @@ import { defineComponent } from 'vue'
 import { useDiscordStore } from 'src/stores/discord-store'
 import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
+import { Dialog } from 'quasar'
+import axios, { AxiosError } from 'axios'
 
 export default defineComponent({
   async beforeRouteEnter(to, from, next) {
@@ -25,18 +27,37 @@ export default defineComponent({
       try {
         const { data } = await api.get<APIGuild>(`/server/${serverId}`)
         server = data
-        store.setServer(data.id, data)
       } catch (e) {
-        // TODO only do next if 404 is detected
-        logger.error(e, `Error encountered while retrieving server ${serverId}`)
-        next(false)
-        return
+        if (axios.isAxiosError(e) && e?.response?.status === 403) {
+          server = 'NO_ACCESS'
+        } else {
+          logger.error(
+            e,
+            `An error was encountered while retrieving server ${serverId}`
+          )
+          next(false)
+        }
       }
-    } else if (server === 'NO_ACCESS') {
+
+      store.setServer(serverId, server)
+    }
+
+    if (server === 'NO_ACCESS') {
       logger.warn(
         `User has no acccess to server ${serverId}, aborting navigation`
       )
-      next(false)
+
+      Dialog.create({
+        title: 'Server restricted',
+        message: 'You have no access to the server',
+        ok: {
+          unelevated: true,
+          color: 'primary',
+          dense: true,
+        },
+      }).onDismiss(() => {
+        next(false)
+      })
       return
     }
 
@@ -45,9 +66,18 @@ export default defineComponent({
       await api.head(`server/${serverId}/receive/${receiveId}`)
       next()
     } catch (e) {
-      // TODO check if 404 was encountered
       logger.error(e, `Error encountered while checking receive ${receiveId}`)
-      next(false)
+      Dialog.create({
+        title: 'Error',
+        message: 'An error was encoutered while trying to retrieve the data',
+        ok: {
+          unelevated: true,
+          color: 'primary',
+          dense: true,
+        },
+      }).onDismiss(() => {
+        next(false)
+      })
     }
   },
 })
