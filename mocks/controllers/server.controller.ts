@@ -4,7 +4,7 @@ export function serverController(app: Router) {
   const router = Router()
 
   router.get('/no-access', (req, res) => {
-    res.sendStatus(404)
+    res.sendStatus(403)
   })
 
   router.get('/:id', (req, res) => {
