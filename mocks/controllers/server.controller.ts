@@ -16,9 +16,7 @@ export function serverController(app: Router) {
   })
 
   router.get('/:id', (req, res) => {
-    res.json({
-      id: req.params.id,
-    })
+    res.sendStatus(404)
   })
 
   app.use('/server', router)
