@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/EmptyLayout.vue'),
     children: [
       {
         path: '',
@@ -21,6 +21,11 @@ const routes: RouteRecordRaw[] = [
         name: 'discord-oauth-callback',
         path: 'auth/oauth/discord/callback',
         component: () => import('pages/DiscordAuthCallbackPage.vue'),
+      },
+      {
+        name: 'receive-preview',
+        path: '/preview/server/:serverId/receive/:receiveId',
+        component: () => import('pages/ReceiveQuickPreviewPage.vue'),
       },
     ],
   },
