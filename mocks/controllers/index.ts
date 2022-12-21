@@ -1,8 +1,12 @@
 import { Router } from 'express'
-import { serverReceivesController } from './server-receives.controller'
-import { serverController } from './server.controller'
+import { avatarController } from './avatar.controller'
+import { serverMembersController } from './server-members.controller'
+import { serverQuotesController } from './server-quotes.controller'
+import { serversController } from './server.controller'
 
 export function controllers(app: Router) {
-  serverController(app)
-  serverReceivesController(app)
+  serversController(app)
+  serverQuotesController(app)
+  serverMembersController(app)
+  avatarController(app)
 }

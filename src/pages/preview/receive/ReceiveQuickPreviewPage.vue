@@ -1,27 +1,56 @@
 <template>
-  <q-page> initial page </q-page>
+  <q-page class="column justify-center items-center bg-deep-purple-6">
+    <div class="column q-gutter-y-sm q-ma-md" style="width: 50%">
+      <CQuoteCard v-if="quote" :quote="quote" />
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
 import { api } from 'src/boot/axios'
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useDiscordStore } from 'src/stores/discord-store'
 import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
-import { Dialog } from 'quasar'
+import { Dialog, useQuasar } from 'quasar'
 import axios from 'axios'
 import { i18n } from 'src/boot/i18n'
+import { useRoute } from 'vue-router'
+import { useApi } from 'src/composables/use-api.composable'
+import { Quote } from 'src/models/quote.interface'
+import CQuoteCard from 'src/components/CQuoteCard.vue'
 
 export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const serverId = route.params.serverId as string
+    const quoteId = route.params.quoteId as string
+    const api = useApi()
+    const { loading } = useQuasar()
+    const quote = ref<Quote | null>(null)
+    onMounted(async () => {
+      loading.show()
+      try {
+        const { data } = await api.get<Quote>(
+          `server/${serverId}/quote/${quoteId}`
+        )
+        quote.value = data
+      } catch (e) {
+        // TODO add logging and handling
+      } finally {
+        loading.hide()
+      }
+    })
+    return {
+      quote,
+    }
+  },
   async beforeRouteEnter(to, from, next) {
     const logger = getLogger('receive-quick-preview:beforeRouteEnter')
-
     const { params } = to
     const serverId = params.serverId as string
-    const receiveId = params.receiveId as string
-
+    const quoteId = params.quoteId as string
     const store = useDiscordStore()
-
     // check server access
     let server = store.servers[serverId]
     if (!server) {
@@ -39,15 +68,12 @@ export default defineComponent({
           next(false)
         }
       }
-
       store.setServer(serverId, server)
     }
-
     if (server === 'NO_ACCESS') {
       logger.warn(
         `User has no acccess to server ${serverId}, aborting navigation`
       )
-
       Dialog.create({
         title: i18n.t('preview.errors.receiveEnter.title'),
         message: i18n.t('preview.errors.receiveEnter.serverNoAccess'),
@@ -61,13 +87,12 @@ export default defineComponent({
       })
       return
     }
-
     // check quote access
     try {
-      await api.head(`server/${serverId}/receive/${receiveId}`)
+      await api.head(`server/${serverId}/quote/${quoteId}`)
       next()
     } catch (e) {
-      logger.error(e, `Error encountered while checking receive ${receiveId}`)
+      logger.error(e, `Error encountered while retrieving quote ${quoteId}`)
       Dialog.create({
         title: i18n.t('preview.errors.receiveEnter.title'),
         message: i18n.t('preview.errors.receiveEnter.generic'),
@@ -81,5 +106,6 @@ export default defineComponent({
       })
     }
   },
+  components: { CQuoteCard },
 })
 </script>
