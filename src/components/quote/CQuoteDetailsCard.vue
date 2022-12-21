@@ -1,6 +1,16 @@
 <template>
   <q-card>
-    <q-card-section> </q-card-section>
+    <q-card-section>
+      <i18n-t keypath="quote.submittedByFormat">
+        <template #date>
+          {{ quote.submitDt }}
+        </template>
+
+        <template #user>
+          {{ quote.submitterId }}
+        </template>
+      </i18n-t>
+    </q-card-section>
   </q-card>
 </template>
 
