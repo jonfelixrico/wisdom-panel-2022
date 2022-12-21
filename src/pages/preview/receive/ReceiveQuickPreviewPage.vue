@@ -1,7 +1,7 @@
 <template>
   <q-page class="column justify-center items-center bg-deep-purple-6">
     <div class="column q-gutter-y-sm q-ma-md" style="width: 50%">
-      <CQuoteCard v-if="quote" :quote="quote" />
+      <CQuotePreviewCard v-if="quote" :quote="quote" />
     </div>
   </q-page>
 </template>
@@ -18,7 +18,7 @@ import { i18n } from 'src/boot/i18n'
 import { useRoute } from 'vue-router'
 import { useApi } from 'src/composables/use-api.composable'
 import { Quote } from 'src/models/quote.interface'
-import CQuoteCard from 'src/components/CQuoteCard.vue'
+import CQuotePreviewCard from 'src/components/quote/CQuotePreviewCard.vue'
 
 export default defineComponent({
   setup() {
@@ -106,6 +106,6 @@ export default defineComponent({
       })
     }
   },
-  components: { CQuoteCard },
+  components: { CQuotePreviewCard },
 })
 </script>

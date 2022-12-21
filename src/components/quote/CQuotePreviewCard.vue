@@ -29,7 +29,7 @@
 <script lang="ts">
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
-import CServerMemberAvatar from './server-member/CServerMemberAvatar.vue'
+import CServerMemberAvatar from 'components/server-member/CServerMemberAvatar.vue'
 
 export default defineComponent({
   props: {
