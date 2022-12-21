@@ -3,10 +3,6 @@ import { Router } from 'express'
 export function serverQuotesController(app: Router) {
   const router = Router()
 
-  router.get('/non-existent', (req, res) => {
-    res.sendStatus(404)
-  })
-
   router.get('/dummy', (req, res) => {
     res.json({
       id: 'dummy',
@@ -16,6 +12,8 @@ export function serverQuotesController(app: Router) {
       authorId: 'user-1',
       submitterId: 'user-2',
       submitDt: new Date('2022-01-01'),
+
+      serverId: 'dummy',
 
       receives: [
         {
@@ -43,9 +41,7 @@ export function serverQuotesController(app: Router) {
   })
 
   router.get('/:quoteId', (req, res) => {
-    res.json({
-      id: req.params.quoteId,
-    })
+    res.sendStatus(404)
   })
 
   app.use('/server/:serverId/quote', router)
