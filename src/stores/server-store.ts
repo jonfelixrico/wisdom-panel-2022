@@ -11,7 +11,7 @@ interface Store {
   servers: ServerMap
 }
 
-export const useDiscordStore = defineStore('discord', {
+export const useServerStore = defineStore('server', {
   state: (): Store => ({
     servers: {},
   }),

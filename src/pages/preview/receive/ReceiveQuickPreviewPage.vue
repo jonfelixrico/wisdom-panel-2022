@@ -10,7 +10,7 @@
 <script lang="ts">
 import { api } from 'src/boot/axios'
 import { defineComponent, onMounted, ref } from 'vue'
-import { useDiscordStore } from 'src/stores/discord-store'
+import { useServerStore } from 'src/stores/server-store'
 import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
 import { Dialog, useQuasar } from 'quasar'
@@ -52,7 +52,7 @@ export default defineComponent({
     const { params } = to
     const serverId = params.serverId as string
     const quoteId = params.quoteId as string
-    const store = useDiscordStore()
+    const store = useServerStore()
     // check server access
     let server = store.servers[serverId]
     if (!server) {
