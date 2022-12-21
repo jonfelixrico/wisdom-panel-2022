@@ -1,7 +1,7 @@
 import { APIGuild } from 'discord-api-types/v10'
 import { Router } from 'express'
 
-export function serverController(app: Router) {
+export function serversController(app: Router) {
   const router = Router()
 
   router.get('/no-access', (req, res) => {
