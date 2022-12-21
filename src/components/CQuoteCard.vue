@@ -38,11 +38,7 @@ export default defineComponent({
       type: Object as PropType<Quote>,
     },
   },
-  computed: {
-    year() {
-      return new Date(this.quote.submitDt).getFullYear()
-    },
-  },
+
   components: { CServerMemberAvatar },
 })
 </script>
