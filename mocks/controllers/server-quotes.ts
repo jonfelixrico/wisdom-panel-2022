@@ -10,7 +10,8 @@ export function serverQuotesController(app: Router) {
   router.get('/dummy', (req, res) => {
     res.json({
       id: 'dummy',
-      content: 'Dummy quote',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 
       authorId: 'user-1',
       submitterId: 'user-2',
