@@ -20,7 +20,7 @@ export function useServerMemberAvatarService() {
       store.setServerMemberAvatarUrl(userId, serverId, url)
     }
 
-    url
+    return url
   }
 
   return {
