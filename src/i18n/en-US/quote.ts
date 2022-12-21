@@ -1,3 +1,3 @@
 export default {
-  submitByFormat: 'Submitted by {user} on {date}',
+  submittedByFormat: 'Submitted by {user} on {date}',
 }
