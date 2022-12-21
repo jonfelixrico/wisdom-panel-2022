@@ -1,5 +1,5 @@
 <template>
-  <q-avatar>
+  <q-avatar :size="size">
     <q-img v-if="avatarUrl" :src="avatarUrl" />
     <q-spinner v-else />
   </q-avatar>
@@ -20,6 +20,8 @@ export default defineComponent({
       type: String,
       required: true,
     },
+
+    size: String,
   },
 
   setup(props) {
