@@ -12,5 +12,7 @@ export interface Quote {
   submitterId: string
   submitDt: Date
 
+  serverId: string
+
   receives: QuoteReceive[]
 }

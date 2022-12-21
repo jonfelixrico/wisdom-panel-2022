@@ -7,9 +7,10 @@
 
       <div class="row items-center q-mt-sm">
         <div class="col row justify-end">
-          <q-avatar>
-            <q-icon name="person" />
-          </q-avatar>
+          <CServerMemberAvatar
+            :user-id="quote.authorId"
+            :server-id="quote.serverId"
+          />
         </div>
 
         <!-- will be positioned in the center -->
@@ -27,6 +28,7 @@
 <script lang="ts">
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
+import CServerMemberAvatar from './server-member/CServerMemberAvatar.vue'
 
 export default defineComponent({
   props: {
@@ -35,11 +37,11 @@ export default defineComponent({
       type: Object as PropType<Quote>,
     },
   },
-
   computed: {
     year() {
       return new Date(this.quote.submitDt).getFullYear()
     },
   },
+  components: { CServerMemberAvatar },
 })
 </script>
