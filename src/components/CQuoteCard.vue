@@ -1,28 +1,24 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="q-gutter-y-sm">
-        <div class="text-h4 text-center text-weight-light">
-          "{{ quote.content }}"
+      <div class="text-h3 text-center text-weight-regular">
+        "{{ quote.content }}"
+      </div>
+
+      <div class="row items-center q-mt-sm">
+        <div class="col row justify-end">
+          <q-avatar>
+            <q-icon name="person" />
+          </q-avatar>
         </div>
 
-        <q-separator />
-
-        <!-- i18nize the format -->
-        <div class="row items-center">
-          <div class="col row justify-end">
-            <q-avatar>
-              <q-icon name="person" />
-            </q-avatar>
-          </div>
-          <div class="row justify-center">
-            <span class="text-h6 text-weight-regular">
-              {{ quote.authorId }}, {{ year }}
-            </span>
-          </div>
-
-          <div class="col" />
+        <!-- will be positioned in the center -->
+        <div class="text-h6 text-weight-regular text-center">
+          {{ quote.authorId }}
         </div>
+
+        <!-- needed to position the author name to the center -->
+        <div class="col" />
       </div>
     </q-card-section>
   </q-card>
