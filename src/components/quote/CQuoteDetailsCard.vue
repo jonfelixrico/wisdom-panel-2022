@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <q-card-section>
+    <q-card-section class="row justify-between">
       <i18n-t keypath="quote.submittedByFormat">
         <template #date>
           {{ quote.submitDt }}
@@ -10,6 +10,12 @@
           {{ quote.submitterId }}
         </template>
       </i18n-t>
+
+      <span>{{
+        $t('quote.receiveCount', {
+          count: quote.receives.length,
+        })
+      }}</span>
     </q-card-section>
   </q-card>
 </template>
