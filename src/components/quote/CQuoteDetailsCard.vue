@@ -2,7 +2,11 @@
   <q-card>
     <q-card-section>
       <div class="row q-mb-sm">
-        <i18n-t keypath="quote.submittedByFormat" tag="div" class="pre row">
+        <i18n-t
+          keypath="quote.submittedByFormat"
+          tag="div"
+          class="pre row text-weight-bold"
+        >
           <template #date>
             {{ new Date(quote.submitDt).toLocaleDateString() }}
           </template>
