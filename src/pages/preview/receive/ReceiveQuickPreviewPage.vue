@@ -1,7 +1,8 @@
 <template>
   <q-page class="column justify-center items-center bg-deep-purple-6">
-    <div class="column q-gutter-y-sm q-ma-md" style="width: 50%">
-      <CQuoteCard v-if="quote" :quote="quote" />
+    <div v-if="quote" class="column q-gutter-y-sm q-ma-md" style="width: 50%">
+      <CQuotePreviewCard :quote="quote" />
+      <CQuoteDetailsCard :quote="quote" />
     </div>
   </q-page>
 </template>
@@ -9,7 +10,7 @@
 <script lang="ts">
 import { api } from 'src/boot/axios'
 import { defineComponent, onMounted, ref } from 'vue'
-import { useDiscordStore } from 'src/stores/discord-store'
+import { useServerStore } from 'src/stores/server-store'
 import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
 import { Dialog, useQuasar } from 'quasar'
@@ -18,7 +19,8 @@ import { i18n } from 'src/boot/i18n'
 import { useRoute } from 'vue-router'
 import { useApi } from 'src/composables/use-api.composable'
 import { Quote } from 'src/models/quote.interface'
-import CQuoteCard from 'src/components/CQuoteCard.vue'
+import CQuotePreviewCard from 'src/components/quote/CQuotePreviewCard.vue'
+import CQuoteDetailsCard from 'src/components/quote/CQuoteDetailsCard.vue'
 
 export default defineComponent({
   setup() {
@@ -50,7 +52,7 @@ export default defineComponent({
     const { params } = to
     const serverId = params.serverId as string
     const quoteId = params.quoteId as string
-    const store = useDiscordStore()
+    const store = useServerStore()
     // check server access
     let server = store.servers[serverId]
     if (!server) {
@@ -106,6 +108,6 @@ export default defineComponent({
       })
     }
   },
-  components: { CQuoteCard },
+  components: { CQuotePreviewCard, CQuoteDetailsCard },
 })
 </script>

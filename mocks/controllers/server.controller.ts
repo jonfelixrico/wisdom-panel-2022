@@ -15,9 +15,5 @@ export function serversController(app: Router) {
     } as Partial<APIGuild>)
   })
 
-  router.get('/:id', (req, res) => {
-    res.sendStatus(404)
-  })
-
   app.use('/server', router)
 }

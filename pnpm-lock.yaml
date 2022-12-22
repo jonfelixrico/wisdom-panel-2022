@@ -6,6 +6,7 @@ specifiers:
   '@quasar/extras': ^1.15.8
   '@types/dotenv-defaults': ^2.0.1
   '@types/express': ^4.17.15
+  '@types/lodash': ^4.14.191
   '@types/node': ^12.20.55
   '@typescript-eslint/eslint-plugin': ^5.46.1
   '@typescript-eslint/parser': ^5.46.1
@@ -17,6 +18,7 @@ specifiers:
   eslint-config-prettier: ^8.5.0
   eslint-plugin-vue: ^9.8.0
   express: ^4.18.2
+  lodash: ^4.17.21
   nodemon: ^2.0.20
   pinia: ^2.0.28
   pino: ^8.8.0
@@ -32,6 +34,7 @@ dependencies:
   '@quasar/extras': 1.15.8
   axios: 0.21.4
   discord-api-types: 0.37.23
+  lodash: 4.17.21
   pinia: 2.0.28_prq2uz4lho2pwp6irk4cfkrxwu
   pino: 8.8.0
   quasar: 2.10.2
@@ -44,6 +47,7 @@ devDependencies:
   '@quasar/app-vite': 1.1.3_ka6ayg5awbaurldxwvxrq7qso4
   '@types/dotenv-defaults': 2.0.1
   '@types/express': 4.17.15
+  '@types/lodash': 4.14.191
   '@types/node': 12.20.55
   '@typescript-eslint/eslint-plugin': 5.46.1_mqzxmroayievgzgel6yrqgih5i
   '@typescript-eslint/parser': 5.46.1_lzzuuodtsqwxnvqeq4g4likcqa
@@ -436,6 +440,10 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/mime/3.0.1:
@@ -2338,7 +2346,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols/4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}

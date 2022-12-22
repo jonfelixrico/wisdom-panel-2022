@@ -1,7 +1,7 @@
 import { useAvatarStore } from 'src/stores/avatar-store'
 import { useApi } from './use-api.composable'
 
-export function useServerMemberAvatarService() {
+export function useAvatarService() {
   const store = useAvatarStore()
   const api = useApi()
 
@@ -9,7 +9,7 @@ export function useServerMemberAvatarService() {
    * Retrieves the avatar URL from the server.
    * Caching is implemented.
    */
-  async function getAvatarUrl(userId: string, serverId: string) {
+  async function getServerMemberAvatarUrl(userId: string, serverId: string) {
     let url = store.servers[serverId]?.userId
     if (!url) {
       const { data } = await api.get<{ url: string }>(
@@ -27,6 +27,6 @@ export function useServerMemberAvatarService() {
     /**
      * Fetches the URL to the server member's avatar.
      */
-    getAvatarUrl,
+    getServerMemberAvatarUrl,
   }
 }
