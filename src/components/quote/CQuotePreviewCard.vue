@@ -5,24 +5,13 @@
         "{{ quote.content }}"
       </div>
 
-      <div class="row items-center q-mt-sm q-col-gutter-x-sm">
-        <div class="col row justify-end">
-          <CServerMemberAvatar
-            :user="{
-              userId: quote.authorId,
-              serverId: quote.serverId,
-            }"
-            size="sm"
-          />
-        </div>
-
-        <!-- will be positioned in the center -->
-        <div class="text-h6 text-weight-regular text-center">
-          {{ quote.authorId }}
-        </div>
-
-        <!-- needed to position the author name to the center -->
-        <div class="col" />
+      <div class="row justify-center q-mt-md">
+        <CServerMemberChip
+          :user="{
+            userId: quote.authorId,
+            serverId: quote.serverId,
+          }"
+        />
       </div>
     </q-card-section>
   </q-card>
@@ -31,7 +20,7 @@
 <script lang="ts">
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
-import CServerMemberAvatar from 'components/server-member/CServerMemberAvatar.vue'
+import CServerMemberChip from '../server-member/CServerMemberChip.vue'
 
 export default defineComponent({
   props: {
@@ -41,6 +30,6 @@ export default defineComponent({
     },
   },
 
-  components: { CServerMemberAvatar },
+  components: { CServerMemberChip },
 })
 </script>
