@@ -4,7 +4,7 @@
       <div class="row justify-between q-mb-sm">
         <i18n-t keypath="quote.submittedByFormat">
           <template #date>
-            {{ quote.submitDt }}
+            {{ new Date(quote.submitDt).toLocaleDateString() }}
           </template>
 
           <template #user>
