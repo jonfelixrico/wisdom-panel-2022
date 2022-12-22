@@ -30,6 +30,6 @@ export function useUsernameService() {
   }
 
   return {
-    getUsername: getServerMemberUsername,
+    getServerMemberUsername,
   }
 }
