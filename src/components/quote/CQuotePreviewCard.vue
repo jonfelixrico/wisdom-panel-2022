@@ -11,6 +11,8 @@
             userId: quote.authorId,
             serverId: quote.serverId,
           }"
+          avatar-size="md"
+          class="text-h6"
         />
       </div>
     </q-card-section>
