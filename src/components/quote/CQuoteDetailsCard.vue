@@ -14,7 +14,7 @@
       </div>
 
       <div class="row items-center q-gutter-x-sm">
-        <div>
+        <div class="text-weight-bold">
           {{
             $t('quote.receiveCount', {
               count: receiveCount,
