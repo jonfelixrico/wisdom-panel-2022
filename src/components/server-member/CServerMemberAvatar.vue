@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { useServerMemberAvatarService } from 'src/composables/use-server-member-avatar-service.composable'
+import { useAvatarService } from 'src/composables/use-avatar-service.composable'
 import { defineComponent, onMounted, ref } from 'vue'
 
 export default defineComponent({
@@ -25,7 +25,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const avatarService = useServerMemberAvatarService()
+    const avatarService = useAvatarService()
     const avatarUrl = ref<string | undefined>(undefined)
 
     onMounted(async () => {
