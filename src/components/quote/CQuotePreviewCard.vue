@@ -8,8 +8,10 @@
       <div class="row items-center q-mt-sm q-col-gutter-x-sm">
         <div class="col row justify-end">
           <CServerMemberAvatar
-            :user-id="quote.authorId"
-            :server-id="quote.serverId"
+            :user="{
+              userId: quote.authorId,
+              serverId: quote.serverId,
+            }"
             size="sm"
           />
         </div>

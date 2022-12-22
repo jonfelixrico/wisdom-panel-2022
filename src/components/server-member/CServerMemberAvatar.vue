@@ -7,18 +7,18 @@
 
 <script lang="ts">
 import { useAvatarService } from 'src/composables/use-avatar-service.composable'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
+
+interface ServerMember {
+  userId: string
+  serverId: string
+}
 
 export default defineComponent({
   props: {
-    userId: {
-      type: String,
+    user: {
       required: true,
-    },
-
-    serverId: {
-      type: String,
-      required: true,
+      type: Object as PropType<ServerMember>,
     },
 
     size: String,
@@ -30,8 +30,8 @@ export default defineComponent({
 
     onMounted(async () => {
       avatarUrl.value = await avatarService.getServerMemberAvatarUrl(
-        props.userId,
-        props.serverId
+        props.user.userId,
+        props.user.serverId
       )
     })
 
