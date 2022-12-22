@@ -13,8 +13,8 @@
         </i18n-t>
       </div>
 
-      <div class="row items-center">
-        <div class="q-mr-sm">
+      <div class="row items-center q-gutter-x-sm">
+        <div>
           {{
             $t('quote.receiveCount', {
               count: receiveCount,
@@ -24,11 +24,12 @@
 
         <template v-if="receiveCount > 0">
           <div
-            class="bg-grey col-auto rounded-borders q-px-xs"
+            class="bordered col-auto rounded-borders q-py-xs q-px-sm row pre items-center"
             v-for="{ userId, count } in receivesPerUser"
             :key="userId"
           >
-            {{ userId }} x {{ count }}
+            <CServerMemberChip :user="{ userId, serverId: quote.serverId }" /> x
+            {{ count }}
           </div>
         </template>
       </div>
@@ -40,6 +41,7 @@
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
 import { countBy, sortBy } from 'lodash'
+import CServerMemberChip from '../server-member/CServerMemberChip.vue'
 
 export default defineComponent({
   props: {
@@ -48,28 +50,34 @@ export default defineComponent({
       type: Object as PropType<Quote>,
     },
   },
-
   computed: {
     receiveCount() {
       return this.quote.receives.length
     },
-
     receivesPerUser() {
       const grouped = countBy(
         this.quote.receives,
         ({ receiverId }) => receiverId
       )
-
-      const values: { userId: string; count: number }[] = []
+      const values: {
+        userId: string
+        count: number
+      }[] = []
       for (const userId in grouped) {
         values.push({
           userId,
           count: grouped[userId],
         })
       }
-
-      return sortBy(values, ['count'], ['asc'])
+      return sortBy(values, ['count'], ['desc'])
     },
   },
+  components: { CServerMemberChip },
 })
 </script>
+
+<style lang="scss" scoped>
+.bordered {
+  border: 1px solid $primary;
+}
+</style>
