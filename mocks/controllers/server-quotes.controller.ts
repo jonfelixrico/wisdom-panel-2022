@@ -40,9 +40,5 @@ export function serverQuotesController(app: Router) {
     })
   })
 
-  router.get('/:quoteId', (req, res) => {
-    res.sendStatus(404)
-  })
-
   app.use('/server/:serverId/quote', router)
 }
