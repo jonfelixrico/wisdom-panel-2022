@@ -1,14 +1,21 @@
 <template>
   <q-card>
     <q-card-section>
-      <div class="row justify-between q-mb-sm">
-        <i18n-t keypath="quote.submittedByFormat">
+      <div class="row q-mb-sm">
+        <i18n-t keypath="quote.submittedByFormat" tag="div" class="pre row">
           <template #date>
             {{ new Date(quote.submitDt).toLocaleDateString() }}
           </template>
 
           <template #user>
-            {{ quote.submitterId }}
+            <div>
+              <CServerMemberChip
+                :user="{
+                  userId: quote.submitterId,
+                  serverId: quote.serverId,
+                }"
+              />
+            </div>
           </template>
         </i18n-t>
       </div>
