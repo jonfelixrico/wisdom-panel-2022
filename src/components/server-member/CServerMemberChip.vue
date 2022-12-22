@@ -4,7 +4,7 @@
     <CServerMemberAvatar :user="user" :size="avatarSize" class="q-mr-sm" />
 
     <slot v-if="username" :username="username">
-      <div>{{ username }}</div>
+      <div :class="usernameClass">{{ username }}</div>
     </slot>
     <q-skeleton v-else type="text" style="width: 25px" />
   </div>
@@ -33,6 +33,8 @@ export default defineComponent({
       type: String,
       default: 'sm',
     },
+
+    usernameClass: String,
   },
 
   setup(props) {
