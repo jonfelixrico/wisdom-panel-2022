@@ -1,7 +1,7 @@
 <!-- Displays a server member's username and avatar -->
 <template>
   <div class="row items-center">
-    <CServerMemberAvatar :user="user" :size="avatarSize" class="q-mr-sm" />
+    <CServerMemberAvatar :user="user" :size="avatarSize" class="q-mr-xs" />
 
     <slot v-if="username" :username="username">
       <div v-if="usernameClass" :class="usernameClass" v-text="username" />
