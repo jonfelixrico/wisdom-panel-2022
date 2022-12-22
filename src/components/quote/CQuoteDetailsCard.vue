@@ -51,7 +51,7 @@
 <script lang="ts">
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
-import { countBy, sortBy } from 'lodash'
+import { countBy, orderBy } from 'lodash'
 import CServerMemberChip from '../server-member/CServerMemberChip.vue'
 
 export default defineComponent({
@@ -80,7 +80,7 @@ export default defineComponent({
           count: grouped[userId],
         })
       }
-      return sortBy(values, ['count'], ['desc'])
+      return orderBy(values, ['count', 'userId'], ['desc', 'asc'])
     },
   },
   components: { CServerMemberChip },
