@@ -1,3 +1,4 @@
+<!-- Displays a server member's username and avatar -->
 <template>
   <div class="row items-center">
     <CServerMemberAvatar :user="user" class="q-ml-sm" />
