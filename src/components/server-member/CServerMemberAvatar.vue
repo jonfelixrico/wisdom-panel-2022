@@ -29,7 +29,7 @@ export default defineComponent({
     const avatarUrl = ref<string | undefined>(undefined)
 
     onMounted(async () => {
-      avatarUrl.value = await avatarService.getAvatarUrl(
+      avatarUrl.value = await avatarService.getServerMemberAvatarUrl(
         props.userId,
         props.serverId
       )

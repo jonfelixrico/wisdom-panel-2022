@@ -1,7 +1,7 @@
 import { useAvatarStore } from 'src/stores/avatar-store'
 import { useApi } from './use-api.composable'
 
-export function userAvatarService() {
+export function useAvatarService() {
   const store = useAvatarStore()
   const api = useApi()
 
@@ -27,6 +27,6 @@ export function userAvatarService() {
     /**
      * Fetches the URL to the server member's avatar.
      */
-    getAvatarUrl: getServerMemberAvatarUrl,
+    getServerMemberAvatarUrl,
   }
 }
