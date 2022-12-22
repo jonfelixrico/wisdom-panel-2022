@@ -1,10 +1,12 @@
 <!-- Displays a server member's username and avatar -->
 <template>
   <div class="row items-center">
-    <CServerMemberAvatar :user="user" class="q-ml-sm" />
+    <CServerMemberAvatar :user="user" :size="avatarSize" class="q-mr-sm" />
 
-    <q-skeleton v-if="!username" type="text" style="width: 25px" />
-    <div v-else>{{ username }}</div>
+    <slot v-if="username" :username="username">
+      <div>{{ username }}</div>
+    </slot>
+    <q-skeleton v-else type="text" style="width: 25px" />
   </div>
 </template>
 
@@ -25,6 +27,11 @@ export default defineComponent({
     user: {
       type: Object as PropType<ServerMember>,
       required: true,
+    },
+
+    avatarSize: {
+      type: String,
+      default: 'sm',
     },
   },
 
