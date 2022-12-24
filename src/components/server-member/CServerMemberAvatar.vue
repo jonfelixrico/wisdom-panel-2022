@@ -1,11 +1,7 @@
 <template>
-  <q-skeleton type="QAvatar" :size="size" v-if="!avatarUrl" />
-  <q-avatar v-else :size="size">
-    <q-img :src="avatarUrl">
-      <template #loading>
-        <q-skeleton type="QAvatar" />
-      </template>
-    </q-img>
+  <q-avatar :size="size">
+    <q-skeleton v-if="!avatarUrl" type="QAvatar" size="100%" />
+    <q-icon v-else :name="`img:${avatarUrl}`" :size="size" />
   </q-avatar>
 </template>
 
