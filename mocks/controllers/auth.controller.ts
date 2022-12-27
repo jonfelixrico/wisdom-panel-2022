@@ -16,6 +16,7 @@ export function authController(app: Router) {
   })
 
   router.post('/auth/oauth/discord', (req, res) => {
+    // TODO add session
     res.end()
   })
 
