@@ -4,9 +4,9 @@ import { URL } from 'url'
 export function authController(app: Router) {
   const router = Router()
 
-  router.get('/auth/oauth/discord', (req, res) => {
+  router.get('', (req, res) => {
     const redirectUrl = new URL(
-      'http://localhost:8080/auth/oauth/discord/callback'
+      'http://localhost:9080/auth/oauth/discord/callback'
     )
 
     const query = redirectUrl.searchParams
@@ -15,10 +15,10 @@ export function authController(app: Router) {
     res.redirect(redirectUrl.toString())
   })
 
-  router.post('/auth/oauth/discord', (req, res) => {
+  router.post('', (req, res) => {
     // TODO add session
     res.end()
   })
 
-  app.use('/auth', router)
+  app.use('/auth/oauth/discord', router)
 }
