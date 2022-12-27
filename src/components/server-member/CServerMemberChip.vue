@@ -7,7 +7,7 @@
       <div v-if="usernameClass" :class="usernameClass" v-text="username" />
       <div v-else class="text-weight-bold text-primary" v-text="username" />
     </slot>
-    <q-skeleton v-else type="text" style="width: 25px" />
+    <q-skeleton v-else type="text" style="min-width: 50px" />
   </div>
 </template>
 
