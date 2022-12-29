@@ -2,9 +2,13 @@ import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 import { isAxiosError } from 'src/utils/axios.utils'
 
+interface SessionState {
+  hasSession: 'UNLOADED' | boolean
+}
+
 export const useSessionStore = defineStore('session', {
-  state: () => ({
-    hasSession: false,
+  state: (): SessionState => ({
+    hasSession: 'UNLOADED',
   }),
 
   actions: {
@@ -13,8 +17,8 @@ export const useSessionStore = defineStore('session', {
     },
 
     async fetchSession() {
-      if (this.hasSession) {
-        return true
+      if (this.hasSession !== 'UNLOADED') {
+        return this.hasSession
       }
 
       try {
@@ -23,6 +27,7 @@ export const useSessionStore = defineStore('session', {
         return true
       } catch (e) {
         if (isAxiosError(e) && e.response?.status === 401) {
+          this.setHasSession(false)
           return false
         }
 
