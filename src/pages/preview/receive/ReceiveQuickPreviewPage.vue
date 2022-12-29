@@ -11,16 +11,26 @@
 import { api } from 'src/boot/axios'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useServerStore } from 'src/stores/server-store'
-import { APIGuild } from 'discord-api-types/v10'
 import { getLogger } from 'src/boot/pino-logger'
 import { Dialog, useQuasar } from 'quasar'
-import axios from 'axios'
 import { i18n } from 'src/boot/i18n'
 import { useRoute } from 'vue-router'
 import { useApi } from 'src/composables/use-api.composable'
 import { Quote } from 'src/models/quote.interface'
 import CQuotePreviewCard from 'src/components/quote/CQuotePreviewCard.vue'
 import CQuoteDetailsCard from 'src/components/quote/CQuoteDetailsCard.vue'
+
+function generateErrorDialog(message = 'preview.errors.receiveEnter.generic') {
+  return Dialog.create({
+    title: i18n.t('preview.errors.receiveEnter.title'),
+    message: i18n.t(message),
+    ok: {
+      unelevated: true,
+      color: 'primary',
+      dense: true,
+    },
+  })
+}
 
 export default defineComponent({
   setup() {
@@ -52,60 +62,34 @@ export default defineComponent({
     const { params } = to
     const serverId = params.serverId as string
     const quoteId = params.quoteId as string
-    const store = useServerStore()
+    const serverStore = useServerStore()
+
     // check server access
-    let server = store.servers[serverId]
-    if (!server) {
-      try {
-        const { data } = await api.get<APIGuild>(`/server/${serverId}`)
-        server = data
-      } catch (e) {
-        if (axios.isAxiosError(e) && e?.response?.status === 403) {
-          server = 'NO_ACCESS'
-        } else {
-          logger.error(
-            e,
-            `An error was encountered while retrieving server ${serverId}`
-          )
-          next(false)
-        }
-      }
-      store.setServer(serverId, server)
-    }
-    if (server === 'NO_ACCESS') {
-      logger.warn(
-        `User has no acccess to server ${serverId}, aborting navigation`
-      )
-      Dialog.create({
-        title: i18n.t('preview.errors.receiveEnter.title'),
-        message: i18n.t('preview.errors.receiveEnter.serverNoAccess'),
-        ok: {
-          unelevated: true,
-          color: 'primary',
-          dense: true,
-        },
-      }).onDismiss(() => {
+    try {
+      const server = await serverStore.fetchServer(serverId)
+      if (server === 'NO_ACCESS') {
+        logger.warn(
+          `User has no acccess to server ${serverId}, aborting navigation`
+        )
+        generateErrorDialog('preview.errors.receiveEnter.serverNoAccess')
         next(false)
-      })
+        return
+      }
+    } catch (e) {
+      logger.error(e, 'Error encountered while fetching the server data')
+      generateErrorDialog()
+      next(false)
       return
     }
+
     // check quote access
     try {
       await api.head(`server/${serverId}/quote/${quoteId}`)
       next()
     } catch (e) {
       logger.error(e, `Error encountered while retrieving quote ${quoteId}`)
-      Dialog.create({
-        title: i18n.t('preview.errors.receiveEnter.title'),
-        message: i18n.t('preview.errors.receiveEnter.generic'),
-        ok: {
-          unelevated: true,
-          color: 'primary',
-          dense: true,
-        },
-      }).onDismiss(() => {
-        next(false)
-      })
+      generateErrorDialog()
+      next(false)
     }
   },
   components: { CQuotePreviewCard, CQuoteDetailsCard },
