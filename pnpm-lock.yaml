@@ -6,6 +6,7 @@ specifiers:
   '@quasar/extras': ^1.15.8
   '@types/dotenv-defaults': ^2.0.1
   '@types/express': ^4.17.15
+  '@types/express-session': ^1.17.5
   '@types/lodash': ^4.14.191
   '@types/node': ^12.20.55
   '@typescript-eslint/eslint-plugin': ^5.46.1
@@ -49,6 +50,7 @@ devDependencies:
   '@quasar/app-vite': 1.1.3_ka6ayg5awbaurldxwvxrq7qso4
   '@types/dotenv-defaults': 2.0.1
   '@types/express': 4.17.15
+  '@types/express-session': 1.17.5
   '@types/lodash': 4.14.191
   '@types/node': 12.20.55
   '@typescript-eslint/eslint-plugin': 5.46.1_mqzxmroayievgzgel6yrqgih5i
@@ -417,6 +419,12 @@ packages:
       '@types/node': 12.20.55
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
+    dev: true
+
+  /@types/express-session/1.17.5:
+    resolution: {integrity: sha512-l0DhkvNVfyUPEEis8fcwbd46VptfA/jmMwHfob2TfDMf3HyPLiB9mKD71LXhz5TMUobODXPD27zXSwtFQLHm+w==}
+    dependencies:
+      '@types/express': 4.17.15
     dev: true
 
   /@types/express/4.17.15:
