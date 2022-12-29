@@ -24,9 +24,6 @@ const PUBLIC_ROUTES: AuthlessRoute[] = [
   {
     path: /auth/,
   },
-  {
-    path: /favicon/,
-  },
 ]
 
 function isPublic(req: Request) {
@@ -54,6 +51,7 @@ const authGuard: RequestHandler = (
   if (req.session.isAuthenticated || isPublic(req)) {
     next()
   } else {
+    console.log('Unauthenticated access to %s', req.path)
     next(new Error(UNAUTHENTICATED))
   }
 }
