@@ -3,6 +3,7 @@
     class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
   >
     <div>
+      <!-- TODO add proper verbiage for a "coming soon" landing page -->
       <div style="font-size: 30vh">Coming Soon</div>
 
       <div class="text-h2" style="opacity: 0.4">Oops. Nothing here...</div>
