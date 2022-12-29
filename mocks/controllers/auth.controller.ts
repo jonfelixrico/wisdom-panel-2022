@@ -30,7 +30,7 @@ export function authController(app: Router) {
   })
 
   router.post('', (req, res) => {
-    // TODO add session
+    req.session.isAuthenticated = true
     res.end()
   })
 
