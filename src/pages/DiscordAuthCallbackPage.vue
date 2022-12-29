@@ -5,9 +5,17 @@
 </template>
 
 <script lang="ts">
+import { getLogger } from 'src/boot/pino-logger'
 import { useApi } from 'src/composables/use-api.composable'
 import { defineComponent, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import {
+  isNavigationFailure,
+  NavigationFailureType,
+  useRoute,
+  useRouter,
+} from 'vue-router'
+
+const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
 export default defineComponent({
   setup() {
@@ -18,7 +26,7 @@ export default defineComponent({
     const router = useRouter()
 
     onMounted(async () => {
-      api.post('auth/oauth/discord', {
+      await api.post('auth/oauth/discord', {
         code,
       })
 
@@ -26,14 +34,27 @@ export default defineComponent({
         query: otherQuery,
       }
 
-      if (redirect) {
-        await router.push({
-          ...location,
-          path: JSON.stringify(redirect),
-        })
-      } else {
-        await router.push({
-          ...location,
+      const navResult = redirect
+        ? router.push({
+            // redirect with target according to the callback
+            ...location,
+            path: redirect.toString(),
+          })
+        : router.push({
+            // generic redirect
+            ...location,
+            name: 'index',
+          })
+
+      if (isNavigationFailure(await navResult, NavigationFailureType.aborted)) {
+        /*
+         * This will trigger if one of the navigations above were aborted.
+         * This handling will prevent the user from being stuck in the callback's UI.
+         */
+        LOGGER.warn(
+          'Navigation failure encountered, redirecting to the index as fallback'
+        )
+        router.push({
           name: 'index',
         })
       }

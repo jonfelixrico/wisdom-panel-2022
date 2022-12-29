@@ -12,15 +12,29 @@ const routes: RouteRecordRaw[] = [
         },
         name: 'index',
       },
+      // TODO remove once we have a proper home page
+      {
+        path: 'home',
+        redirect: {
+          name: 'landing-page',
+        },
+        name: 'home',
+      },
       {
         name: 'login',
         path: 'login',
         component: () => import('pages/LoginPage.vue'),
+        meta: {
+          isPublicRoute: true,
+        },
       },
       {
         name: 'discord-oauth-callback',
         path: 'auth/oauth/discord/callback',
         component: () => import('pages/DiscordAuthCallbackPage.vue'),
+        meta: {
+          isPublicRoute: true,
+        },
       },
       {
         name: 'receive-preview',
@@ -31,11 +45,21 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
+  // TODO remove once we have a proper home page
+  {
+    path: '/landing',
+    name: 'landing-page',
+    component: () => import('pages/LandingPage.vue'),
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
+    meta: {
+      isPublicRoute: true,
+    },
   },
 ]
 
