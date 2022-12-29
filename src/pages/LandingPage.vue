@@ -16,6 +16,7 @@
         unelevated
         label="Sign out"
         no-caps
+        @click="signOut"
       />
     </div>
   </div>
