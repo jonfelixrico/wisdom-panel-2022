@@ -24,11 +24,17 @@ const routes: RouteRecordRaw[] = [
         name: 'login',
         path: 'login',
         component: () => import('pages/LoginPage.vue'),
+        meta: {
+          isPublicRoute: true,
+        },
       },
       {
         name: 'discord-oauth-callback',
         path: 'auth/oauth/discord/callback',
         component: () => import('pages/DiscordAuthCallbackPage.vue'),
+        meta: {
+          isPublicRoute: true,
+        },
       },
       {
         name: 'receive-preview',
@@ -41,7 +47,7 @@ const routes: RouteRecordRaw[] = [
 
   // TODO remove once we have a proper home page
   {
-    path: 'landing',
+    path: '/landing',
     name: 'landing-page',
     component: () => import('pages/LandingPage.vue'),
   },
@@ -51,6 +57,9 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
+    meta: {
+      isPublicRoute: true,
+    },
   },
 ]
 
