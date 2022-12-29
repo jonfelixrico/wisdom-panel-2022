@@ -1,4 +1,3 @@
-import { api } from 'src/boot/axios'
 import { getLogger } from 'src/boot/pino-logger'
 import { useSessionStore } from 'src/stores/session-store'
 import { isAxiosError } from 'src/utils/axios.utils'
@@ -9,26 +8,29 @@ const LOGGER = getLogger('auth-guard')
 export const checkSession: NavigationGuard = async (to, from, next) => {
   const sessionStore = useSessionStore()
 
-  if (to.meta.isPublicRoute || sessionStore.hasSession) {
+  if (to.meta.isPublicRoute) {
     next()
     return
   }
 
   try {
-    await api.head('session')
-    LOGGER.info('Session found.')
-
-    sessionStore.setHasSession(true)
-    next()
-  } catch (e) {
-    if (!isAxiosError(e)) {
-      LOGGER.error(e, 'Error encountered while trying to check for session')
-    } else if (e.response?.status !== 401) {
-      LOGGER.error(e, 'Non-401 error encountered while doing a session check')
+    if (await sessionStore.fetchSession()) {
+      next()
     } else {
-      LOGGER.warn('Encountered 401 while doing a session check')
+      next({
+        name: 'login',
+        query: {
+          redirect: to.fullPath,
+        },
+      })
+    }
+  } catch (e) {
+    if (isAxiosError(e)) {
+      LOGGER.error(e, 'Non-401 error encountered while doing a session check')
+    } else if (e) {
+      LOGGER.error(e, 'Generic error encountered while doing a session check')
     }
 
-    next({ name: 'index' })
+    next(false)
   }
 }
