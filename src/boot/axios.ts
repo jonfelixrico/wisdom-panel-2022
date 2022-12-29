@@ -6,6 +6,7 @@ import { getLogger } from './pino-logger'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance
+    $api: AxiosInstance
   }
 }
 
