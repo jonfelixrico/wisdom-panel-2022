@@ -8,5 +8,11 @@ export function sessionController(app: Router) {
     res.end()
   })
 
+  router.delete('/', (req, res) => {
+    req.session.destroy(() => {
+      res.end()
+    })
+  })
+
   app.use('/session', router)
 }
