@@ -8,7 +8,7 @@
 import { getLogger } from 'src/boot/pino-logger'
 import { useApi } from 'src/composables/use-api.composable'
 import { defineComponent, onMounted } from 'vue'
-import { isNavigationFailure, Router, useRoute, useRouter } from 'vue-router'
+import { isNavigationFailure, useRoute, useRouter } from 'vue-router'
 
 const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
