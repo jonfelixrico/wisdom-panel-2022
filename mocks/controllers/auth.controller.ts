@@ -12,7 +12,10 @@ export function authController(app: Router) {
     const query = redirectUrl.searchParams
     query.append('code', 'dummy')
 
-    res.redirect(redirectUrl.toString())
+    res.render('oauth', {
+      url: redirectUrl.toString(),
+      layout: false,
+    })
   })
 
   router.post('', (req, res) => {
