@@ -9,8 +9,13 @@ export function authController(app: Router) {
       'http://localhost:9080/auth/oauth/discord/callback'
     )
 
-    const query = redirectUrl.searchParams
-    query.append('code', 'dummy')
+    const params = redirectUrl.searchParams
+    for (const key in req.query) {
+      if (req.query[key]) {
+        params.append(key, req.query[key] as string)
+      }
+    }
+    params.append('code', 'dummy')
 
     res.render('oauth', {
       url: redirectUrl.toString(),
