@@ -6,10 +6,6 @@ import { setupSession } from './setup/session.setup'
 
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('Hello, world!').end()
-})
-
 controllers(app)
 
 // Handlebars setup
