@@ -23,13 +23,13 @@
 </template>
 
 <script lang="ts">
-import { useLogger } from 'src/boot/pino-logger'
+import { getLogger } from 'src/boot/pino-logger'
 import { useApi } from 'src/composables/use-api.composable'
 import { useSessionStore } from 'src/stores/session-store'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
-const LOGGER = useLogger('landing-page')
+const LOGGER = getLogger('landing-page')
 
 export default defineComponent({
   setup() {
