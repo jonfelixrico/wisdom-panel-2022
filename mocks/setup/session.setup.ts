@@ -1,4 +1,11 @@
-import type { Express, NextFunction, Response, Request } from 'express'
+import type {
+  Express,
+  NextFunction,
+  Response,
+  Request,
+  ErrorRequestHandler,
+  RequestHandler,
+} from 'express'
 import session from 'express-session'
 
 // Session setup
@@ -13,14 +20,17 @@ interface AuthlessRoute {
   methods?: string[]
 }
 
-const AUTHLESS_ROUTES: AuthlessRoute[] = [
+const PUBLIC_ROUTES: AuthlessRoute[] = [
   {
     path: /auth/,
   },
+  {
+    path: /favicon/,
+  },
 ]
 
-function isRouteAuthless(req: Request) {
-  for (const { path, methods } of AUTHLESS_ROUTES) {
+function isPublic(req: Request) {
+  for (const { path, methods } of PUBLIC_ROUTES) {
     if (!path.test(req.path)) {
       continue
     }
@@ -35,15 +45,27 @@ function isRouteAuthless(req: Request) {
   return false
 }
 
-function authGuard(req: Request, res: Response, next: NextFunction) {
-  if (req.session.isAuthenticated || isRouteAuthless(req)) {
+const UNAUTHENTICATED = 'UNAUTHENTICATED'
+const authGuard: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session.isAuthenticated || isPublic(req)) {
     next()
   } else {
+    next(new Error(UNAUTHENTICATED))
+  }
+}
+const authGuardCatcher: ErrorRequestHandler = (err, req, res, next) => {
+  if (err?.message == UNAUTHENTICATED) {
     res.sendStatus(401)
+  } else {
+    next({ err })
   }
 }
 
-export function setupSession(app: Express) {
+export default function setupSession(app: Express) {
   app.use(
     session({
       secret: 'mocks',
@@ -53,4 +75,5 @@ export function setupSession(app: Express) {
   )
 
   app.use(authGuard)
+  app.use(authGuardCatcher)
 }
