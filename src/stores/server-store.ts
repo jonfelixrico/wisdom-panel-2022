@@ -19,15 +19,6 @@ export const useServerStore = defineStore('server', {
   }),
 
   actions: {
-    /**
-     * @deprecated
-     * @param id
-     * @param serverData
-     */
-    setServer(id: string, serverData: APIGuild | InaccessibleServer) {
-      this.servers[id] = serverData
-    },
-
     async fetchServer(serverId: string) {
       const inStore = this.servers[serverId]
       if (inStore) {
