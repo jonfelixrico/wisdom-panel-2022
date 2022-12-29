@@ -3,7 +3,6 @@ import type {
   NextFunction,
   Response,
   Request,
-  ErrorRequestHandler,
   RequestHandler,
 } from 'express'
 import session from 'express-session'
@@ -42,7 +41,6 @@ function isPublic(req: Request) {
   return false
 }
 
-const UNAUTHENTICATED = 'UNAUTHENTICATED'
 const authGuard: RequestHandler = (
   req: Request,
   res: Response,
@@ -52,14 +50,7 @@ const authGuard: RequestHandler = (
     next()
   } else {
     console.log('Unauthenticated access to %s', req.path)
-    next(new Error(UNAUTHENTICATED))
-  }
-}
-const authGuardCatcher: ErrorRequestHandler = (err, req, res, next) => {
-  if (err?.message == UNAUTHENTICATED) {
     res.sendStatus(401)
-  } else {
-    next({ err })
   }
 }
 
@@ -73,5 +64,4 @@ export function setupSession(app: Express) {
   )
 
   app.use(authGuard)
-  app.use(authGuardCatcher)
 }
