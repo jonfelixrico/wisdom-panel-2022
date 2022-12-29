@@ -41,17 +41,19 @@ export default defineComponent({
     },
   },
 
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     const sessionStore = useSessionStore()
-
-    // handling for already-authenticated users trying to access this page
-    if (sessionStore.hasSession) {
-      LOGGER.debug('Redirecting to home because a session is already present')
-      next({ name: 'home' })
-      return
+    try {
+      if (await sessionStore.fetchSession()) {
+        next({ name: 'home' })
+        return
+      } else {
+        next(true)
+      }
+    } catch (e) {
+      LOGGER.error(e, 'Error encountered while trying to fetch the session')
+      next(true)
     }
-
-    next()
   },
 })
 </script>
