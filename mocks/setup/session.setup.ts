@@ -1,7 +1,6 @@
 import type { Express, NextFunction, Response, Request } from 'express'
 import session from 'express-session'
 
-// Session setup
 declare module 'express-session' {
   interface SessionData {
     isAuthenticated: boolean
