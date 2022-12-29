@@ -16,9 +16,12 @@
 </template>
 
 <script lang="ts">
+import { getLogger } from 'src/boot/pino-logger'
+import { useSessionStore } from 'src/stores/session-store'
 import { defineComponent } from 'vue'
 
 const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
+const LOGGER = getLogger('login-page')
 
 export default defineComponent({
   computed: {
@@ -31,11 +34,26 @@ export default defineComponent({
 
       const { query } = this.$route
       for (const key in query) {
-        url.searchParams.append(key, JSON.stringify(query[key]))
+        url.searchParams.append(key, String(query[key]))
       }
 
       return url.toString()
     },
+  },
+
+  async beforeRouteEnter(to, from, next) {
+    const sessionStore = useSessionStore()
+    try {
+      if (await sessionStore.fetchSession()) {
+        next({ name: 'home' })
+        return
+      } else {
+        next(true)
+      }
+    } catch (e) {
+      LOGGER.error(e, 'Error encountered while trying to fetch the session')
+      next(true)
+    }
   },
 })
 </script>

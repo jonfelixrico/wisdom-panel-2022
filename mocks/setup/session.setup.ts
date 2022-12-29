@@ -1,4 +1,10 @@
-import type { Express, NextFunction, Response, Request } from 'express'
+import type {
+  Express,
+  NextFunction,
+  Response,
+  Request,
+  RequestHandler,
+} from 'express'
 import session from 'express-session'
 
 declare module 'express-session' {
@@ -12,14 +18,14 @@ interface AuthlessRoute {
   methods?: string[]
 }
 
-const AUTHLESS_ROUTES: AuthlessRoute[] = [
+const PUBLIC_ROUTES: AuthlessRoute[] = [
   {
     path: /auth/,
   },
 ]
 
-function isRouteAuthless(req: Request) {
-  for (const { path, methods } of AUTHLESS_ROUTES) {
+function isPublic(req: Request) {
+  for (const { path, methods } of PUBLIC_ROUTES) {
     if (!path.test(req.path)) {
       continue
     }
@@ -34,10 +40,15 @@ function isRouteAuthless(req: Request) {
   return false
 }
 
-function authGuard(req: Request, res: Response, next: NextFunction) {
-  if (req.session.isAuthenticated || isRouteAuthless(req)) {
+const authGuard: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session.isAuthenticated || isPublic(req)) {
     next()
   } else {
+    console.log('Unauthenticated access to %s', req.path)
     res.sendStatus(401)
   }
 }
