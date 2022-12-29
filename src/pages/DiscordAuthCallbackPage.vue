@@ -5,9 +5,12 @@
 </template>
 
 <script lang="ts">
+import { getLogger } from 'src/boot/pino-logger'
 import { useApi } from 'src/composables/use-api.composable'
 import { defineComponent, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { isNavigationFailure, Router, useRoute, useRouter } from 'vue-router'
+
+const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
 export default defineComponent({
   setup() {
@@ -26,14 +29,23 @@ export default defineComponent({
         query: otherQuery,
       }
 
-      if (redirect) {
-        await router.push({
-          ...location,
-          path: redirect.toString(),
-        })
-      } else {
-        await router.push({
-          ...location,
+      const navResult = redirect
+        ? router.push({
+            // redirect with target according to the callback
+            ...location,
+            path: redirect.toString(),
+          })
+        : router.push({
+            // generic redirect
+            ...location,
+            name: 'index',
+          })
+
+      if (isNavigationFailure(await navResult)) {
+        LOGGER.warn(
+          'Navigation failure encountered, redirecting to the index as fallback'
+        )
+        router.push({
           name: 'index',
         })
       }
