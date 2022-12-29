@@ -14,8 +14,10 @@ export const abortOnStartLocationGuard: (
 ) => NavigationHookAfter = (router) => {
   return (to, from, failure) => {
     if (
-      !isNavigationFailure(failure, NavigationFailureType.aborted) ||
-      from !== START_LOCATION
+      !(
+        isNavigationFailure(failure, NavigationFailureType.aborted) &&
+        from === START_LOCATION
+      )
     ) {
       return
     }
