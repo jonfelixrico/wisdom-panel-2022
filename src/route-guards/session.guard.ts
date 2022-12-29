@@ -5,7 +5,7 @@ import { NavigationGuard } from 'vue-router'
 
 const LOGGER = getLogger('auth-guard')
 
-export const checkSession: NavigationGuard = async (to, from, next) => {
+export const sessionGuard: NavigationGuard = async (to, from, next) => {
   const sessionStore = useSessionStore()
 
   if (to.meta.isPublicRoute) {
