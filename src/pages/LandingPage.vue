@@ -14,8 +14,7 @@
         color="white"
         text-color="blue"
         unelevated
-        to="/"
-        label="Go Home"
+        label="Sign out"
         no-caps
       />
     </div>
@@ -23,9 +22,35 @@
 </template>
 
 <script lang="ts">
+import { useLogger } from 'src/boot/pino-logger'
+import { useApi } from 'src/composables/use-api.composable'
+import { useSessionStore } from 'src/stores/session-store'
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
+
+const LOGGER = useLogger('landing-page')
 
 export default defineComponent({
-  name: 'ErrorNotFound',
+  setup() {
+    const sessionStore = useSessionStore()
+    const api = useApi()
+    const router = useRouter()
+
+    async function signOut() {
+      try {
+        await api.delete('session')
+        sessionStore.setHasSession(false)
+        await router.push({
+          name: 'index',
+        })
+      } catch (e) {
+        LOGGER.error(e, 'Unexpected error while trying to sign out')
+      }
+    }
+
+    return {
+      signOut,
+    }
+  },
 })
 </script>
