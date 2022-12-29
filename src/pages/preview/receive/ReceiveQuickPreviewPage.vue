@@ -29,6 +29,7 @@ function generateErrorDialog(message = 'preview.errors.receiveEnter.generic') {
       color: 'primary',
       dense: true,
     },
+    noRouteDismiss: true,
   })
 }
 
