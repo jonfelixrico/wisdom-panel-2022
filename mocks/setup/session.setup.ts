@@ -19,7 +19,7 @@ const AUTHLESS_ROUTES: AuthlessRoute[] = [
   },
   {
     path: /session/,
-    methods: ['GET'],
+    methods: ['POST'],
   },
 ]
 
