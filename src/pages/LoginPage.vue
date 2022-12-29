@@ -16,9 +16,12 @@
 </template>
 
 <script lang="ts">
+import { getLogger } from 'src/boot/pino-logger'
+import { useSessionStore } from 'src/stores/session-store'
 import { defineComponent } from 'vue'
 
 const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
+const LOGGER = getLogger('login-page')
 
 export default defineComponent({
   computed: {
@@ -36,6 +39,19 @@ export default defineComponent({
 
       return url.toString()
     },
+  },
+
+  beforeRouteEnter(to, from, next) {
+    const sessionStore = useSessionStore()
+
+    // handling for already-authenticated users trying to access this page
+    if (sessionStore.hasSession) {
+      LOGGER.debug('Redirecting to home because a session is already present')
+      next({ name: 'home' })
+      return
+    }
+
+    next()
   },
 })
 </script>
