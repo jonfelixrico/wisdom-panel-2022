@@ -2,12 +2,12 @@ import { defineStore } from 'pinia'
 
 export const useSessionStore = defineStore('session', {
   state: () => ({
-    isAuthenticated: false,
+    hasSession: false,
   }),
 
   actions: {
-    setIsAuthenticated(value: boolean) {
-      this.isAuthenticated = value
+    setHasSession(value: boolean) {
+      this.hasSession = value
     },
   },
 })
