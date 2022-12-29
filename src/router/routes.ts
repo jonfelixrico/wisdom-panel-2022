@@ -12,6 +12,14 @@ const routes: RouteRecordRaw[] = [
         },
         name: 'index',
       },
+      // TODO remove once we have a proper home page
+      {
+        path: 'home',
+        redirect: {
+          name: 'landing-page',
+        },
+        name: 'home',
+      },
       {
         name: 'login',
         path: 'login',
@@ -29,6 +37,13 @@ const routes: RouteRecordRaw[] = [
           import('pages/preview/receive/ReceiveQuickPreviewPage.vue'),
       },
     ],
+  },
+
+  // TODO remove once we have a proper home page
+  {
+    path: 'landing',
+    name: 'landing-page',
+    component: () => import('pages/LandingPage.vue'),
   },
 
   // Always leave this as last one,
