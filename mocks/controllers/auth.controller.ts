@@ -5,6 +5,12 @@ export function authController(app: Router) {
   const router = Router()
 
   router.get('', (req, res) => {
+    // this is to prevent the silly UX of the auth flow happening if the user attempts to start it
+    if (req.session.isAuthenticated) {
+      res.redirect('http://localhost:9080')
+      return
+    }
+
     const redirectUrl = new URL(
       'http://localhost:9080/auth/oauth/discord/callback'
     )
