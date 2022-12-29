@@ -12,6 +12,10 @@ export const useSessionStore = defineStore('session', {
   }),
 
   actions: {
+    setHasSession(value: boolean) {
+      this.hasSession = value
+    },
+
     async fetchSession() {
       if (this.hasSession !== 'UNLOADED') {
         return this.hasSession
@@ -19,11 +23,11 @@ export const useSessionStore = defineStore('session', {
 
       try {
         await api.head('session')
-        this.hasSession = true
+        this.setHasSession(true)
         return true
       } catch (e) {
         if (isAxiosError(e) && e.response?.status === 401) {
-          this.hasSession = false
+          this.setHasSession(false)
           return false
         }
 
