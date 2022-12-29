@@ -34,7 +34,7 @@ export default defineComponent({
 
       const { query } = this.$route
       for (const key in query) {
-        url.searchParams.append(key, JSON.stringify(query[key]))
+        url.searchParams.append(key, String(query[key]))
       }
 
       return url.toString()

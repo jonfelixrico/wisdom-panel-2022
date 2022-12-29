@@ -18,7 +18,7 @@ export default defineComponent({
     const router = useRouter()
 
     onMounted(async () => {
-      api.post('auth/oauth/discord', {
+      await api.post('auth/oauth/discord', {
         code,
       })
 
@@ -29,7 +29,7 @@ export default defineComponent({
       if (redirect) {
         await router.push({
           ...location,
-          path: JSON.stringify(redirect),
+          path: redirect.toString(),
         })
       } else {
         await router.push({
