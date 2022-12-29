@@ -17,10 +17,6 @@ const AUTHLESS_ROUTES: AuthlessRoute[] = [
   {
     path: /auth/,
   },
-  {
-    path: /session/,
-    methods: ['POST'],
-  },
 ]
 
 function isRouteAuthless(req: Request) {
