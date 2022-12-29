@@ -8,7 +8,12 @@
 import { getLogger } from 'src/boot/pino-logger'
 import { useApi } from 'src/composables/use-api.composable'
 import { defineComponent, onMounted } from 'vue'
-import { isNavigationFailure, useRoute, useRouter } from 'vue-router'
+import {
+  isNavigationFailure,
+  NavigationFailureType,
+  useRoute,
+  useRouter,
+} from 'vue-router'
 
 const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
@@ -41,7 +46,11 @@ export default defineComponent({
             name: 'index',
           })
 
-      if (isNavigationFailure(await navResult)) {
+      if (isNavigationFailure(await navResult, NavigationFailureType.aborted)) {
+        /*
+         * This will trigger if one of the navigations above were aborted.
+         * This handling will prevent the user from being stuck in the callback's UI.
+         */
         LOGGER.warn(
           'Navigation failure encountered, redirecting to the index as fallback'
         )
