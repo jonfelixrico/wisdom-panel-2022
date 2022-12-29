@@ -1,8 +1,8 @@
 import { boot } from 'quasar/wrappers'
 import { abortOnStartLocationGuard } from 'src/route-guards/abort-on-start-location.guard'
-import { checkSession } from 'src/route-guards/session-check.guard'
+import { sessionGuard } from 'src/route-guards/session.guard'
 
 export default boot(({ router }) => {
-  router.beforeEach(checkSession)
+  router.beforeEach(sessionGuard)
   router.afterEach(abortOnStartLocationGuard(router))
 })
