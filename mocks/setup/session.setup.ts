@@ -65,7 +65,7 @@ const authGuardCatcher: ErrorRequestHandler = (err, req, res, next) => {
   }
 }
 
-export default function setupSession(app: Express) {
+export function setupSession(app: Express) {
   app.use(
     session({
       secret: 'mocks',
