@@ -14,7 +14,7 @@ interface ServerMemberStore {
   }
 }
 
-export const useCounterStore = defineStore('server-member', {
+export const userServerMemberStore = defineStore('server-member', {
   state: (): ServerMemberStore => {
     return {
       servers: {},
