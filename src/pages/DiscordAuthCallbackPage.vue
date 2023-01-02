@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <q-spinner />
+    <q-spinner size="lg" color="primary" />
   </q-page>
 </template>
 
