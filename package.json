@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "mocks": "nodemon -e ts,json --exec ts-node --skipProject ./mocks",
-    "start:dev": "quasar dev"
+    "start:dev": "quasar dev",
+    "start:dev:be": "quasar dev --proxyTargetUrl http://localhost:9085"
   },
   "dependencies": {
     "@quasar/extras": "^1.15.8",
