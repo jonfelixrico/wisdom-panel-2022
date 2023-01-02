@@ -38,11 +38,15 @@ export default defineComponent({
       })
     }
 
-    const { redirect } = JSON.parse(String(state))
-    if (redirect) {
+    let parsedState: { redirect?: string } = {}
+    if (state) {
+      parsedState = JSON.parse(String(state))
+    }
+
+    if (parsedState.redirect) {
       next({
         replace: true,
-        path: redirect,
+        path: parsedState.redirect,
       })
     } else {
       next({
