@@ -1,19 +1,32 @@
 <!-- Displays a server member's username and avatar -->
 <template>
   <div class="row items-center">
-    <CServerMemberAvatar :size="avatarSize" class="q-mr-xs" />
+    <CServerMemberAvatar
+      :avatar-url="userData?.avatarUrl"
+      :size="avatarSize"
+      class="q-mr-xs"
+    />
 
-    <slot v-if="username" :username="username">
-      <div v-if="usernameClass" :class="usernameClass" v-text="username" />
-      <div v-else class="text-weight-bold text-primary" v-text="username" />
+    <slot v-if="userData" :username="userData.username">
+      <div
+        v-if="usernameClass"
+        :class="usernameClass"
+        v-text="userData.username"
+      />
+
+      <div
+        v-else
+        class="text-weight-bold text-primary"
+        v-text="userData.username"
+      />
     </slot>
     <q-skeleton v-else type="text" style="min-width: 50px" />
   </div>
 </template>
 
 <script lang="ts">
-import { useUsernameService } from 'src/composables/use-username-service'
-import { defineComponent, onBeforeMount, PropType, ref } from 'vue'
+import { userServerMemberStore } from 'src/stores/server-member-store'
+import { computed, defineComponent, onBeforeMount, PropType } from 'vue'
 import CServerMemberAvatar from './CServerMemberAvatar.vue'
 
 interface ServerMember {
@@ -39,19 +52,16 @@ export default defineComponent({
   },
 
   setup(props) {
-    const usernameSvc = useUsernameService()
+    const store = userServerMemberStore()
 
-    const username = ref<string | undefined>(undefined)
-
-    onBeforeMount(async () => {
-      username.value = await usernameSvc.getServerMemberUsername(
-        props.user.userId,
-        props.user.serverId
-      )
+    onBeforeMount(() => {
+      store.fetchServerMember(props.user.serverId, props.user.userId)
     })
 
     return {
-      username,
+      userData: computed(
+        () => store.servers[props.user.serverId]?.[props.user.userId]
+      ),
     }
   },
 })
