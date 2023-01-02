@@ -6,23 +6,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-
-interface ServerMember {
-  userId: string
-  serverId: string
-}
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
-    /**
-     * @deprecated
-     */
-    user: {
-      required: true,
-      type: Object as PropType<ServerMember>,
-    },
-
     avatarUrl: String,
     size: String,
   },
