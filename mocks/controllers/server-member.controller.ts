@@ -6,7 +6,7 @@ const usernameMap: Record<string, string> = {
   'user-3': 'User 3',
 }
 
-export function serverMembersController(app: Router) {
+export function serverMemberController(app: Router) {
   const router = Router()
 
   router.get('/:userId/avatar', (req, res) => {
