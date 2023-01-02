@@ -1,74 +1,59 @@
 <template>
   <q-page class="flex flex-center">
-    <q-spinner />
+    <q-spinner size="lg" color="primary" />
   </q-page>
 </template>
 
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
-import { useApi } from 'src/composables/use-api.composable'
-import { defineComponent, onMounted } from 'vue'
-import {
-  isNavigationFailure,
-  NavigationFailureType,
-  useRoute,
-  useRouter,
-} from 'vue-router'
+import { defineComponent } from 'vue'
+import { Dialog } from 'quasar'
+import { i18n } from 'src/boot/i18n'
 
 const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
 export default defineComponent({
-  setup() {
-    const route = useRoute()
-    const { code, redirect, ...otherQuery } = route.query
+  beforeRouteEnter({ query }, from, next) {
+    const { state, error } = query
+    if (error) {
+      const { errorDescription } = query
+      LOGGER.error(
+        `Error encountered during OAuth login: ${error} -- ${
+          errorDescription ?? 'NO_DESCRIPTION'
+        }`
+      )
 
-    const api = useApi()
-    const router = useRouter()
-
-    onMounted(async () => {
-      await api.post('auth/oauth/discord', {
-        code,
+      Dialog.create({
+        title: 'Login unsuccessful',
+        message: errorDescription
+          ? String(errorDescription)
+          : i18n.t('auth.dialogs.discordOAuthFailed.message.generic', {
+              errorCode: error,
+            }),
+        noRouteDismiss: true,
+        ok: {
+          unelevated: true,
+          color: 'primary',
+        },
       })
-
-      const location = {
-        query: otherQuery,
-      }
-
-      const navResult = redirect
-        ? router.push({
-            // redirect with target according to the callback
-            ...location,
-            path: redirect.toString(),
-          })
-        : router.push({
-            // generic redirect
-            ...location,
-            name: 'index',
-          })
-
-      if (isNavigationFailure(await navResult, NavigationFailureType.aborted)) {
-        /*
-         * This will trigger if one of the navigations above were aborted.
-         * This handling will prevent the user from being stuck in the callback's UI.
-         */
-        LOGGER.warn(
-          'Navigation failure encountered, redirecting to the index as fallback'
-        )
-        router.push({
-          name: 'index',
-        })
-      }
-    })
-  },
-
-  beforeRouteEnter(to, from, next) {
-    if (!to.query.code) {
-      // TODO add logging
-      // TODO add notice to the user
-      return next(false)
     }
 
-    next()
+    let parsedState: { redirect?: string } = {}
+    if (state) {
+      parsedState = JSON.parse(String(state))
+    }
+
+    if (parsedState.redirect) {
+      next({
+        replace: true,
+        path: parsedState.redirect,
+      })
+    } else {
+      next({
+        replace: true,
+        name: 'index',
+      })
+    }
   },
 })
 </script>

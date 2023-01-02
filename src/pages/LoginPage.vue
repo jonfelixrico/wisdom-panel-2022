@@ -33,8 +33,8 @@ export default defineComponent({
       const url = new URL(DISCORD_OAUTH_URL)
 
       const { query } = this.$route
-      for (const key in query) {
-        url.searchParams.append(key, String(query[key]))
+      if (query && Object.keys(query).length) {
+        url.searchParams.append('state', JSON.stringify(query))
       }
 
       return url.toString()
