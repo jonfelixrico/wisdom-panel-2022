@@ -109,7 +109,7 @@ module.exports = configure(function (ctx) {
         },
       },
       hmr: {
-        port: args.viteHmrPort || 9080,
+        port: args.hmrPort || 9080,
       },
     },
 
