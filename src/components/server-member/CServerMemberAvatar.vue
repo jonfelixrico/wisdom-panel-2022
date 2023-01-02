@@ -6,8 +6,7 @@
 </template>
 
 <script lang="ts">
-import { useAvatarService } from 'src/composables/use-avatar-service.composable'
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 interface ServerMember {
   userId: string
@@ -16,28 +15,16 @@ interface ServerMember {
 
 export default defineComponent({
   props: {
+    /**
+     * @deprecated
+     */
     user: {
       required: true,
       type: Object as PropType<ServerMember>,
     },
 
+    avatarUrl: String,
     size: String,
-  },
-
-  setup(props) {
-    const avatarService = useAvatarService()
-    const avatarUrl = ref<string | undefined>(undefined)
-
-    onMounted(async () => {
-      avatarUrl.value = await avatarService.getServerMemberAvatarUrl(
-        props.user.userId,
-        props.user.serverId
-      )
-    })
-
-    return {
-      avatarUrl,
-    }
   },
 })
 </script>
