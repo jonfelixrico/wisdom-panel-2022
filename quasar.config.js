@@ -11,7 +11,12 @@
 const { configure } = require('quasar/wrappers')
 const path = require('path')
 
+const { hideBin } = require('yargs/helpers')
+const yargs = require('yargs')
+
 module.exports = configure(function (ctx) {
+  const args = yargs(hideBin(process.argv)).argv
+
   return {
     eslint: {
       // fix: true,
@@ -95,12 +100,16 @@ module.exports = configure(function (ctx) {
       // https: true
       open: true, // opens browser window automatically
       port: 9080,
+      strictPort: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:9081',
+          target: args.proxyTargetUrl || 'http://localhost:9081',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
+      },
+      hmr: {
+        port: args.viteHmrPort || 9080,
       },
     },
 
