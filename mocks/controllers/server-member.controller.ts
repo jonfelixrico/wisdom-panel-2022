@@ -9,12 +9,18 @@ const usernameMap: Record<string, string> = {
 export function serverMemberController(app: Router) {
   const router = Router()
 
+  /**
+   * @deprecated
+   */
   router.get('/:userId/avatar', (req, res) => {
     res.json({
       url: '/api/dummy-avatar',
     })
   })
 
+  /**
+   * @deprecated
+   */
   router.get('/:userId/username', (req, res) => {
     const username = usernameMap[req.params.userId]
     if (!username) {
@@ -23,6 +29,14 @@ export function serverMemberController(app: Router) {
     }
 
     res.json({ username })
+  })
+
+  router.get('/:userId', (req, res) => {
+    const username = usernameMap[req.params.userId]
+    res.json({
+      username,
+      avatarUrl: '/api/dummy-avatar',
+    })
   })
 
   app.use('/server/:serverId/user', router)
