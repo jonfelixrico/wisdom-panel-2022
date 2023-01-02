@@ -9,7 +9,6 @@ import { getLogger } from 'src/boot/pino-logger'
 import { defineComponent } from 'vue'
 import { Dialog } from 'quasar'
 import { i18n } from 'src/boot/i18n'
-import { RouteLocationRaw } from 'vue-router'
 
 const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
@@ -31,20 +30,26 @@ export default defineComponent({
           : i18n.t('auth.dialogs.discordOAuthFailed.message.generic', {
               errorCode: error,
             }),
+        noRouteDismiss: true,
+        ok: {
+          unelevated: true,
+          color: 'primary',
+        },
       })
     }
 
-    const redirectTo: RouteLocationRaw = {
-      replace: true,
-      name: 'index',
+    const { redirect } = JSON.parse(String(state))
+    if (redirect) {
+      next({
+        replace: true,
+        path: redirect,
+      })
+    } else {
+      next({
+        replace: true,
+        name: 'index',
+      })
     }
-
-    if (state) {
-      // we don't expect this to be an array
-      redirectTo.query = JSON.parse(String(state))
-    }
-
-    next(redirectTo)
   },
 })
 </script>
