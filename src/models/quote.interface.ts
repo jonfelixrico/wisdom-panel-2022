@@ -1,7 +1,6 @@
 export interface QuoteReceive {
   id: string
   userId: string
-  timestamp: Date
 }
 
 export interface Quote {
