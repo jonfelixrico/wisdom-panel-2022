@@ -8,7 +8,7 @@
           class="pre row text-weight-bold"
         >
           <template #date>
-            {{ new Date(quote.submitDt).toLocaleDateString() }}
+            {{ quote.submitDt.toLocaleDateString() }}
           </template>
 
           <template #user>
