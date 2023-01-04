@@ -18,23 +18,23 @@ export function serverQuotesController(app: Router) {
       receives: [
         {
           id: 'receive-1',
-          receiverId: 'user-1',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-1',
+          timestamp: new Date('2022-01-02'),
         },
         {
           id: 'receive-2',
-          receiverId: 'user-2',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-2',
+          timestamp: new Date('2022-01-02'),
         },
         {
           id: 'receive-3',
-          receiverId: 'user-2',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-2',
+          timestamp: new Date('2022-01-02'),
         },
         {
           id: 'receive-4',
-          receiverId: 'user-3',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-3',
+          timestamp: new Date('2022-01-02'),
         },
       ],
     })

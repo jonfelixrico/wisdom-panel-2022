@@ -1,7 +1,7 @@
 export interface QuoteReceive {
   id: string
-  receiverId: string
-  receiveDt: Date
+  userId: string
+  timestamp: Date
 }
 
 export interface Quote {
