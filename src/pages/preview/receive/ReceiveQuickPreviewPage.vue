@@ -43,10 +43,14 @@ export default defineComponent({
     onMounted(async () => {
       loading.show()
       try {
+        // TODO move this to a separate method to hide the implementation details
         const { data } = await api.get<Quote>(
           `server/${serverId}/quote/${quoteId}`
         )
-        quote.value = data
+        quote.value = {
+          ...data,
+          submitDt: new Date(data.submitDt), // this is a serialized date; need to explicitly convert to JS date
+        }
       } catch (e) {
         // TODO add logging and handling
       } finally {
