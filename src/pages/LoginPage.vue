@@ -30,7 +30,7 @@ export default defineComponent({
         return null
       }
 
-      const url = new URL(DISCORD_OAUTH_URL)
+      const url = new URL(DISCORD_OAUTH_URL, window.location.host)
 
       const { query } = this.$route
       if (query && Object.keys(query).length) {
