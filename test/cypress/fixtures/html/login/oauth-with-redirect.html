@@ -6,6 +6,13 @@
     <title>Mock OAuth</title>
   </head>
   <body>
+    <!--
+      This basically has a query param "state" which has the value
+      {
+        redirect: /preview/server/server-1/quote/quote-1
+      }
+      in JSON form. It has been URL-encoded which is why it appears this way.
+     -->
     <a
       href="http://localhost:9080/auth/oauth/discord/callback?state=%7B%22redirect%22%3A%22%2Fpreview%2Fserver%2Fserver-1%2Fquote%2Fquote-1%22%7D"
       data-cy="redirect-href"
