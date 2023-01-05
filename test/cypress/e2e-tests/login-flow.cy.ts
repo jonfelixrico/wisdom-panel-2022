@@ -1,5 +1,5 @@
 describe('Login flow', () => {
-  it('should be able to handle the login happy path', () => {
+  it('should be able to handle a successful login', () => {
     // 401 will make the user stay on /login because they are unauthenticated
     cy.intercept('HEAD', '/api/session', {
       statusCode: 401,
