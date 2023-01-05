@@ -8,7 +8,7 @@
           class="pre row text-weight-bold"
         >
           <template #date>
-            {{ new Date(quote.submitDt).toLocaleDateString() }}
+            {{ quote.submitDt.toLocaleDateString() }}
           </template>
 
           <template #user>
@@ -66,10 +66,7 @@ export default defineComponent({
       return this.quote.receives.length
     },
     receivesPerUser() {
-      const grouped = countBy(
-        this.quote.receives,
-        ({ receiverId }) => receiverId
-      )
+      const grouped = countBy(this.quote.receives, ({ userId }) => userId)
       const values: {
         userId: string
         count: number

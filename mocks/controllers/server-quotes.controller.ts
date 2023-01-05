@@ -11,30 +11,25 @@ export function serverQuotesController(app: Router) {
 
       authorId: 'user-1',
       submitterId: 'user-2',
-      submitDt: new Date('2022-01-01'),
 
       serverId: 'dummy',
 
       receives: [
         {
           id: 'receive-1',
-          receiverId: 'user-1',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-1',
         },
         {
           id: 'receive-2',
-          receiverId: 'user-2',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-2',
         },
         {
           id: 'receive-3',
-          receiverId: 'user-2',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-2',
         },
         {
           id: 'receive-4',
-          receiverId: 'user-3',
-          receiveDt: new Date('2022-01-02'),
+          userId: 'user-3',
         },
       ],
     })

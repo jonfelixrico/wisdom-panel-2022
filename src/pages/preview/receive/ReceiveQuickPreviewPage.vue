@@ -10,7 +10,6 @@
 <script lang="ts">
 import { api } from 'src/boot/axios'
 import { defineComponent, onMounted, ref } from 'vue'
-import { useServerStore } from 'src/stores/server-store'
 import { getLogger } from 'src/boot/pino-logger'
 import { Dialog, useQuasar } from 'quasar'
 import { i18n } from 'src/boot/i18n'
@@ -20,10 +19,10 @@ import { Quote } from 'src/models/quote.interface'
 import CQuotePreviewCard from 'src/components/quote/CQuotePreviewCard.vue'
 import CQuoteDetailsCard from 'src/components/quote/CQuoteDetailsCard.vue'
 
-function generateErrorDialog(message = 'preview.errors.receiveEnter.generic') {
+function generateErrorDialog() {
   return Dialog.create({
-    title: i18n.t('preview.errors.receiveEnter.title'),
-    message: i18n.t(message),
+    title: i18n.t('common.dialog.genericError.title'),
+    message: i18n.t('common.dialog.genericError.message'),
     ok: {
       unelevated: true,
       color: 'primary',
@@ -44,10 +43,14 @@ export default defineComponent({
     onMounted(async () => {
       loading.show()
       try {
+        // TODO move this to a separate method to hide the implementation details
         const { data } = await api.get<Quote>(
           `server/${serverId}/quote/${quoteId}`
         )
-        quote.value = data
+        quote.value = {
+          ...data,
+          submitDt: new Date(data.submitDt), // this is a serialized date; need to explicitly convert to JS date
+        }
       } catch (e) {
         // TODO add logging and handling
       } finally {
@@ -63,25 +66,6 @@ export default defineComponent({
     const { params } = to
     const serverId = params.serverId as string
     const quoteId = params.quoteId as string
-    const serverStore = useServerStore()
-
-    // check server access
-    try {
-      const server = await serverStore.fetchServer(serverId)
-      if (server === 'NO_ACCESS') {
-        logger.warn(
-          `User has no acccess to server ${serverId}, aborting navigation`
-        )
-        generateErrorDialog('preview.errors.receiveEnter.serverNoAccess')
-        next(false)
-        return
-      }
-    } catch (e) {
-      logger.error(e, 'Error encountered while fetching the server data')
-      generateErrorDialog()
-      next(false)
-      return
-    }
 
     // check quote access
     try {

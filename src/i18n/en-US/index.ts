@@ -1,9 +1,9 @@
 import auth from './auth'
-import preview from './preview'
 import quote from './quote'
+import common from './common'
 
 export default {
   auth,
-  preview,
   quote,
+  common,
 }
