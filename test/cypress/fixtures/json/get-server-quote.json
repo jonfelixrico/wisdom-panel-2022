@@ -1,0 +1,22 @@
+{
+  "id": "quote-1",
+  "content": "Lorem ipsum",
+  "authorId": "user-1",
+  "submitterId": "user-2",
+  "submitDt": "2023-01-05T17:21:29.403Z",
+  "serverId": "server-1",
+  "receives": [
+    {
+      "id": "receive-1",
+      "userId": "user-2"
+    },
+    {
+      "id": "receive-2",
+      "userId": "user-2"
+    },
+    {
+      "id": "receive-3",
+      "userId": "user-3"
+    }
+  ]
+}
