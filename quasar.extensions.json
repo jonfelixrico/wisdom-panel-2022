@@ -1,0 +1,8 @@
+{
+  "@quasar/testing": {
+    "harnesses": ["e2e-cypress@beta"]
+  },
+  "@quasar/testing-e2e-cypress": {
+    "options": ["scripts", "typescript"]
+  }
+}
