@@ -28,6 +28,7 @@ describe('Quote preview', () => {
       statusCode: 200,
     })
 
+    // set up endpoints for displaying the preview
     cy.intercept('/api/server/server-1/quote/quote-1', {
       id: 'quote-1',
       content: 'Lorem ipsum',
