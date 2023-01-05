@@ -5,8 +5,9 @@ export default {
       title: 'Login unsuccessful',
       message: {
         genericWithCode:
-          'An unexpected error occurred while trying to log you in ({errorCode})',
-        generic: 'An unexpected error occurred while trying to log you in',
+          'An unexpected error occurred while trying to log you in ({errorCode}). Please try again.',
+        generic:
+          'An unexpected error occurred while trying to log you in. Please try again.',
       },
     },
   },
