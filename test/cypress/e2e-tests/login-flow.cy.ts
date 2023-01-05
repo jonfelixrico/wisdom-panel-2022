@@ -58,11 +58,16 @@ describe('Login flow', () => {
       statusCode: 401,
     })
 
-    cy.withinDialog(() => {
-      // failed logins from the callback will redirect the user back to the login
-      cy.wait(200)
-      cy.url().should('contain', 'login')
+    cy.withinDialog({
+      persistent: true,
+      fn() {
+        // intended to be empty, required
+      },
     })
+
+    // failed logins from the callback will redirect the user back to the login
+    cy.wait(200)
+    cy.url().should('contain', 'login')
   })
 })
 
