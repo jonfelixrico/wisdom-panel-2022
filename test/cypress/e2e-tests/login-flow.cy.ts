@@ -1,5 +1,6 @@
 describe('Login flow', () => {
-  it('can pass the happy path', () => {
+  // Login -- happy path
+  it('should guide the unauthenticated user through the flow', () => {
     cy.intercept('HEAD', '/api/session', {
       statusCode: 401,
     })
