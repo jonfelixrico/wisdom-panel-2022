@@ -58,6 +58,7 @@ describe('Login flow', () => {
       statusCode: 401,
     })
 
+    // an error dialog must be displayed to the user to inform them of the failed login
     cy.withinDialog({
       persistent: true,
       fn() {
