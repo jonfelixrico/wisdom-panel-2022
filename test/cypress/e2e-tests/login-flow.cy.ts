@@ -14,17 +14,17 @@ describe('Login flow', () => {
     cy.dataCy('discord-login-btn').click()
     cy.wait('@redirectToOAuth')
 
+    // this is to trick the callback page that the user really was successful
+    cy.intercept('HEAD', '/api/session', {
+      statusCode: 200,
+    })
+
     /*
      * by clicking this, user finishes OAuth process
      *
      * the user will actually be redirected to the callback page
      */
     cy.dataCy('redirect-href').click()
-
-    // this is to trick the callback page that the user really was successful
-    cy.intercept('HEAD', '/api/session', {
-      statusCode: 200,
-    })
 
     // callback page will redirect user to the landing page
     cy.wait(200)
@@ -46,17 +46,17 @@ describe('Login flow', () => {
     cy.dataCy('discord-login-btn').click()
     cy.wait('@redirectToOAuth')
 
+    // this is to trick the callback page that the login failed somehow
+    cy.intercept('HEAD', '/api/session', {
+      statusCode: 401,
+    })
+
     /*
      * by clicking this, user finishes OAuth process
      *
      * the user will actually be redirected to the callback page
      */
     cy.dataCy('redirect-href').click()
-
-    // this is to trick the callback page that the login failed somehow
-    cy.intercept('HEAD', '/api/session', {
-      statusCode: 401,
-    })
 
     // an error dialog must be displayed to the user to inform them of the failed login
     cy.withinDialog({
