@@ -9,6 +9,7 @@
           unelevated
           :href="discordLoginUrl || ''"
           no-caps
+          data-cy="discord-login-btn"
         />
       </q-card-section>
     </q-card>
