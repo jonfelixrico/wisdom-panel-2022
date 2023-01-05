@@ -5,9 +5,9 @@ name: E2E test
 
 on:
   push:
-    branches: ['master']
+    branches: ['master', 'develop-.*']
     tags: [v.*]
-  pull_request:
+  pull_request_target:
     branches: ['master', 'develop-.*']
 
 jobs:
