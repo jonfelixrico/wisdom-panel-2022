@@ -41,18 +41,26 @@ export default defineComponent({
 
     const { error, errorDescription } = query
     LOGGER.error(
-      `Error encountered during OAuth login: ${error} -- ${
+      `Error encountered during OAuth login: ${error ?? 'NO_CODE'} -- ${
         errorDescription ?? 'NO_DESCRIPTION'
       }`
     )
 
+    let message: string
+    if (errorDescription) {
+      message = String(errorDescription)
+    } else if (error) {
+      message = i18n.t(
+        'auth.dialogs.discordOAuthFailed.message.genericWithCode',
+        { errorCode: error }
+      )
+    } else {
+      message = i18n.t('auth.dialogs.discordOAuthFailed.message.generic')
+    }
+
     Dialog.create({
-      title: 'Login unsuccessful',
-      message: errorDescription
-        ? String(errorDescription)
-        : i18n.t('auth.dialogs.discordOAuthFailed.message.generic', {
-            errorCode: error,
-          }),
+      title: i18n.t('auth.dialogs.discordOAuthFailed.title'),
+      message,
       noRouteDismiss: true,
       ok: {
         unelevated: true,

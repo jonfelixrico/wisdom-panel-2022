@@ -4,8 +4,9 @@ export default {
     discordOAuthFailed: {
       title: 'Login unsuccessful',
       message: {
-        generic:
+        genericWithCode:
           'An unexpected error occurred while trying to log you in ({errorCode})',
+        generic: 'An unexpected error occurred while trying to log you in',
       },
     },
   },
