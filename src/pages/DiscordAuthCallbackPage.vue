@@ -9,50 +9,68 @@ import { getLogger } from 'src/boot/pino-logger'
 import { defineComponent } from 'vue'
 import { Dialog } from 'quasar'
 import { i18n } from 'src/boot/i18n'
+import { useSessionStore } from 'src/stores/session-store'
 
 const LOGGER = getLogger('page:DiscordAuthCallbackPage')
 
 export default defineComponent({
-  beforeRouteEnter({ query }, from, next) {
-    const { state, error } = query
-    if (error) {
-      const { errorDescription } = query
-      LOGGER.error(
-        `Error encountered during OAuth login: ${error} -- ${
-          errorDescription ?? 'NO_DESCRIPTION'
-        }`
-      )
-
-      Dialog.create({
-        title: 'Login unsuccessful',
-        message: errorDescription
-          ? String(errorDescription)
-          : i18n.t('auth.dialogs.discordOAuthFailed.message.generic', {
-              errorCode: error,
-            }),
-        noRouteDismiss: true,
-        ok: {
-          unelevated: true,
-          color: 'primary',
-        },
-      })
-    }
-
+  async beforeRouteEnter({ query }) {
+    const { state } = query
     let parsedState: { redirect?: string } = {}
     if (state) {
       parsedState = JSON.parse(String(state))
     }
 
-    if (parsedState.redirect) {
-      next({
-        replace: true,
-        path: parsedState.redirect,
-      })
+    const sessionStore = useSessionStore()
+    const hasSession = await sessionStore.fetchSession()
+
+    // handling for successful OAuth
+    if (hasSession) {
+      if (parsedState.redirect) {
+        return {
+          replace: true,
+          path: parsedState.redirect,
+        }
+      } else {
+        return {
+          replace: true,
+          name: 'index',
+        }
+      }
+    }
+
+    const { error, errorDescription } = query
+    LOGGER.error(
+      `Error encountered during OAuth login: ${error ?? 'NO_CODE'} -- ${
+        errorDescription ?? 'NO_DESCRIPTION'
+      }`
+    )
+
+    let message: string
+    if (errorDescription) {
+      message = String(errorDescription)
+    } else if (error) {
+      message = i18n.t(
+        'auth.dialogs.discordOAuthFailed.message.genericWithCode',
+        { errorCode: error }
+      )
     } else {
-      next({
-        replace: true,
-        name: 'index',
-      })
+      message = i18n.t('auth.dialogs.discordOAuthFailed.message.generic')
+    }
+
+    Dialog.create({
+      title: i18n.t('auth.dialogs.discordOAuthFailed.title'),
+      message,
+      noRouteDismiss: true,
+      ok: {
+        unelevated: true,
+        color: 'primary',
+      },
+    })
+
+    return {
+      name: 'login',
+      query: parsedState,
     }
   },
 })
