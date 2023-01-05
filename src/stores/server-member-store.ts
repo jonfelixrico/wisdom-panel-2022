@@ -32,7 +32,8 @@ export const userServerMemberStore = defineStore('server-member', {
 
       let server = this.servers[serverId]
       if (!server) {
-        server = this.servers[serverId] = {}
+        this.servers[serverId] = {}
+        server = this.servers[serverId]
       }
 
       const { data } = await api.get<ServerMember>(
