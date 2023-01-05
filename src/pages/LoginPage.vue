@@ -9,6 +9,7 @@
           unelevated
           :href="discordLoginUrl || ''"
           no-caps
+          data-cy="discord-login-btn"
         />
       </q-card-section>
     </q-card>
@@ -30,7 +31,7 @@ export default defineComponent({
         return null
       }
 
-      const url = new URL(DISCORD_OAUTH_URL)
+      const url = new URL(DISCORD_OAUTH_URL, window.location.origin)
 
       const { query } = this.$route
       if (query && Object.keys(query).length) {
