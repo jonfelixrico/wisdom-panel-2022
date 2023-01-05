@@ -7,7 +7,7 @@ describe('Login flow', () => {
     cy.visit('/login')
 
     cy.intercept('/api/auth/oauth/discord', {
-      fixture: 'html/login/success-oauth.html',
+      fixture: 'html/login/oauth.html',
     }).as('redirectToOAuth')
 
     // on click of the discord login button, they will be redirected to the OAuth page
