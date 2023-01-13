@@ -1,0 +1,17 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Development pipleine
+
+on:
+  push:
+    branches: ['develop-*']
+  pull_request:
+    branches: ['develop-*']
+
+jobs:
+  e2e-test:
+    name: Cypress E2E test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./github/actions/test-e2e.action.yml
