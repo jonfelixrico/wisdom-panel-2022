@@ -5,3 +5,7 @@ services:
     restart: unless-stopped
     ports:
       - 9080:80
+    volumes:
+      - ./templates:/etc/nginx/templates
+    env_file:
+      - .env
