@@ -11,4 +11,4 @@ on:
 
 jobs:
   run-tests:
-    uses: ./.github/workflows/reusable/run-tests.yml
+    uses: ./.github/workflows/run-tests.reusable.yml
