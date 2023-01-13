@@ -17,7 +17,7 @@ RUN pnpm build
 RUN pnpm prune --prod
 
 FROM nginx AS deploy
-COPY --from=build-step /app/dist/spa /usr/share/nginx/html
+COPY --from=build /app/dist/spa /usr/share/nginx/html
 
 EXPOSE 80
 
