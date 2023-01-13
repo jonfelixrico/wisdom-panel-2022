@@ -1,3 +1,5 @@
+# Majority of this config is taken from https://quasar.dev/quasar-cli-vite/developing-spa/deploying#general-deployment
+
 server {
   listen 80;
   server_name localhost;
@@ -13,6 +15,7 @@ server {
 
   charset utf-8;
 
+  # This is the prod equivalent of the Vite dev env reverse proxy
   location /api/ {
     proxy_pass ${API_BASE_URL}/;
   }
