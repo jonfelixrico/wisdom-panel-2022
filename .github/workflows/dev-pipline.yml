@@ -14,4 +14,4 @@ jobs:
     name: Cypress E2E test
     runs-on: ubuntu-latest
     steps:
-      - uses: ./github/actions/test-e2e.action.yml
+      - uses: ./github/actions/test-e2e.yml
