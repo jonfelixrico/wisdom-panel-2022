@@ -1,5 +1,20 @@
 import { Router } from 'express'
 
+function generateReceives() {
+  const RECEIVE_COUNT = 30
+  const UNIQUE_USER_COUNT = 10
+  const receives: { id: string; userId: string }[] = []
+
+  for (let receiveNo = 1; receiveNo <= RECEIVE_COUNT; receiveNo++) {
+    receives.push({
+      id: `receive-${receiveNo}`,
+      userId: `user-${receiveNo % UNIQUE_USER_COUNT || UNIQUE_USER_COUNT}`,
+    })
+  }
+
+  return receives
+}
+
 export function serverQuotesController(app: Router) {
   const router = Router()
 
@@ -14,24 +29,7 @@ export function serverQuotesController(app: Router) {
 
       serverId: 'dummy',
 
-      receives: [
-        {
-          id: 'receive-1',
-          userId: 'user-1',
-        },
-        {
-          id: 'receive-2',
-          userId: 'user-2',
-        },
-        {
-          id: 'receive-3',
-          userId: 'user-2',
-        },
-        {
-          id: 'receive-4',
-          userId: 'user-3',
-        },
-      ],
+      receives: generateReceives(),
     })
   })
 

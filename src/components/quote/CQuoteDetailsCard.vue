@@ -24,7 +24,7 @@
         </i18n-t>
       </div>
 
-      <div class="row items-center q-gutter-x-sm">
+      <div class="row items-center q-gutter-xs">
         <div class="text-weight-bold">
           {{
             $t('quote.receiveCount', {
