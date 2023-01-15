@@ -1,6 +1,20 @@
 import { Router } from 'express'
 import { URL } from 'url'
 
+function generateRedirectUrl(query: Record<string, string>) {
+  const url = new URL('http://localhost:9080/auth/oauth/discord/callback')
+
+  const params = url.searchParams
+  for (const key in query) {
+    if (query[key]) {
+      params.append(key, query[key] as string)
+    }
+  }
+  params.append('code', 'dummy')
+
+  return url.toString()
+}
+
 export function authController(app: Router) {
   const router = Router()
 
@@ -11,27 +25,12 @@ export function authController(app: Router) {
       return
     }
 
-    const redirectUrl = new URL(
-      'http://localhost:9080/auth/oauth/discord/callback'
-    )
-
-    const params = redirectUrl.searchParams
-    for (const key in req.query) {
-      if (req.query[key]) {
-        params.append(key, req.query[key] as string)
-      }
-    }
-    params.append('code', 'dummy')
+    req.session.isAuthenticated = true
 
     res.render('oauth', {
-      url: redirectUrl.toString(),
+      url: generateRedirectUrl(req.query as Record<string, string>),
       layout: false,
     })
-  })
-
-  router.post('', (req, res) => {
-    req.session.isAuthenticated = true
-    res.end()
   })
 
   app.use('/auth/oauth/discord', router)
