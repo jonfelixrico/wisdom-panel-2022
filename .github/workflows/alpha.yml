@@ -29,3 +29,4 @@ jobs:
         with:
           push: true
           tags: jonfelixrico/wisdom-panel-client:${{steps.branch-name.outputs.current_branch}},jonfelixrico/wisdom-panel-client:alpha
+          build-args: BUILD_SCRIPT_NAME=build:debug

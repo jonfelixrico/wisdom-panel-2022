@@ -15,7 +15,12 @@ FROM base AS build
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
-RUN pnpm build
+
+# This will allow us to specify which build script to use. Defaults to just `build`.
+ARG BUILD_SCRIPT_NAME
+ENV BUILD_SCRIPT_NAME=build
+
+RUN pnpm $BUILD_SCRIPT_NAME
 RUN pnpm prune --prod
 
 # Stage 4: actually deploy the thing via nginx
