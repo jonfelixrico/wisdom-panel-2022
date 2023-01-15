@@ -90,6 +90,13 @@ module.exports = configure(function (ctx) {
 
             // you need to set i18n resource including paths !
             include: path.resolve(__dirname, './src/i18n/**'),
+
+            /*
+             * Without this, i18n seems to be breaking during prod.
+             * See https://github.com/quasarframework/quasar/issues/13229#issuecomment-1115905093 for the
+             * solution and the thread for context.
+             */
+            runtimeOnly: false,
           },
         ],
       ],
