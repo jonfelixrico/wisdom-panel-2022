@@ -6,7 +6,7 @@
         <q-btn
           :disable="!discordLoginUrl"
           :label="$t('auth.loginWithDiscord')"
-          color="discord"
+          color="primary"
           unelevated
           :href="discordLoginUrl || ''"
           no-caps
