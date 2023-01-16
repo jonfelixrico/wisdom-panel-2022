@@ -1,7 +1,8 @@
 <template>
-  <q-page class="flex flex-center bg-grey-2">
-    <q-card flat style="width: 500px; height: 250px" class="flex flex-center">
-      <q-card-section>
+  <q-page class="flex flex-center q-px-md">
+    <q-card flat class="flex flex-center">
+      <q-card-section class="row justify-center">
+        <div class="text-h1">Wisdom</div>
         <q-btn
           :disable="!discordLoginUrl"
           :label="$t('auth.loginWithDiscord')"
@@ -10,6 +11,7 @@
           :href="discordLoginUrl || ''"
           no-caps
           data-cy="discord-login-btn"
+          class="col-12 text-h6 q-mt-md"
         />
       </q-card-section>
     </q-card>
