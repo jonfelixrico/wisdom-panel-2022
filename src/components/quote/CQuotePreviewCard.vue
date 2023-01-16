@@ -1,7 +1,10 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="text-h3 text-center text-weight-regular">
+      <div
+        class="text-center text-weight-regular"
+        :class="[$q.screen.lg || $q.screen.gt.lg ? 'text-h3' : 'text-h4']"
+      >
         "{{ quote.content }}"
       </div>
 
