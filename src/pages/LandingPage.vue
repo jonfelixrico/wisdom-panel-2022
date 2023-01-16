@@ -4,20 +4,22 @@
     class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
   >
     <div>
-      <!-- TODO add proper verbiage for a "coming soon" landing page -->
-      <div style="font-size: 30vh">Coming Soon</div>
+      <div class="text-h1">More coming soon</div>
+      <div class="text-h4 q-mt-lg" style="opacity: 0.4">
+        Nothing here for now.
+      </div>
 
-      <div class="text-h2" style="opacity: 0.4">Oops. Nothing here...</div>
-
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        label="Sign out"
-        no-caps
-        @click="signOut"
-      />
+      <div class="q-mt-xl row justify-center">
+        <q-btn
+          color="white"
+          text-color="blue"
+          unelevated
+          label="Sign out"
+          no-caps
+          @click="signOut"
+          class="col-md-3 col-xs-12"
+        />
+      </div>
     </div>
   </div>
 </template>
