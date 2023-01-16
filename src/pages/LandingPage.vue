@@ -1,8 +1,6 @@
 <template>
   <!-- TODO i18nize these -->
-  <div
-    class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
-  >
+  <div class="fullscreen text-center q-pa-md flex flex-center">
     <div>
       <div class="text-h1">More coming soon</div>
       <div class="text-h4 q-mt-lg" style="opacity: 0.4">
@@ -11,13 +9,12 @@
 
       <div class="q-mt-xl row justify-center">
         <q-btn
-          color="white"
-          text-color="blue"
           unelevated
           label="Sign out"
           no-caps
           @click="signOut"
-          class="col-md-3 col-xs-12"
+          class="col-md-3 col-xs-12 text-h6"
+          color="primary"
         />
       </div>
     </div>
