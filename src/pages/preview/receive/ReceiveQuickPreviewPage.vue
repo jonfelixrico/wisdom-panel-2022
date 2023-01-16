@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row justify-center items-center bg-deep-purple-6">
+  <q-page class="row justify-center items-center">
     <div
       v-if="quote"
       class="column q-gutter-y-sm q-ma-md col-lg-6 col-md-8 col-sm-10"
