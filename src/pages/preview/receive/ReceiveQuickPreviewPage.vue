@@ -83,9 +83,3 @@ export default defineComponent({
   components: { CQuotePreviewCard, CQuoteDetailsCard },
 })
 </script>
-
-<style lang="scss" scoped>
-.container {
-  max-width: 1000px;
-}
-</style>
