@@ -28,11 +28,7 @@
 import { userServerMemberStore } from 'src/stores/server-member-store'
 import { computed, defineComponent, onBeforeMount, PropType } from 'vue'
 import CServerMemberAvatar from './CServerMemberAvatar.vue'
-
-interface ServerMember {
-  userId: string
-  serverId: string
-}
+import { ServerMember } from './server-member.interface'
 
 export default defineComponent({
   components: { CServerMemberAvatar },
