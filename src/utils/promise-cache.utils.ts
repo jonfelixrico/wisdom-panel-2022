@@ -11,3 +11,5 @@ export class PromiseCache {
     return fnPromise
   }
 }
+
+export const promiseCache = new PromiseCache()
