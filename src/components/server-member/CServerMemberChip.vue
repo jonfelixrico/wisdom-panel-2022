@@ -1,11 +1,7 @@
 <!-- Displays a server member's username and avatar -->
 <template>
   <div class="row items-center">
-    <CServerMemberAvatar
-      :avatar-url="userData?.avatarUrl"
-      :size="avatarSize"
-      class="q-mr-xs"
-    />
+    <CServerMemberAvatar :user="user" :size="avatarSize" class="q-mr-xs" />
 
     <slot v-if="userData" :username="userData.username">
       <div
@@ -26,7 +22,7 @@
 
 <script lang="ts">
 import { userServerMemberStore } from 'src/stores/server-member-store'
-import { computed, defineComponent, PropType, watch } from 'vue'
+import { computed, defineComponent, PropType, toRef, watch } from 'vue'
 import CServerMemberAvatar from './CServerMemberAvatar.vue'
 import { ServerMember } from './server-member.interface'
 
@@ -51,9 +47,9 @@ export default defineComponent({
     const store = userServerMemberStore()
 
     watch(
-      [props.user],
-      () => {
-        store.fetchServerMember(props.user.serverId, props.user.userId)
+      toRef(props, 'user'),
+      (user) => {
+        store.fetchServerMember(user.serverId, user.userId)
       },
       {
         immediate: true,
