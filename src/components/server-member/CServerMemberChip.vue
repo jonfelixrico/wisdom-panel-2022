@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts">
-import { userServerMemberStore } from 'src/stores/server-member-store'
-import { computed, defineComponent, PropType, toRef, watch } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import CServerMemberAvatar from './CServerMemberAvatar.vue'
+import { useServerMember } from './server-member.composables'
 import { ServerMember } from './server-member.interface'
 
 export default defineComponent({
@@ -44,23 +44,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const store = userServerMemberStore()
-
-    watch(
-      toRef(props, 'user'),
-      (user) => {
-        store.fetchServerMember(user.serverId, user.userId)
-      },
-      {
-        immediate: true,
-      }
-    )
-
-    return {
-      userData: computed(
-        () => store.servers[props.user.serverId]?.[props.user.userId]
-      ),
-    }
+    return useServerMember(props)
   },
 })
 </script>

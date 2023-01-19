@@ -9,9 +9,9 @@
 </template>
 
 <script lang="ts">
-import { userServerMemberStore } from 'src/stores/server-member-store'
-import { computed, defineComponent, watch, PropType, toRef } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ServerMember } from './server-member.interface'
+import { useServerMember } from './server-member.composables'
 
 export default defineComponent({
   /*
@@ -38,23 +38,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const store = userServerMemberStore()
-
-    watch(
-      toRef(props, 'user'),
-      (user) => {
-        store.fetchServerMember(user.serverId, user.userId)
-      },
-      {
-        immediate: true,
-      }
-    )
-
-    return {
-      userData: computed(
-        () => store.servers[props.user.serverId]?.[props.user.userId]
-      ),
-    }
+    return useServerMember(props)
   },
 })
 </script>
