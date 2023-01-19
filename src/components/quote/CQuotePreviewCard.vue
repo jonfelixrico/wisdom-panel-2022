@@ -9,14 +9,16 @@
       </div>
 
       <div class="row justify-center q-mt-md">
-        <CServerMemberChip
-          :user="{
-            userId: quote.authorId,
-            serverId: quote.serverId,
-          }"
-          avatar-size="md"
-          class="text-h6"
-        />
+        <div class="relative-position q-py-xs q-px-sm">
+          <div
+            class="absolute-full bg-primary rounded-borders no-pointer-events"
+            style="opacity: 0.3"
+          />
+          <div class="row items-center q-gutter-x-sm">
+            <CServerMemberAvatar :user="author" size="md" />
+            <CServerMemberName :user="author" class="text-h6" />
+          </div>
+        </div>
       </div>
     </q-card-section>
   </q-card>
@@ -25,7 +27,8 @@
 <script lang="ts">
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
-import CServerMemberChip from '../server-member/CServerMemberChip.vue'
+import CServerMemberAvatar from '../server-member/CServerMemberAvatar.vue'
+import CServerMemberName from '../server-member/CServerMemberName.vue'
 
 export default defineComponent({
   props: {
@@ -35,6 +38,17 @@ export default defineComponent({
     },
   },
 
-  components: { CServerMemberChip },
+  computed: {
+    author() {
+      const { quote } = this
+
+      return {
+        userId: quote.authorId,
+        serverId: quote.serverId,
+      }
+    },
+  },
+
+  components: { CServerMemberName, CServerMemberAvatar },
 })
 </script>
