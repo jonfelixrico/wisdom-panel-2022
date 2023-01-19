@@ -50,8 +50,6 @@ export default defineComponent({
       }
     )
 
-    watch
-
     return {
       userData: computed(
         () => store.servers[props.user.serverId]?.[props.user.userId]
