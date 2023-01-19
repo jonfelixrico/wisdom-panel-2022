@@ -5,7 +5,7 @@
         <i18n-t
           keypath="quote.submittedByFormat"
           tag="div"
-          class="pre row text-weight-bold items-center"
+          class="pre row text-weight-medium items-center"
         >
           <template #date>
             {{ quote.submitDt.toLocaleDateString() }}
@@ -19,7 +19,7 @@
               />
               <div class="row items-center q-gutter-x-xs">
                 <CServerMemberAvatar :user="submitter" size="sm" />
-                <CServerMemberName :user="submitter" class="text-weight-bold" />
+                <CServerMemberName :user="submitter" />
               </div>
             </div>
           </template>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="row items-center q-gutter-xs">
-        <div class="text-weight-bold">
+        <div class="text-weight-medium">
           {{
             $t('quote.receiveCount', {
               count: receiveCount,
@@ -36,14 +36,12 @@
         </div>
 
         <template v-if="receiveCount > 0">
-          <div
-            class="bordered col-auto rounded-borders q-py-xs q-px-sm row pre items-center"
+          <CQuoteReceiverChip
             v-for="{ userId, count } in receivesPerUser"
+            :user="{ userId, serverId: quote.serverId }"
+            :count="count"
             :key="userId"
-          >
-            <CServerMemberChip :user="{ userId, serverId: quote.serverId }" /> x
-            {{ count }}
-          </div>
+          />
         </template>
       </div>
     </q-card-section>
@@ -56,7 +54,7 @@ import { defineComponent, PropType } from 'vue'
 import { countBy, orderBy } from 'lodash'
 import CServerMemberAvatar from '../server-member/CServerMemberAvatar.vue'
 import CServerMemberName from '../server-member/CServerMemberName.vue'
-import CServerMemberChip from '../server-member/CServerMemberChip.vue'
+import CQuoteReceiverChip from './CQuoteReceiverChip.vue'
 
 export default defineComponent({
   props: {
@@ -91,12 +89,10 @@ export default defineComponent({
       return orderBy(values, ['count', 'userId'], ['desc', 'asc'])
     },
   },
-  components: { CServerMemberAvatar, CServerMemberName, CServerMemberChip },
+  components: {
+    CServerMemberAvatar,
+    CServerMemberName,
+    CQuoteReceiverChip,
+  },
 })
 </script>
-
-<style lang="scss" scoped>
-.bordered {
-  border: 1px solid $primary;
-}
-</style>
