@@ -1,7 +1,7 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="row q-mb-md">
+      <div class="row q-mb-sm">
         <i18n-t
           keypath="quote.submittedByFormat"
           tag="div"
@@ -56,6 +56,7 @@ import { defineComponent, PropType } from 'vue'
 import { countBy, orderBy } from 'lodash'
 import CServerMemberAvatar from '../server-member/CServerMemberAvatar.vue'
 import CServerMemberName from '../server-member/CServerMemberName.vue'
+import CServerMemberChip from '../server-member/CServerMemberChip.vue'
 
 export default defineComponent({
   props: {
@@ -90,7 +91,7 @@ export default defineComponent({
       return orderBy(values, ['count', 'userId'], ['desc', 'asc'])
     },
   },
-  components: { CServerMemberAvatar, CServerMemberName },
+  components: { CServerMemberAvatar, CServerMemberName, CServerMemberChip },
 })
 </script>
 
