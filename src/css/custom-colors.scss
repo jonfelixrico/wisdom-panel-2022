@@ -1,0 +1,9 @@
+.bg-body {
+  body.body--light & {
+    background-color: white;
+  }
+
+  body.body--dark & {
+    background-color: $dark-page;
+  }
+}

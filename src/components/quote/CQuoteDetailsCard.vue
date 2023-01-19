@@ -1,31 +1,33 @@
 <template>
-  <q-card>
+  <q-card flat>
     <q-card-section>
       <div class="row q-mb-sm">
         <i18n-t
           keypath="quote.submittedByFormat"
           tag="div"
-          class="pre row text-weight-bold"
+          class="pre row text-weight-medium items-center"
         >
           <template #date>
             {{ quote.submitDt.toLocaleDateString() }}
           </template>
 
           <template #user>
-            <div>
-              <CServerMemberChip
-                :user="{
-                  userId: quote.submitterId,
-                  serverId: quote.serverId,
-                }"
+            <div class="relative-position q-py-xs q-px-sm">
+              <div
+                class="absolute-full bg-primary rounded-borders no-pointer-events"
+                style="opacity: 0.3"
               />
+              <div class="row items-center q-gutter-x-xs">
+                <CServerMemberAvatar :user="submitter" size="sm" />
+                <CServerMemberName :user="submitter" />
+              </div>
             </div>
           </template>
         </i18n-t>
       </div>
 
       <div class="row items-center q-gutter-xs">
-        <div class="text-weight-bold">
+        <div class="text-weight-medium">
           {{
             $t('quote.receiveCount', {
               count: receiveCount,
@@ -34,14 +36,12 @@
         </div>
 
         <template v-if="receiveCount > 0">
-          <div
-            class="bordered col-auto rounded-borders q-py-xs q-px-sm row pre items-center"
+          <CQuoteReceiverChip
             v-for="{ userId, count } in receivesPerUser"
+            :user="{ userId, serverId: quote.serverId }"
+            :count="count"
             :key="userId"
-          >
-            <CServerMemberChip :user="{ userId, serverId: quote.serverId }" /> x
-            {{ count }}
-          </div>
+          />
         </template>
       </div>
     </q-card-section>
@@ -52,7 +52,9 @@
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
 import { countBy, orderBy } from 'lodash'
-import CServerMemberChip from '../server-member/CServerMemberChip.vue'
+import CServerMemberAvatar from '../server-member/CServerMemberAvatar.vue'
+import CServerMemberName from '../server-member/CServerMemberName.vue'
+import CQuoteReceiverChip from './CQuoteReceiverChip.vue'
 
 export default defineComponent({
   props: {
@@ -64,6 +66,13 @@ export default defineComponent({
   computed: {
     receiveCount() {
       return this.quote.receives.length
+    },
+    submitter() {
+      const { quote } = this
+      return {
+        userId: quote.submitterId,
+        serverId: quote.serverId,
+      }
     },
     receivesPerUser() {
       const grouped = countBy(this.quote.receives, ({ userId }) => userId)
@@ -80,12 +89,10 @@ export default defineComponent({
       return orderBy(values, ['count', 'userId'], ['desc', 'asc'])
     },
   },
-  components: { CServerMemberChip },
+  components: {
+    CServerMemberAvatar,
+    CServerMemberName,
+    CQuoteReceiverChip,
+  },
 })
 </script>
-
-<style lang="scss" scoped>
-.bordered {
-  border: 1px solid $primary;
-}
-</style>
