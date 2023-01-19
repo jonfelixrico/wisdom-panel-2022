@@ -1,24 +1,26 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="row q-mb-sm">
+      <div class="row q-mb-md">
         <i18n-t
           keypath="quote.submittedByFormat"
           tag="div"
-          class="pre row text-weight-bold"
+          class="pre row text-weight-bold items-center"
         >
           <template #date>
             {{ quote.submitDt.toLocaleDateString() }}
           </template>
 
           <template #user>
-            <div>
-              <CServerMemberChip
-                :user="{
-                  userId: quote.submitterId,
-                  serverId: quote.serverId,
-                }"
+            <div class="relative-position q-py-xs q-px-sm">
+              <div
+                class="absolute-full bg-primary rounded-borders no-pointer-events"
+                style="opacity: 0.3"
               />
+              <div class="row items-center q-gutter-x-xs">
+                <CServerMemberAvatar :user="submitter" size="sm" />
+                <CServerMemberName :user="submitter" class="text-weight-bold" />
+              </div>
             </div>
           </template>
         </i18n-t>
@@ -52,7 +54,8 @@
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, PropType } from 'vue'
 import { countBy, orderBy } from 'lodash'
-import CServerMemberChip from '../server-member/CServerMemberChip.vue'
+import CServerMemberAvatar from '../server-member/CServerMemberAvatar.vue'
+import CServerMemberName from '../server-member/CServerMemberName.vue'
 
 export default defineComponent({
   props: {
@@ -64,6 +67,13 @@ export default defineComponent({
   computed: {
     receiveCount() {
       return this.quote.receives.length
+    },
+    submitter() {
+      const { quote } = this
+      return {
+        userId: quote.submitterId,
+        serverId: quote.serverId,
+      }
     },
     receivesPerUser() {
       const grouped = countBy(this.quote.receives, ({ userId }) => userId)
@@ -80,7 +90,7 @@ export default defineComponent({
       return orderBy(values, ['count', 'userId'], ['desc', 'asc'])
     },
   },
-  components: { CServerMemberChip },
+  components: { CServerMemberAvatar, CServerMemberName },
 })
 </script>
 
