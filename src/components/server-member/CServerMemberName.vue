@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { userServerMemberStore } from 'src/stores/server-member-store'
-import { computed, defineComponent, onBeforeMount, PropType } from 'vue'
+import { computed, defineComponent, watch, PropType } from 'vue'
 import { ServerMember } from './server-member.interface'
 
 export default defineComponent({
@@ -40,9 +40,17 @@ export default defineComponent({
   setup(props) {
     const store = userServerMemberStore()
 
-    onBeforeMount(() => {
-      store.fetchServerMember(props.user.serverId, props.user.userId)
-    })
+    watch(
+      [props.user],
+      () => {
+        store.fetchServerMember(props.user.serverId, props.user.userId)
+      },
+      {
+        immediate: true,
+      }
+    )
+
+    watch
 
     return {
       userData: computed(

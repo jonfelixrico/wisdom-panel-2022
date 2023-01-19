@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { userServerMemberStore } from 'src/stores/server-member-store'
-import { computed, defineComponent, onBeforeMount, PropType } from 'vue'
+import { computed, defineComponent, PropType, watch } from 'vue'
 import CServerMemberAvatar from './CServerMemberAvatar.vue'
 import { ServerMember } from './server-member.interface'
 
@@ -50,9 +50,15 @@ export default defineComponent({
   setup(props) {
     const store = userServerMemberStore()
 
-    onBeforeMount(() => {
-      store.fetchServerMember(props.user.serverId, props.user.userId)
-    })
+    watch(
+      [props.user],
+      () => {
+        store.fetchServerMember(props.user.serverId, props.user.userId)
+      },
+      {
+        immediate: true,
+      }
+    )
 
     return {
       userData: computed(
