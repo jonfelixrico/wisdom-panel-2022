@@ -1,10 +1,16 @@
 <template>
-  <div class="row justify-center">
+  <div
+    class="row justify-center relative-position root"
+    :class="{ active: isActive }"
+  >
     <q-btn round unelevated @click="$emit('click')">
       <q-avatar>
         <q-img :src="server.iconUrl" />
       </q-avatar>
     </q-btn>
+    <div class="absolute full-height column justify-center indicator-container">
+      <div class="bg-white indicator" />
+    </div>
   </div>
 </template>
 
@@ -24,4 +30,23 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.indicator-container {
+  width: 5px;
+  left: -2.5px;
+
+  .indicator {
+    border-radius: 5px;
+  }
+}
+
+.root {
+  &:hover .indicator {
+    height: 15px !important;
+  }
+
+  &.active .indicator {
+    height: 7.5px;
+  }
+}
+</style>
