@@ -34,10 +34,12 @@ export default defineComponent({
 .indicator-container {
   width: 5px;
   left: -2.5px;
+}
 
-  .indicator {
-    border-radius: 5px;
-  }
+.indicator {
+  border-radius: 5px;
+  height: 0;
+  transition: height 0.1s;
 }
 
 .root {
