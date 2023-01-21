@@ -2,12 +2,13 @@
   <q-layout view="hHh LpR fFf">
     <q-header class="bg-root">
       <q-toolbar>
-        <q-btn round dense flat icon="menu" @click="showDrawer = !showDrawer" />
         <q-toolbar-title>{{ $t('common.appName') }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
+
+    <!-- Like Discord, this will always be shown -->
     <q-drawer
-      v-model="showDrawer"
+      :model-value="true"
       class="bg-root relative-position"
       :mini="true"
       :overlay="false"
@@ -25,16 +26,9 @@
 
 <script lang="ts">
 import CServerSelectionList from 'src/components/server/CServerSelectionList.vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: { CServerSelectionList },
-  setup() {
-    const showDrawer = ref(true)
-
-    return {
-      showDrawer,
-    }
-  },
 })
 </script>
