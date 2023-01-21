@@ -7,6 +7,10 @@
       <q-avatar>
         <q-img :src="server.iconUrl" />
       </q-avatar>
+
+      <q-tooltip anchor="center end" self="center left">{{
+        server.name
+      }}</q-tooltip>
     </q-btn>
     <div class="absolute full-height column justify-center indicator-container">
       <div class="bg-white indicator" />
