@@ -11,7 +11,11 @@ export interface Server {
   serverId: string
   name: string
   iconUrl: string
-  noAccess: undefined
+
+  /**
+   * Only necessary to be defined here because TS seems to keep complaining when we try server.noAccess
+   */
+  noAccess?: undefined
 }
 
 interface Store {
