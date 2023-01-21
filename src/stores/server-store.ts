@@ -1,16 +1,21 @@
 import { defineStore } from 'pinia'
-import { APIGuild } from 'discord-api-types/v10'
 import { api } from 'src/boot/axios'
 import { isAxiosError } from 'src/utils/axios.utils'
 
-export type InaccessibleServer = 'NO_ACCESS'
+export interface InaccessibleServer {
+  serverId: string
+  noAccess: true
+}
 
-interface ServerMap {
-  [serverId: string]: APIGuild | InaccessibleServer
+export interface Server {
+  serverId: string
+  name: string
+  iconUrl: string
+  noAccess: undefined
 }
 
 interface Store {
-  servers: ServerMap
+  servers: Record<string, Server | InaccessibleServer>
 }
 
 export const useServerStore = defineStore('server', {
@@ -19,23 +24,26 @@ export const useServerStore = defineStore('server', {
   }),
 
   actions: {
-    async fetchServer(serverId: string) {
+    async fetchServer(serverId: string): Promise<Server | null> {
       const inStore = this.servers[serverId]
-      if (inStore) {
+      if (inStore && !inStore.noAccess) {
         return inStore
       }
 
       try {
-        const { data } = await api.get<APIGuild>(`server/${serverId}`)
+        const { data } = await api.get<Server>(`server/${serverId}`)
         this.servers[serverId] = data
         return data
       } catch (e) {
-        if (isAxiosError(e) && e.response?.status === 403) {
-          this.servers[serverId] = 'NO_ACCESS'
-          return 'NO_ACCESS'
+        if (!isAxiosError(e) || e.response?.status !== 403) {
+          throw e
         }
 
-        throw e
+        this.servers[serverId] = {
+          serverId,
+          noAccess: true,
+        }
+        return null
       }
     },
   },
