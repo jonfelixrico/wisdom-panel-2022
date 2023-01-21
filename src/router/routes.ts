@@ -40,12 +40,19 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/home',
+    redirect: {
+      name: 'server-selection',
+    },
+  },
+
+  {
+    path: '/server',
     component: () => import('layouts/MainLayout.vue'),
-    name: 'home',
+    name: 'server-selection',
     children: [
       {
         path: '',
-        name: 'select-server',
+        name: 'no-server-selected',
         component: () => import('pages/ServerIndexPage.vue'),
       },
     ],
