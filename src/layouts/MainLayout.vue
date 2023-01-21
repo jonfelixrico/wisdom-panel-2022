@@ -1,9 +1,10 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header class="bg-root">
-      <q-toolbar>
-        <q-toolbar-title>{{ $t('common.appName') }}</q-toolbar-title>
-      </q-toolbar>
+    <!-- Overriding this because QHeader applies bg-primary by default -->
+    <q-header class="bg-transparent">
+      <q-bar class="bg-root">
+        {{ $t('common.appName') }}
+      </q-bar>
     </q-header>
 
     <!-- Like Discord, this will always be shown -->
