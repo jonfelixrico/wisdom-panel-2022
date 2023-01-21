@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { generatePartialQuotes, generateQuote } from '../data/quote.data'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
@@ -18,20 +19,32 @@ function generateReceives() {
 export function serverQuotesController(app: Router) {
   const router = Router()
 
-  router.get('/dummy', (req, res) => {
-    res.json({
-      id: 'dummy',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-
-      authorId: 'user-1',
-      submitterId: 'user-2',
-
-      serverId: 'dummy',
-
-      receives: generateReceives(),
-    })
+  router.get('/server/:serverId/quote', (req, res) => {
+    res.json(generatePartialQuotes(100))
   })
 
-  app.use('/server/:serverId/quote', router)
+  router.get('/server/:serverId/quote/:quoteId', (req, res) => {
+    const { serverId, quoteId } = req.params
+
+    if (quoteId === 'dummy') {
+      // TODO move this to the data file
+      res.json({
+        id: 'dummy',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+
+        authorId: 'user-1',
+        submitterId: 'user-2',
+
+        serverId: 'dummy',
+
+        receives: generateReceives(),
+      })
+      return
+    }
+
+    res.json(generateQuote(serverId, quoteId))
+  })
+
+  app.use('', router)
 }
