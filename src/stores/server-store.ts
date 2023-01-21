@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
+import { getLogger } from 'src/boot/pino-logger'
 
 const CACHE_EXPIRE_THRESHOLD = 60 * 1000
 
@@ -19,6 +20,8 @@ interface Store {
   lastListFetch: null | Date
 }
 
+const LOGGER = getLogger('store:server')
+
 export const useServerStore = defineStore('server', {
   state: (): Store => ({
     servers: {},
@@ -32,27 +35,25 @@ export const useServerStore = defineStore('server', {
     },
 
     async fetchAllServers(force?: boolean): Promise<Record<string, Server>> {
-      const CACHE_AGE =
-        new Date().getTime() - (this.lastListFetch?.getTime() ?? 0)
       /*
        * Uses the values "cached" in the store if the cache hasn't expired and if we did
        * not use the `force` flag.
        */
       if (
         !force &&
-        // check if cache hasn't expired
-        CACHE_AGE >= CACHE_EXPIRE_THRESHOLD
+        this.lastListFetch && // this being null means that this call will be the first time that we have loaded the data
+        new Date().getTime() - this.lastListFetch?.getTime() >=
+          CACHE_EXPIRE_THRESHOLD // check if the cached value is too old
       ) {
+        LOGGER.debug('Reused cached servers object')
         return this.servers
       }
 
-      /**
-       * This will only happen if the value
-       */
-
+      LOGGER.debug('Fetching the servers list...')
       const { data } = await api.get<Record<string, Server>>('server')
       this.servers = data
       this.lastListFetch = new Date()
+      LOGGER.info('Finished pulling the server list.')
       return data
     },
   },
