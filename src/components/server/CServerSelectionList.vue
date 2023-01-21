@@ -57,7 +57,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      // TODO add logging
       store.fetchAllServers()
     })
 
