@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area :visible="false">
-    <div class="q-gutter-y-sm column items-center">
+    <div class="q-gutter-y-sm column">
       <template v-if="!hasFetched">
         <q-skeleton
           v-for="index in SKELETON_COUNT"
@@ -10,17 +10,13 @@
       </template>
 
       <template v-else>
-        <q-btn
-          round
-          unelevated
+        <CServerItem
           v-for="server of serverList"
           :key="server.serverId"
+          :server="server"
+          :is-active="server.serverId === selectedServerId"
           @click="selectedServerId = server.serverId"
-        >
-          <q-avatar>
-            <q-img :src="server.iconUrl" />
-          </q-avatar>
-        </q-btn>
+        />
       </template>
     </div>
   </q-scroll-area>
@@ -32,10 +28,13 @@ import { orderBy } from 'lodash'
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, onMounted } from 'vue'
 import { getLogger } from 'src/boot/pino-logger'
+import CServerItem from './CServerItem.vue'
+import CServerItem from './CServerItem.vue'
 
 const LOGGER = getLogger('component:server-selection-list')
 
 export default defineComponent({
+  components: { CServerItem, CServerItem },
   setup() {
     const store = useServerStore()
     const $router = useRouter()
