@@ -39,10 +39,9 @@
 </template>
 
 <script lang="ts">
-import { useApi } from 'src/composables/use-api.composable'
-import { Quote } from 'src/models/quote.interface'
-import { defineComponent, toRefs, watch, ref } from 'vue'
+import { defineComponent } from 'vue'
 import CQuoteUserBadge from './CQuoteUserBadge.vue'
+import { useQuoteLoader } from './quote.composables'
 
 export default defineComponent({
   props: {
@@ -56,19 +55,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const api = useApi()
-    const { quoteId, serverId } = toRefs(props)
-    const quote = ref<Quote | null>(null)
-    watch(
-      [quoteId, serverId],
-      async ([quoteId, serverId]) => {
-        const { data } = await api.get(`server/${serverId}/quote/${quoteId}`)
-        quote.value = data
-      },
-      {
-        immediate: true,
-      }
-    )
+    const quote = useQuoteLoader(props)
+
     return {
       quote,
     }
