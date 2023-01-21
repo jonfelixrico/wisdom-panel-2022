@@ -3,8 +3,10 @@
     <q-resize-observer @resize="size = $event" />
     <q-layout view="lHh LpR fFf" class="absolute" container>
       <q-drawer :model-value="true" class="column">
-        <q-toolbar class="shadow-1" />
-        <CServerBanner :server="server" />
+        <q-toolbar class="shadow-1">
+          <q-skeleton v-if="!server" type="rect" width="40%" />
+          <div v-else class="text-weight-medium">{{ server.name }}</div>
+        </q-toolbar>
         <CServerMenu class="col" />
       </q-drawer>
 
@@ -20,7 +22,6 @@ import { useRoute } from 'vue-router'
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, ref } from 'vue'
 import CServerMenu from 'src/components/server/CServerMenu.vue'
-import CServerBanner from 'src/components/server/CServerBanner.vue'
 
 export default defineComponent({
   setup() {
@@ -33,6 +34,6 @@ export default defineComponent({
     }
   },
 
-  components: { CServerMenu, CServerBanner },
+  components: { CServerMenu },
 })
 </script>
