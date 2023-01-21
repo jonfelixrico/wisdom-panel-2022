@@ -9,7 +9,11 @@
         />
       </template>
 
-      <template v-else> </template>
+      <template v-else>
+        <q-avatar v-for="server of serverList" :key="server.serverId">
+          <q-img :src="server.iconUrl" />
+        </q-avatar>
+      </template>
     </div>
   </q-scroll-area>
 </template>
