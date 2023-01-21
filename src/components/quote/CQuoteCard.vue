@@ -37,7 +37,7 @@
 
         <div class="column justify-center">
           <q-btn
-            color="secondary"
+            color="primary"
             unelevated
             :label="$t('quote.toDetailsPage')"
             no-caps
