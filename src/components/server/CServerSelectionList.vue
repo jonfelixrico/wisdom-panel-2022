@@ -1,6 +1,16 @@
 <template>
   <q-scroll-area>
-    <div>test</div>
+    <div class="q-gutter-y-sm column items-center">
+      <template v-if="!hasFetched">
+        <q-skeleton
+          v-for="index in SKELETON_COUNT"
+          :key="index"
+          type="QAvatar"
+        />
+      </template>
+
+      <template v-else> </template>
+    </div>
   </q-scroll-area>
 </template>
 
@@ -14,12 +24,16 @@ export default defineComponent({
     const store = useServerStore()
 
     onMounted(() => {
-      store.fetchServerList()
+      // TODO add logging
+      store.fetchAllServers()
     })
 
     return {
-      servers: () =>
-        computed(() => orderBy(Object.values(store.servers), ['name'], 'asc')),
+      serverList: computed(() =>
+        orderBy(Object.values(store.servers), ['name'], 'asc')
+      ),
+      hasFetched: computed(() => !!store.lastListFetch),
+      SKELETON_COUNT: 5,
     }
   },
 })
