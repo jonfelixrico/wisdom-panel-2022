@@ -12,7 +12,7 @@
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
-    "mocks": "nodemon -e ts,json --exec ts-node --skipProject ./mocks",
+    "mocks": "nodemon -e ts,json --exec ts-node --project ./mocks/mocks.tsconfig.json ./mocks",
     "start:dev": "quasar dev",
     "start:dev:be": "quasar dev --proxyTargetUrl http://localhost:9085",
     "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9080 \"cypress open --e2e\"",
