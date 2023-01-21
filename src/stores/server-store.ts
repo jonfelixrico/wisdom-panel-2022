@@ -51,7 +51,7 @@ export const useServerStore = defineStore('server', {
       }
     },
 
-    async listServers(): Promise<Server[]> {
+    async fetchServerList(): Promise<Server[]> {
       const { data } = await api.get<Server[]>('server')
 
       for (const server of data) {

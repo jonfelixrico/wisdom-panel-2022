@@ -14,7 +14,7 @@ export default defineComponent({
     const store = useServerStore()
 
     onMounted(() => {
-      store.listServers()
+      store.fetchServerList()
     })
 
     return {
