@@ -1,18 +1,22 @@
-import { APIGuild } from 'discord-api-types/v10'
 import { Router } from 'express'
+import { servers } from '../data/server.data'
 
 export function serversController(app: Router) {
   const router = Router()
 
-  router.get('/no-access', (req, res) => {
+  router.get('/:serverId', (req, res) => {
+    const server = servers[req.params.serverId]
+
+    if (server) {
+      res.json(server)
+      return
+    }
+
     res.sendStatus(403)
   })
 
-  router.get('/dummy', (req, res) => {
-    res.json({
-      id: 'dummy',
-      name: 'Dummy Server',
-    } as Partial<APIGuild>)
+  router.get('/', (req, res) => {
+    res.json(servers)
   })
 
   app.use('/server', router)
