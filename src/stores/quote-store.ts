@@ -46,7 +46,7 @@ export const useQuoteStore = defineStore('quote', {
       }
 
       if (!this.servers[serverId]) {
-        this.servers = {}
+        this.servers[serverId] = {}
         LOGGER.debug(`Created sub-object for ${serverId}.`)
       }
 
