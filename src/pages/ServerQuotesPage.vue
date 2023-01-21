@@ -4,16 +4,24 @@
     <div class="col relative-position">
       <q-scroll-area class="absolute-full">
         <q-infinite-scroll @load="load">
-          <div class="q-mx-auto q-pa-sm content-max-width q-gutter-y-sm">
-            <CQuoteCard
-              v-for="quoteId of listItems"
-              :key="quoteId"
-              :quote-id="quoteId"
-              :server-id="serverId"
-            />
+          <template #default>
+            <div class="q-mx-auto q-pa-sm content-max-width q-gutter-y-sm">
+              <CQuoteCard
+                v-for="quoteId of listItems"
+                :key="quoteId"
+                :quote-id="quoteId"
+                :server-id="serverId"
+              />
 
-            <!-- TODO skeletons while there are no quotes loaded -->
-          </div>
+              <!-- TODO skeletons while there are no quotes loaded -->
+            </div>
+          </template>
+
+          <template #loading>
+            <div class="row justify-center">
+              <q-spinner />
+            </div>
+          </template>
         </q-infinite-scroll>
       </q-scroll-area>
     </div>
