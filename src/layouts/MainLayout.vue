@@ -6,7 +6,7 @@
       </q-toolbar>
     </q-header>
     <q-drawer v-model="showDrawer" class="bg-root"> test </q-drawer>
-    <q-page-container class="bg-body">
+    <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
