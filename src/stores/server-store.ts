@@ -46,5 +46,15 @@ export const useServerStore = defineStore('server', {
         return null
       }
     },
+
+    async listServers(): Promise<Server[]> {
+      const { data } = await api.get<Server[]>('server')
+
+      for (const server of data) {
+        this.servers[server.serverId] = server
+      }
+
+      return data
+    },
   },
 })
