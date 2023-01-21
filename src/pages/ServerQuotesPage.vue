@@ -19,17 +19,16 @@
 </template>
 
 <script lang="ts">
-import { useRoute } from 'vue-router'
 import { useApi } from 'src/composables/use-api.composable'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import CQuoteCard from 'src/components/quote/CQuoteCard.vue'
+import { useServerIdParam } from 'src/composables/route-param.composables'
 
 export default defineComponent({
   // TODO implement cursor-based pagination
   setup() {
     const api = useApi()
-    const $route = useRoute()
-    const serverId = computed(() => String($route.params.serverId))
+    const serverId = useServerIdParam()
 
     async function fetchQuotes(serverId: string) {
       const { data } = await api.get<string[]>(`server/${serverId}/quote`)
@@ -39,6 +38,7 @@ export default defineComponent({
     onMounted(async () => {
       listItems.value = await fetchQuotes(serverId.value)
     })
+
     return {
       listItems,
       serverId,
