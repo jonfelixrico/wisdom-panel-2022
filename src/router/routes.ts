@@ -54,6 +54,11 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'no-server-selected',
+        component: () => import('pages/NoServerSelectedPage.vue'),
+      },
+      {
+        path: ':serverId',
+        name: 'server-index',
         component: () => import('pages/ServerIndexPage.vue'),
       },
     ],
