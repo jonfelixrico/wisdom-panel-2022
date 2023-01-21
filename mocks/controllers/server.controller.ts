@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { orderBy } from 'lodash'
 import { servers } from '../data/server.data'
 
 export function serversController(app: Router) {
