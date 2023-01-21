@@ -18,6 +18,8 @@
           @click="selectedServerId = server.serverId"
         />
       </template>
+
+      <!-- TODO add item that allows the user to add the bot to their server -->
     </div>
   </q-scroll-area>
 </template>
