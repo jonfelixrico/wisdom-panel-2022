@@ -2,15 +2,6 @@
   <q-page class="relative-position">
     <q-resize-observer @resize="size = $event" />
     <q-layout view="lHh LpR fFf" class="absolute" container>
-      <q-header class="bg-transparent">
-        <q-toolbar class="shadow-1">
-          <q-toolbar-title>
-            <q-skeleton v-if="!server" width="25%" type="rect" />
-            <div v-else>{{ server.name }}</div>
-          </q-toolbar-title>
-        </q-toolbar>
-      </q-header>
-
       <q-drawer :model-value="true" class="column">
         <q-toolbar class="shadow-1" />
         <CServerBanner />
