@@ -7,12 +7,16 @@
           <i18n-t
             keypath="quote.authorFormat"
             tag="div"
-            class="text-weight-regular"
+            class="text-weight-regular row pre items-center"
           >
-            <template #author>{{ quote?.authorId }}</template>
-            <template #year>{{
-              new Date(quote?.submitDt).getFullYear()
-            }}</template>
+            <template #author>
+              <CQuoteUserBadge :user="{ userId: quote.authorId, serverId }" />
+            </template>
+            <template #year>
+              <div class="text-grey-5 text-weight-medium">
+                {{ new Date(quote?.submitDt).toLocaleDateString() }}
+              </div>
+            </template>
           </i18n-t>
         </div>
 
@@ -35,6 +39,7 @@
 import { useApi } from 'src/composables/use-api.composable'
 import { Quote } from 'src/models/quote.interface'
 import { defineComponent, toRefs, watch, ref } from 'vue'
+import CQuoteUserBadge from './CQuoteUserBadge.vue'
 
 export default defineComponent({
   props: {
@@ -42,19 +47,15 @@ export default defineComponent({
       type: String,
       required: true,
     },
-
     serverId: {
       type: String,
       required: true,
     },
   },
-
   setup(props) {
     const api = useApi()
-
     const { quoteId, serverId } = toRefs(props)
     const quote = ref<Quote | null>(null)
-
     watch(
       [quoteId, serverId],
       async ([quoteId, serverId]) => {
@@ -65,10 +66,10 @@ export default defineComponent({
         immediate: true,
       }
     )
-
     return {
       quote,
     }
   },
+  components: { CQuoteUserBadge },
 })
 </script>
