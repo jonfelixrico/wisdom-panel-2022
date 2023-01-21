@@ -4,7 +4,7 @@
     <q-layout view="lHh LpR fFf" class="absolute" container>
       <q-drawer :model-value="true" class="column">
         <q-toolbar class="shadow-1" />
-        <CServerBanner />
+        <CServerBanner :server="server" />
         <CServerMenu class="col" />
       </q-drawer>
 
