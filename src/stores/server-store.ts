@@ -41,6 +41,7 @@ export const useServerStore = defineStore('server', {
 
       const { data } = await api.get<Record<string, Server>>('server')
       this.servers = data
+      this.lastListFetch = new Date()
       return data
     },
   },
