@@ -5,7 +5,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { orderBy } from 'lodash'
+import { useServerStore } from 'src/stores/server-store'
+import { computed, defineComponent, onMounted } from 'vue'
 
-export default defineComponent({})
+export default defineComponent({
+  setup() {
+    const store = useServerStore()
+
+    onMounted(() => {
+      store.listServers()
+    })
+
+    return {
+      servers: () =>
+        computed(() => orderBy(Object.values(store.servers), ['name'], 'asc')),
+    }
+  },
+})
 </script>
