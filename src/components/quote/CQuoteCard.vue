@@ -1,18 +1,32 @@
 <template>
   <q-card flat>
     <q-card-section class="row">
-      <div class="col">
-        <div class="text-h5">{{ quote?.content }}</div>
-      </div>
+      <template v-if="quote">
+        <div class="col">
+          <div class="text-h6 text-weight-regular">"{{ quote?.content }}"</div>
+          <i18n-t
+            keypath="quote.authorFormat"
+            tag="div"
+            class="text-weight-regular"
+          >
+            <template #author>{{ quote?.authorId }}</template>
+            <template #year>{{
+              new Date(quote?.submitDt).getFullYear()
+            }}</template>
+          </i18n-t>
+        </div>
 
-      <div class="column justify-center">
-        <q-btn
-          color="secondary"
-          unelevated
-          :label="$t('quote.toDetailsPage')"
-          no-caps
-        />
-      </div>
+        <div class="column justify-center">
+          <q-btn
+            color="secondary"
+            unelevated
+            :label="$t('quote.toDetailsPage')"
+            no-caps
+          />
+        </div>
+      </template>
+
+      <template v-else> Loading... </template>
     </q-card-section>
   </q-card>
 </template>
