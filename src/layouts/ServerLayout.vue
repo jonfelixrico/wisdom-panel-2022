@@ -21,26 +21,28 @@
       </q-drawer>
 
       <q-page-container>
-        <router-view />
+        <router-view :key="serverId" />
       </q-page-container>
     </q-layout>
   </q-page>
 </template>
 
 <script lang="ts">
-import { useRoute } from 'vue-router'
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, ref } from 'vue'
 import CServerMenu from 'src/components/server/CServerMenu.vue'
+import { useServerIdParam } from 'src/composables/route-param.composables'
 
 export default defineComponent({
   setup() {
+    const serverId = useServerIdParam()
     const size = ref({ width: 0, height: 0 })
     const store = useServerStore()
-    const $route = useRoute()
+
     return {
       size,
-      server: computed(() => store.servers[String($route?.params?.serverId)]),
+      server: computed(() => store.servers[serverId.value]),
+      serverId,
     }
   },
 
