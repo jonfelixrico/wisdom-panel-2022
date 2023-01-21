@@ -1,5 +1,5 @@
 <template>
-  <q-scroll-area>
+  <q-scroll-area :visible="false">
     <div class="q-gutter-y-sm column items-center">
       <template v-if="!hasFetched">
         <q-skeleton
