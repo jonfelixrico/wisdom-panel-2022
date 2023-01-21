@@ -11,7 +11,7 @@
       :model-value="true"
       class="bg-root relative-position"
       :mini="true"
-      :overlay="false"
+      :breakpoint="0"
     >
       <!-- We're always using mini because we're following the Discord desktop layout -->
       <template #mini>
