@@ -7,13 +7,16 @@
           <i18n-t
             keypath="quote.authorFormat"
             tag="div"
-            class="text-weight-regular row pre items-center"
+            class="text-weight-regular text-grey-5 row pre items-center"
           >
             <template #author>
-              <CQuoteUserBadge :user="{ userId: quote.authorId, serverId }" />
+              <CQuoteUserBadge
+                class="text-white"
+                :user="{ userId: quote.authorId, serverId }"
+              />
             </template>
             <template #year>
-              <div class="text-grey-5 text-weight-medium">
+              <div class="text-weight-medium">
                 {{ new Date(quote?.submitDt).toLocaleDateString() }}
               </div>
             </template>
