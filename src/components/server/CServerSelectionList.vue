@@ -31,6 +31,9 @@ import { useRouter } from 'vue-router'
 import { orderBy } from 'lodash'
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, onMounted } from 'vue'
+import { getLogger } from 'src/boot/pino-logger'
+
+const LOGGER = getLogger('component:server-selection-list')
 
 export default defineComponent({
   setup() {
@@ -41,13 +44,15 @@ export default defineComponent({
       get() {
         return String($router.currentRoute.value.params.serverId)
       },
-      set(serverId: string) {
-        $router.push({
+      async set(serverId: string) {
+        LOGGER.debug(`Changing selected server to ${serverId}...`)
+        await $router.push({
           name: 'server-index',
           params: {
             serverId,
           },
         })
+        LOGGER.info(`Selected server has been changed to ${serverId}`)
       },
     })
 
