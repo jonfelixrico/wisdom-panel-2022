@@ -40,6 +40,7 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/home',
+    name: 'home',
     redirect: {
       name: 'server-selection',
     },
