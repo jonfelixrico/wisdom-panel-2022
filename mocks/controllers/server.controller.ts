@@ -17,9 +17,7 @@ export function serversController(app: Router) {
   })
 
   router.get('/', (req, res) => {
-    const serverList = Object.values(servers)
-
-    res.json(orderBy(serverList, ['name'], ['asc']))
+    res.json(servers)
   })
 
   app.use('/server', router)
