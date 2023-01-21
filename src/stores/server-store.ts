@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 
-const RELOAD_THRESHOLD = 60 * 1000
+const CACHE_EXPIRE_THRESHOLD = 60 * 1000
+
 export interface Server {
   serverId: string
   name: string
@@ -31,13 +32,23 @@ export const useServerStore = defineStore('server', {
     },
 
     async fetchAllServers(force?: boolean): Promise<Record<string, Server>> {
+      const CACHE_AGE =
+        new Date().getTime() - (this.lastListFetch?.getTime() ?? 0)
+      /*
+       * Uses the values "cached" in the store if the cache hasn't expired and if we did
+       * not use the `force` flag.
+       */
       if (
         !force &&
-        this.lastListFetch &&
-        new Date().getTime() - this.lastListFetch.getTime() >= RELOAD_THRESHOLD
+        // check if cache hasn't expired
+        CACHE_AGE >= CACHE_EXPIRE_THRESHOLD
       ) {
         return this.servers
       }
+
+      /**
+       * This will only happen if the value
+       */
 
       const { data } = await api.get<Record<string, Server>>('server')
       this.servers = data
