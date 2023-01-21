@@ -1,4 +1,4 @@
-import { Quote } from 'src/models/quote.interface'
+import { Quote } from 'src/stores/quote-store'
 
 export function generateQuoteListData(count: number): string[] {
   const partials: string[] = []
@@ -10,7 +10,10 @@ export function generateQuoteListData(count: number): string[] {
   return partials
 }
 
-export function generateQuote(serverId: string, quoteId: string): Quote {
+export function generateQuote(
+  serverId: string,
+  quoteId: string
+): Omit<Quote, 'status'> {
   return {
     id: quoteId,
     serverId,

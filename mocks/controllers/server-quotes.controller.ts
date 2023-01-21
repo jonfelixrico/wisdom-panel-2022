@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { Quote } from 'src/stores/quote-store'
 import { generateQuoteListData, generateQuote } from '../data/quote.data'
 
 function generateReceives() {
@@ -23,6 +24,7 @@ export function serverQuotesController(app: Router) {
     res.json(generateQuoteListData(100))
   })
 
+  let statusCtr = 0
   router.get('/server/:serverId/quote/:quoteId', (req, res) => {
     const { serverId, quoteId } = req.params
 
@@ -39,11 +41,16 @@ export function serverQuotesController(app: Router) {
         serverId: 'dummy',
 
         receives: generateReceives(),
-      })
+        status: 'ACCEPTED',
+        submitDt: new Date('2022-01-01'),
+      } as Quote)
       return
     }
 
-    res.json(generateQuote(serverId, quoteId))
+    res.json({
+      ...generateQuote(serverId, quoteId),
+      status: statusCtr++ % 2 === 0 ? 'ACCEPTED' : 'PENDING',
+    } as Quote)
   })
 
   app.use('', router)
