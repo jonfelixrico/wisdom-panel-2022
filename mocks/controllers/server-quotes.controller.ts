@@ -17,11 +17,21 @@ function generateReceives() {
   return receives
 }
 
+const QUOTE_LIST_DATA = generateQuoteListData(100)
+
 export function serverQuotesController(app: Router) {
   const router = Router()
 
   router.get('/server/:serverId/quote', (req, res) => {
-    res.json(generateQuoteListData(100))
+    const { cursorId, count } = req.query
+    const parsedCount = Number(count || 10)
+
+    if (!cursorId) {
+      res.json(QUOTE_LIST_DATA.slice(0, parsedCount))
+    } else {
+      const idx = QUOTE_LIST_DATA.findIndex((id) => id === cursorId)
+      res.json(QUOTE_LIST_DATA.slice(idx + 1, idx + parsedCount + 1))
+    }
   })
 
   let statusCtr = 0
