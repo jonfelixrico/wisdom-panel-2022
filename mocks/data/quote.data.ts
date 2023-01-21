@@ -1,12 +1,10 @@
 import { Quote } from 'src/models/quote.interface'
 
-export function generatePartialQuotes(count: number) {
-  const partials: { quoteId: string }[] = []
+export function generateQuoteListData(count: number): string[] {
+  const partials: string[] = []
 
   for (let i = 1; i <= count; i++) {
-    partials.push({
-      quoteId: `quote-fodder-${i}`,
-    })
+    partials.push(`quote-fodder-${i}`)
   }
 
   return partials

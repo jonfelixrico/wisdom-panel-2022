@@ -5,9 +5,9 @@
       <q-scroll-area class="absolute-full">
         <div class="q-mx-auto q-pa-sm content-max-width q-gutter-y-sm">
           <CQuoteCard
-            v-for="quote of quotes"
-            :key="quote.quoteId"
-            :quote-id="quote.quoteId"
+            v-for="quoteId of listItems"
+            :key="quoteId"
+            :quote-id="quoteId"
             :server-id="serverId"
           />
 
@@ -24,10 +24,6 @@ import { useApi } from 'src/composables/use-api.composable'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import CQuoteCard from 'src/components/quote/CQuoteCard.vue'
 
-interface PartialQuote {
-  quoteId: string
-}
-
 export default defineComponent({
   // TODO implement cursor-based pagination
   setup() {
@@ -36,15 +32,15 @@ export default defineComponent({
     const serverId = computed(() => String($route.params.serverId))
 
     async function fetchQuotes(serverId: string) {
-      const { data } = await api.get<PartialQuote[]>(`server/${serverId}/quote`)
+      const { data } = await api.get<string[]>(`server/${serverId}/quote`)
       return data
     }
-    const quotes = ref<PartialQuote[]>([])
+    const listItems = ref<string[]>([])
     onMounted(async () => {
-      quotes.value = await fetchQuotes(serverId.value)
+      listItems.value = await fetchQuotes(serverId.value)
     })
     return {
-      quotes,
+      listItems,
       serverId,
     }
   },

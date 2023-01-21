@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { generatePartialQuotes, generateQuote } from '../data/quote.data'
+import { generateQuoteListData, generateQuote } from '../data/quote.data'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
@@ -20,7 +20,7 @@ export function serverQuotesController(app: Router) {
   const router = Router()
 
   router.get('/server/:serverId/quote', (req, res) => {
-    res.json(generatePartialQuotes(100))
+    res.json(generateQuoteListData(100))
   })
 
   router.get('/server/:serverId/quote/:quoteId', (req, res) => {
