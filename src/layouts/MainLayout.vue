@@ -1,12 +1,12 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header>
+  <q-layout view="hHh LpR fFf">
+    <q-header class="bg-root">
       <q-toolbar>
         <q-toolbar-header> test </q-toolbar-header>
       </q-toolbar>
     </q-header>
-    <q-drawer v-model="showDrawer"> test </q-drawer>
-    <q-page-container>
+    <q-drawer v-model="showDrawer" class="bg-root"> test </q-drawer>
+    <q-page-container class="bg-body">
       <router-view />
     </q-page-container>
   </q-layout>
