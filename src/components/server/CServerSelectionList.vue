@@ -10,15 +10,24 @@
       </template>
 
       <template v-else>
-        <q-avatar v-for="server of serverList" :key="server.serverId">
-          <q-img :src="server.iconUrl" />
-        </q-avatar>
+        <q-btn
+          round
+          unelevated
+          v-for="server of serverList"
+          :key="server.serverId"
+          @click="selectedServerId = server.serverId"
+        >
+          <q-avatar>
+            <q-img :src="server.iconUrl" />
+          </q-avatar>
+        </q-btn>
       </template>
     </div>
   </q-scroll-area>
 </template>
 
 <script lang="ts">
+import { useRouter } from 'vue-router'
 import { orderBy } from 'lodash'
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, onMounted } from 'vue'
@@ -26,6 +35,21 @@ import { computed, defineComponent, onMounted } from 'vue'
 export default defineComponent({
   setup() {
     const store = useServerStore()
+    const $router = useRouter()
+
+    const selectedServerId = computed({
+      get() {
+        return String($router.currentRoute.value.params.serverId)
+      },
+      set(serverId: string) {
+        $router.push({
+          name: 'server-index',
+          params: {
+            serverId,
+          },
+        })
+      },
+    })
 
     onMounted(() => {
       // TODO add logging
@@ -38,6 +62,7 @@ export default defineComponent({
       ),
       hasFetched: computed(() => !!store.lastListFetch),
       SKELETON_COUNT: 5,
+      selectedServerId,
     }
   },
 })
