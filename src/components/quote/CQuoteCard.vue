@@ -3,7 +3,19 @@
     <q-card-section class="row">
       <template v-if="quote">
         <div class="col">
-          <div class="text-h6 text-weight-regular">"{{ quote?.content }}"</div>
+          <div class="pre row items-center q-gutter-x-xs">
+            <q-badge
+              color="warning"
+              text-color="black"
+              v-if="quote.status === 'PENDING'"
+            >
+              {{ $t('quote.pending') }}
+            </q-badge>
+            <div
+              class="text-h6 text-weight-regular pre"
+              v-text="quote.content"
+            />
+          </div>
           <i18n-t
             keypath="quote.authorFormat"
             tag="div"
