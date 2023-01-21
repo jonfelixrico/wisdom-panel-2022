@@ -3,9 +3,19 @@
     <q-resize-observer @resize="size = $event" />
     <q-layout view="lHh LpR fFf" class="absolute" container>
       <q-drawer :model-value="true" class="column">
-        <q-toolbar class="shadow-1">
+        <q-toolbar class="shadow-1 justify-between">
           <q-skeleton v-if="!server" type="rect" width="40%" />
           <div v-else class="text-weight-medium">{{ server.name }}</div>
+
+          <q-btn
+            flat
+            round
+            dense
+            icon="close"
+            color="secondary"
+            size="sm"
+            @click="$router.push({ name: 'no-server-selected' })"
+          />
         </q-toolbar>
         <CServerMenu class="col" />
       </q-drawer>
