@@ -1,12 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
-import { isAxiosError } from 'src/utils/axios.utils'
 
-export interface InaccessibleServer {
-  serverId: string
-  noAccess: true
-}
-
+const RELOAD_THRESHOLD = 60 * 1000
 export interface Server {
   serverId: string
   name: string
@@ -19,45 +14,33 @@ export interface Server {
 }
 
 interface Store {
-  servers: Record<string, Server | InaccessibleServer>
+  servers: Record<string, Server>
+  lastListFetch: null | Date
 }
 
 export const useServerStore = defineStore('server', {
   state: (): Store => ({
     servers: {},
+    lastListFetch: null,
   }),
 
   actions: {
     async fetchServer(serverId: string): Promise<Server | null> {
-      const inStore = this.servers[serverId]
-      if (inStore && !inStore.noAccess) {
-        return inStore
-      }
-
-      try {
-        const { data } = await api.get<Server>(`server/${serverId}`)
-        this.servers[serverId] = data
-        return data
-      } catch (e) {
-        if (!isAxiosError(e) || e.response?.status !== 403) {
-          throw e
-        }
-
-        this.servers[serverId] = {
-          serverId,
-          noAccess: true,
-        }
-        return null
-      }
+      const servers = await this.fetchAllServers()
+      return servers[serverId] ?? null
     },
 
-    async fetchServerList(): Promise<Server[]> {
-      const { data } = await api.get<Server[]>('server')
-
-      for (const server of data) {
-        this.servers[server.serverId] = server
+    async fetchAllServers(force?: boolean): Promise<Record<string, Server>> {
+      if (
+        !force &&
+        this.lastListFetch &&
+        new Date().getTime() - this.lastListFetch.getTime() >= RELOAD_THRESHOLD
+      ) {
+        return this.servers
       }
 
+      const { data } = await api.get<Record<string, Server>>('server')
+      this.servers = data
       return data
     },
   },
