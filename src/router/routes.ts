@@ -42,6 +42,13 @@ const routes: RouteRecordRaw[] = [
     path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     name: 'home',
+    children: [
+      {
+        path: '',
+        name: 'select-server',
+        component: () => import('pages/SelectAServerPage.vue'),
+      },
+    ],
   },
 
   // TODO remove once we have a proper home page
