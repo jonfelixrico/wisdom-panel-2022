@@ -14,7 +14,7 @@
 
       <div>
         This has received {{ requirements.voters.length }} out of
-        {{ requirements.voteCount }} votes.
+        {{ requirements.requiredVoteCount }} votes.
         <span class="text-negative text-weight-medium">
           Voting is only open until 5pm!
         </span>

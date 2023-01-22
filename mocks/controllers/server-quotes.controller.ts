@@ -69,7 +69,7 @@ export function serverQuotesController(app: Router) {
         ...generated,
         status: 'PENDING',
         approvalRequirements: {
-          voteCount: 3,
+          requiredVoteCount: 3,
           voters: [],
         },
       } as Quote)

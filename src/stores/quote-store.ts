@@ -9,7 +9,7 @@ export interface QuoteReceive {
 }
 
 export interface ApprovalRequirements {
-  voteCount: number
+  requiredVoteCount: number
   voters: string[]
 }
 
