@@ -9,7 +9,7 @@
               text-color="black"
               v-if="quote.status === 'PENDING'"
             >
-              {{ $t('quote.pending') }}
+              {{ $t('quote.status.pending') }}
             </q-badge>
             <div
               class="text-h6 text-weight-regular pre"
