@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { Quote } from 'src/stores/quote-store'
 import { generateQuoteListData, generateQuote } from '../data/quote.data'
 import { date } from 'quasar'
-import { range } from 'lodash'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
