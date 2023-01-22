@@ -1,7 +1,7 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="text-h5 q-mb-sm">"{{ quote.content }}"</div>
+      <div class="text-h4 q-mb-sm">"{{ quote.content }}"</div>
       <i18n-t
         keypath="quote.detailsPage.authorFormat"
         class="pre row text-secondary q-mb-xs"
