@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { Quote } from 'src/stores/quote-store'
 import { generateQuoteListData, generateQuote } from '../data/quote.data'
 import { date } from 'quasar'
+import { range } from 'lodash'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
@@ -52,28 +53,29 @@ export function serverQuotesController(app: Router) {
     } as Quote)
   })
 
-  let statusCtr = 0
-  router.get('/server/:serverId/quote/:quoteId', (req, res) => {
-    const { serverId, quoteId } = req.params
+  router.get('/server/:serverId/quote/quote-fodder-:quoteNo', (req, res) => {
+    const { serverId, quoteNo } = req.params
+    const generated = generateQuote(serverId, quoteNo)
 
-    const generated = generateQuote(serverId, quoteId)
+    const parsedId = parseInt(quoteNo)
 
-    if (statusCtr++ % 2 === 0) {
+    if (parsedId % 2 === 0) {
       res.json({
         ...generated,
         status: 'ACCEPTED',
       } as Quote)
-    } else {
-      res.json({
-        ...generated,
-        status: 'PENDING',
-        approvalRequirements: {
-          requiredVoteCount: 3,
-          voters: [],
-          deadline: date.addToDate(new Date(), { day: 1 }),
-        },
-      } as Quote)
+      return
     }
+
+    res.json({
+      ...generated,
+      status: 'PENDING',
+      approvalRequirements: {
+        requiredVoteCount: 3,
+        voters: ['user-1'],
+        deadline: date.addToDate(new Date(), { day: 1 }),
+      },
+    } as Quote)
   })
 
   app.use('', router)
