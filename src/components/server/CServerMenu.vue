@@ -27,7 +27,7 @@ const ITEMS: MenuItem[] = [
   {
     labelKey: 'server.menuItems.quoteList',
     location: {
-      name: 'quote-list',
+      name: 'sever-quote-list',
     },
     moduleKeys: ['quote-list'],
   },

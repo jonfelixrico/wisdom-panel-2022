@@ -64,12 +64,12 @@ const routes: RouteRecordRaw[] = [
             path: '',
             name: 'server-index',
             redirect: {
-              name: 'server-quotes',
+              name: 'server-quote-list',
             },
           },
           {
             path: 'quote',
-            name: 'server-quotes',
+            name: 'server-quote-list',
             component: () => import('pages/ServerQuoteList.vue'),
             meta: {
               moduleKey: ['quote-list'],
