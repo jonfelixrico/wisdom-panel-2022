@@ -27,11 +27,13 @@
 import { Quote } from 'src/stores/quote-store'
 import { defineComponent, PropType } from 'vue'
 
+type PartialQuote = Pick<Quote, 'content' | 'authorId' | 'serverId' | 'status'>
+
 export default defineComponent({
   props: {
     quote: {
       required: true,
-      type: Object as PropType<Quote>,
+      type: Object as PropType<PartialQuote>,
     },
   },
 
