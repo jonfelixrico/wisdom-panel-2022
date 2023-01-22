@@ -41,7 +41,7 @@
             unelevated
             :label="$t('quote.toDetailsPage')"
             no-caps
-            @click="onClick"
+            @click="goToDetailsPage"
           />
         </div>
       </template>
@@ -76,7 +76,7 @@ export default defineComponent({
   },
 
   methods: {
-    onClick() {
+    goToDetailsPage() {
       this.$router.push({
         name: 'server-quote-details',
         params: {
