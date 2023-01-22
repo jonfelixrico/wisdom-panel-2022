@@ -34,6 +34,11 @@ export const userServerMemberStore = defineStore('server-member', {
       }
 
       const url = `server/${serverId}/user/${userId}`
+
+      /*
+       * We're using this util so that there will always be at most one active HTTP request for each server member
+       * for any given time. We're anticipating that simultaneous calls for a single user can occur within the app.
+       */
       return await promiseCache.wrap(url, async () => {
         let server = this.servers[serverId]
         if (!server) {
