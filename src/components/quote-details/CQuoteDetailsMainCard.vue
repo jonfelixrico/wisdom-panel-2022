@@ -1,32 +1,30 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="q-gutter-y-xs">
-        <div class="text-h5">"{{ quote.content }}"</div>
-        <i18n-t
-          keypath="quote.detailsPage.authorFormat"
-          class="pre row text-secondary"
-          tag="div"
-        >
-          <template #user>
-            <CQuoteUserBadge :user="author" class="text-white" />
-          </template>
-        </i18n-t>
+      <div class="text-h5 q-mb-sm">"{{ quote.content }}"</div>
+      <i18n-t
+        keypath="quote.detailsPage.authorFormat"
+        class="pre row text-secondary q-mb-xs"
+        tag="div"
+      >
+        <template #user>
+          <CQuoteUserBadge :user="author" class="text-white" />
+        </template>
+      </i18n-t>
 
-        <i18n-t
-          keypath="quote.detailsPage.submitterFormat"
-          class="pre row text-secondary"
-          tag="div"
-        >
-          <template #user>
-            <CQuoteUserBadge :user="submitter" class="text-white" />
-          </template>
+      <i18n-t
+        keypath="quote.detailsPage.submitterFormat"
+        class="pre row text-secondary"
+        tag="div"
+      >
+        <template #user>
+          <CQuoteUserBadge :user="submitter" class="text-white" />
+        </template>
 
-          <template #date>
-            {{ formattedDate }}
-          </template>
-        </i18n-t>
-      </div>
+        <template #date>
+          {{ formattedDate }}
+        </template>
+      </i18n-t>
     </q-card-section>
   </q-card>
 </template>
