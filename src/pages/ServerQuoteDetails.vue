@@ -21,7 +21,7 @@
               </i18n-t>
             </div>
 
-            <div class="row items-start">
+            <div class="row items-start" v-if="quote.status === 'PENDING'">
               <q-badge color="warning" text-color="black">{{
                 $t('quote.status.pending')
               }}</q-badge>
