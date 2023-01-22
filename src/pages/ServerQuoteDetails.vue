@@ -44,16 +44,6 @@ export default defineComponent({
     }
   },
 
-  computed: {
-    author() {
-      const { serverId, authorId } = this.quote
-      return {
-        serverId,
-        userId: authorId,
-      }
-    },
-  },
-
   methods: {
     goBackToList() {
       this.$router.push({
