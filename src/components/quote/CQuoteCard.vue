@@ -41,6 +41,7 @@
             unelevated
             :label="$t('quote.toDetailsPage')"
             no-caps
+            @click="onClick"
           />
         </div>
       </template>
@@ -73,6 +74,19 @@ export default defineComponent({
       quote,
     }
   },
+
+  methods: {
+    onClick() {
+      this.$router.push({
+        name: 'server-quote-details',
+        params: {
+          serverId: this.serverId,
+          quoteId: this.quoteId,
+        },
+      })
+    },
+  },
+
   components: { CQuoteUserBadge },
 })
 </script>
