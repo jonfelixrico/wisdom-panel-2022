@@ -39,7 +39,7 @@ export default defineComponent({
     const api = useApi()
     const serverId = useServerIdParam()
 
-    const listItems = ref<string[]>([])
+    const quoteIdArr = ref<string[]>([])
 
     async function load(_: number, done: () => void) {
       try {
@@ -48,21 +48,21 @@ export default defineComponent({
           {
             params: {
               cursorId:
-                listItems.value.length === 0
+                quoteIdArr.value.length === 0
                   ? undefined
-                  : listItems.value[listItems.value.length - 1],
+                  : quoteIdArr.value[quoteIdArr.value.length - 1],
               count: 3,
             },
           }
         )
-        listItems.value.push(...data)
+        quoteIdArr.value.push(...data)
       } finally {
         done()
       }
     }
 
     return {
-      listItems,
+      listItems: quoteIdArr,
       serverId,
       load,
     }
