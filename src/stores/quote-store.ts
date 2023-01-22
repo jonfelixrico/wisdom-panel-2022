@@ -8,6 +8,11 @@ export interface QuoteReceive {
   userId: string
 }
 
+export interface ApprovalRequirements {
+  voteCount: number
+  voters: string[]
+}
+
 export interface Quote {
   id: string
   content: string
@@ -29,10 +34,7 @@ export interface Quote {
   /**
    * If not null, then it means that the quote is still pending.
    */
-  pendingRequirements?: {
-    requiredVoteCount: number
-    votes: string[]
-  }
+  approvalRequirements?: ApprovalRequirements
 }
 
 interface Store {
