@@ -1,6 +1,8 @@
 <template>
   <q-page class="column">
-    <q-toolbar class="shadow-1" />
+    <q-toolbar class="shadow-1 row justify-end">
+      <q-spinner v-if="isLoading" />
+    </q-toolbar>
     <div class="col relative-position">
       <q-scroll-area class="absolute-full">
         <q-infinite-scroll @load="load">
