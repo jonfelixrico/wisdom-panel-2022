@@ -4,4 +4,8 @@ export default {
   toDetailsPage: 'Show Details',
   authorFormat: 'from {author}, {year}',
   pending: 'Pending Approval',
+
+  detailsPage: {
+    title: 'Quote Details',
+  },
 }

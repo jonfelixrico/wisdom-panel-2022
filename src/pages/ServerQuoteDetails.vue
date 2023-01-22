@@ -3,7 +3,7 @@
     <q-toolbar class="shadow-1">
       <q-btn icon="arrow_back" flat round dense />
       <!-- TODO i18nize -->
-      <q-toolbar-title> View Quote </q-toolbar-title>
+      <q-toolbar-title>{{ $t('quote.detailsPage.title') }}</q-toolbar-title>
     </q-toolbar>
     <div class="col"></div>
   </q-page>
