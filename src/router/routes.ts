@@ -88,13 +88,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
-  // TODO remove once we have a proper home page
-  {
-    path: '/landing',
-    name: 'landing-page',
-    component: () => import('pages/LandingPage.vue'),
-  },
-
   // Always leave this as last one,
   // but you can also remove it
   {
