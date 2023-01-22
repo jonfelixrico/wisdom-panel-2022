@@ -26,6 +26,7 @@
 <script lang="ts">
 import { Quote } from 'src/stores/quote-store'
 import { defineComponent, PropType } from 'vue'
+import CQuoteUserBadge from '../quote/CQuoteUserBadge.vue'
 
 type PartialQuote = Pick<Quote, 'content' | 'authorId' | 'serverId' | 'status'>
 
@@ -36,7 +37,6 @@ export default defineComponent({
       type: Object as PropType<PartialQuote>,
     },
   },
-
   computed: {
     author() {
       const { serverId, authorId } = this.quote
@@ -46,5 +46,6 @@ export default defineComponent({
       }
     },
   },
+  components: { CQuoteUserBadge },
 })
 </script>
