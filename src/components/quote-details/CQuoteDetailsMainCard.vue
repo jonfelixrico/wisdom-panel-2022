@@ -1,15 +1,29 @@
 <template>
   <q-card flat>
-    <q-card-section class="row">
-      <div class="col">
+    <q-card-section>
+      <div class="q-gutter-y-xs">
         <div class="text-h5">"{{ quote.content }}"</div>
         <i18n-t
-          keypath="quote.authorFormat"
+          keypath="quote.detailsPage.authorFormat"
           class="pre row text-secondary"
           tag="div"
         >
           <template #user>
             <CQuoteUserBadge :user="author" class="text-white" />
+          </template>
+        </i18n-t>
+
+        <i18n-t
+          keypath="quote.detailsPage.submitterFormat"
+          class="pre row text-secondary"
+          tag="div"
+        >
+          <template #user>
+            <CQuoteUserBadge :user="submitter" class="text-white" />
+          </template>
+
+          <template #date>
+            {{ formattedDate }}
           </template>
         </i18n-t>
       </div>
@@ -22,13 +36,11 @@ import { Quote } from 'src/stores/quote-store'
 import { defineComponent, PropType } from 'vue'
 import CQuoteUserBadge from '../quote/CQuoteUserBadge.vue'
 
-type PartialQuote = Pick<Quote, 'content' | 'authorId' | 'serverId'>
-
 export default defineComponent({
   props: {
     quote: {
       required: true,
-      type: Object as PropType<PartialQuote>,
+      type: Object as PropType<Quote>,
     },
   },
   computed: {
@@ -38,6 +50,18 @@ export default defineComponent({
         serverId,
         userId: authorId,
       }
+    },
+
+    submitter() {
+      const { serverId, submitterId } = this.quote
+      return {
+        serverId,
+        userId: submitterId,
+      }
+    },
+
+    formattedDate() {
+      return this.quote.submitDt.toLocaleDateString()
     },
   },
   components: { CQuoteUserBadge },
