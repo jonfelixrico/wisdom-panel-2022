@@ -13,12 +13,6 @@
           </template>
         </i18n-t>
       </div>
-
-      <div class="row items-start" v-if="quote.status === 'PENDING'">
-        <q-badge color="warning" text-color="black">{{
-          $t('quote.status.pending')
-        }}</q-badge>
-      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -28,7 +22,7 @@ import { Quote } from 'src/stores/quote-store'
 import { defineComponent, PropType } from 'vue'
 import CQuoteUserBadge from '../quote/CQuoteUserBadge.vue'
 
-type PartialQuote = Pick<Quote, 'content' | 'authorId' | 'serverId' | 'status'>
+type PartialQuote = Pick<Quote, 'content' | 'authorId' | 'serverId'>
 
 export default defineComponent({
   props: {
