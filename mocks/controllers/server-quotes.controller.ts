@@ -71,7 +71,7 @@ export function serverQuotesController(app: Router) {
       status: 'PENDING',
       approvalRequirements: {
         requiredVoteCount: 3,
-        voters: ['user-1'],
+        voters: ['user-1', 'user-2'],
         deadline: date.addToDate(new Date(), { day: 1 }),
       },
     } as Quote)
