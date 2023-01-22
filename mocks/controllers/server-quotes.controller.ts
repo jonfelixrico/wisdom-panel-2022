@@ -35,28 +35,26 @@ export function serverQuotesController(app: Router) {
     }
   })
 
+  router.get('/server/:serverId/quote/dummy', (req, res) => {
+    res.json({
+      id: 'dummy',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+
+      authorId: 'user-1',
+      submitterId: 'user-2',
+
+      serverId: req.params.serverId,
+
+      receives: generateReceives(),
+      status: 'ACCEPTED',
+      submitDt: new Date('2022-01-01'),
+    } as Quote)
+  })
+
   let statusCtr = 0
   router.get('/server/:serverId/quote/:quoteId', (req, res) => {
     const { serverId, quoteId } = req.params
-
-    if (quoteId === 'dummy') {
-      // TODO move this to the data file
-      res.json({
-        id: 'dummy',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-
-        authorId: 'user-1',
-        submitterId: 'user-2',
-
-        serverId: 'dummy',
-
-        receives: generateReceives(),
-        status: 'ACCEPTED',
-        submitDt: new Date('2022-01-01'),
-      } as Quote)
-      return
-    }
 
     const generated = generateQuote(serverId, quoteId)
 
