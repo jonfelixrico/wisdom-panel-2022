@@ -9,7 +9,60 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { getLogger } from 'src/boot/pino-logger'
+import CQuoteUserBadge from 'src/components/quote/CQuoteUserBadge.vue'
+import { useQuoteStore } from 'src/stores/quote-store'
+import { defineComponent, computed } from 'vue'
+import { RouteParams, useRoute } from 'vue-router'
 
-export default defineComponent({})
+const LOGGER = getLogger('ServerQuoteDetails')
+
+function extractIdsFromParams({ quoteId, serverId }: RouteParams) {
+  return {
+    quoteId: String(quoteId),
+    serverId: String(serverId),
+  }
+}
+
+export default defineComponent({
+  setup() {
+    const $route = useRoute()
+    const store = useQuoteStore()
+    return {
+      /*
+       * We can assume that this is not null because it should've been pre-loaded
+       * by `beforeRouteEnter`.
+       */
+      quote: computed(() => {
+        const { quoteId, serverId } = extractIdsFromParams($route.params)
+        return store.servers[serverId]?.[quoteId]
+      }),
+    }
+  },
+
+  computed: {
+    author() {
+      const { serverId, authorId } = this.quote
+      return {
+        serverId,
+        userId: authorId,
+      }
+    },
+  },
+
+  async beforeRouteEnter(to, from, next) {
+    const { quoteId, serverId } = extractIdsFromParams(to.params)
+    const store = useQuoteStore()
+    try {
+      // checks for existence + preloads the quote
+      await store.getQuote(quoteId, serverId)
+      next()
+    } catch (e) {
+      LOGGER.error(e, 'Error during beforeRouteEnter')
+      // TODO create error dialog
+      next(false)
+    }
+  },
+  components: { CQuoteUserBadge },
+})
 </script>
