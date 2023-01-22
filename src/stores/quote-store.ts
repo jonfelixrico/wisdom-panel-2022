@@ -61,7 +61,8 @@ export const useQuoteStore = defineStore('quote', {
 
         LOGGER.debug(`Fetching quote ${serverId}/${quoteId}`)
 
-        const { data } = await api.get(url)
+        const { data } = await api.get<Quote>(url)
+        data.submitDt = new Date(data.submitDt) // deserialize the date
         this.servers[serverId][quoteId] = data
 
         LOGGER.info(`Fetched and stored quote ${serverId}/${quoteId}`)
