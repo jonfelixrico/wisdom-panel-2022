@@ -9,8 +9,8 @@
         <div class="q-gutter-y-sm">
           <CQuoteDetailsMainCard :quote="quote" />
           <CQuoteDetailsPendingCard
-            v-if="isPendingQuote(quote)"
-            :quote="quote"
+            v-if="quote.approvalRequirements"
+            :requirements="quote.approvalRequirements"
           />
         </div>
       </div>
@@ -21,18 +21,12 @@
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
 import CQuoteDetailsMainCard from 'src/components/quote-details/CQuoteDetailsMainCard.vue'
-import CQuoteDetailsPendingCard, {
-  PendingQuote,
-} from 'src/components/quote-details/CQuoteDetailsPendingCard.vue'
-import { Quote, useQuoteStore } from 'src/stores/quote-store'
+import CQuoteDetailsPendingCard from 'src/components/quote-details/CQuoteDetailsPendingCard.vue'
+import { useQuoteStore } from 'src/stores/quote-store'
 import { defineComponent, computed } from 'vue'
 import { RouteParams, useRoute } from 'vue-router'
 
 const LOGGER = getLogger('ServerQuoteDetails')
-
-function isPendingQuote(quote: Quote): quote is PendingQuote {
-  return !!quote.approvalRequirements
-}
 
 function extractIdsFromParams({ quoteId, serverId }: RouteParams) {
   return {
@@ -54,7 +48,6 @@ export default defineComponent({
         const { quoteId, serverId } = extractIdsFromParams($route.params)
         return store.servers[serverId]?.[quoteId]
       }),
-      isPendingQuote,
     }
   },
 
