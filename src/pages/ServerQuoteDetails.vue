@@ -6,7 +6,13 @@
     </q-toolbar>
     <div class="col">
       <div class="content-max-width q-mx-auto q-py-sm">
-        <CQuoteDetailsMainCard :quote="quote" />
+        <div class="q-gutter-y-sm">
+          <CQuoteDetailsMainCard :quote="quote" />
+          <CQuoteDetailsPendingCard
+            v-if="quote.status === 'PENDING'"
+            :quote="quote"
+          />
+        </div>
       </div>
     </div>
   </q-page>
@@ -15,6 +21,7 @@
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
 import CQuoteDetailsMainCard from 'src/components/quote-details/CQuoteDetailsMainCard.vue'
+import CQuoteDetailsPendingCard from 'src/components/quote-details/CQuoteDetailsPendingCard.vue'
 import { useQuoteStore } from 'src/stores/quote-store'
 import { defineComponent, computed } from 'vue'
 import { RouteParams, useRoute } from 'vue-router'
@@ -65,6 +72,6 @@ export default defineComponent({
       next(false)
     }
   },
-  components: { CQuoteDetailsMainCard },
+  components: { CQuoteDetailsMainCard, CQuoteDetailsPendingCard },
 })
 </script>
