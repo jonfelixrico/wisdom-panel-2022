@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 import { getLogger } from 'src/boot/pino-logger'
+import { usePromiseCache } from 'src/utils/promise-cache.utils'
 
 export interface QuoteReceive {
   id: string
@@ -31,6 +32,7 @@ interface Store {
 }
 
 const LOGGER = getLogger('store:quote')
+const promiseCache = usePromiseCache()
 
 export const useQuoteStore = defineStore('quote', {
   state: (): Store => ({
@@ -45,16 +47,27 @@ export const useQuoteStore = defineStore('quote', {
         return quote
       }
 
-      if (!this.servers[serverId]) {
-        this.servers[serverId] = {}
-        LOGGER.debug(`Created sub-object for ${serverId}.`)
-      }
+      const url = `server/${serverId}/quote/${quoteId}`
 
-      LOGGER.debug(`Fetching quote ${serverId}/${quoteId}`)
-      const { data } = await api.get(`server/${serverId}/quote/${quoteId}`)
-      this.servers[serverId][quoteId] = data
-      LOGGER.info(`Fetched and stored quote ${serverId}/${quoteId}`)
-      return data
+      /*
+       * PromiseCache is being used because we want a unique quote to only have at most one running HTTP
+       * call at any given time.
+       */
+      return await promiseCache.wrap(url, async () => {
+        if (!this.servers[serverId]) {
+          this.servers[serverId] = {}
+          LOGGER.debug(`Created sub-object for ${serverId}.`)
+        }
+
+        LOGGER.debug(`Fetching quote ${serverId}/${quoteId}`)
+
+        const { data } = await api.get(url)
+        this.servers[serverId][quoteId] = data
+
+        LOGGER.info(`Fetched and stored quote ${serverId}/${quoteId}`)
+
+        return data
+      })
     },
   },
 })
