@@ -10,6 +10,7 @@
           <CQuoteDetailsMainCard :quote="quote" />
           <CQuoteDetailsPendingCard
             v-if="quote.approvalRequirements"
+            :server-id="quote.serverId"
             :requirements="quote.approvalRequirements"
           />
         </div>
