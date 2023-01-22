@@ -4,7 +4,32 @@
       <q-btn icon="arrow_back" flat round dense />
       <q-toolbar-title>{{ $t('quote.detailsPage.title') }}</q-toolbar-title>
     </q-toolbar>
-    <div class="col"></div>
+    <div class="col">
+      <div class="content-max-width q-mx-auto q-py-sm">
+        <q-card flat>
+          <q-card-section class="row">
+            <div class="col">
+              <div class="text-h5">"{{ quote.content }}"</div>
+              <i18n-t
+                keypath="quote.authorFormat"
+                class="pre row text-secondary"
+                tag="div"
+              >
+                <template #user>
+                  <CQuoteUserBadge :user="author" class="text-white" />
+                </template>
+              </i18n-t>
+            </div>
+
+            <div class="row items-start">
+              <q-badge color="warning" text-color="black">{{
+                $t('quote.status.pending')
+              }}</q-badge>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 
