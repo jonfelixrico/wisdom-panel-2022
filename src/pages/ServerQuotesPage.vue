@@ -80,6 +80,9 @@ export default defineComponent({
         )
         quoteIdArr.value.push(...data)
         hasNoDataLeft = data.length < COUNT_PER_FETCH
+        if (hasNoDataLeft) {
+          LOGGER.debug('Reached the end of the data to fetch.')
+        }
       } catch (e) {
         LOGGER.error(e, 'Error encountered while loading.')
       } finally {
