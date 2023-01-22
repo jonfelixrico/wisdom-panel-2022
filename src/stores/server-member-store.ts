@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
+import { usePromiseCache } from 'src/utils/promise-cache.utils'
+
+const promiseCache = usePromiseCache()
 
 interface ServerMember {
   username: string
@@ -30,18 +33,21 @@ export const userServerMemberStore = defineStore('server-member', {
         return member
       }
 
-      let server = this.servers[serverId]
-      if (!server) {
-        this.servers[serverId] = {}
-        server = this.servers[serverId]
-      }
+      const url = `server/${serverId}/user/${userId}`
+      return await promiseCache.wrap(url, async () => {
+        let server = this.servers[serverId]
+        if (!server) {
+          this.servers[serverId] = {}
+          server = this.servers[serverId]
+        }
 
-      const { data } = await api.get<ServerMember>(
-        `server/${serverId}/user/${userId}`
-      )
+        const { data } = await api.get<ServerMember>(
+          `server/${serverId}/user/${userId}`
+        )
 
-      server[userId] = data
-      return data
+        server[userId] = data
+        return data
+      })
     },
   },
 })
