@@ -24,7 +24,7 @@ export const userServerMemberStore = defineStore('server-member', {
     }
   },
   actions: {
-    async fetchServerMember(
+    async getServerMember(
       serverId: string,
       userId: string
     ): Promise<ServerMember> {
