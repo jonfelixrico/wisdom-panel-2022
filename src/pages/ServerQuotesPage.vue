@@ -35,7 +35,6 @@ import CQuoteCard from 'src/components/quote/CQuoteCard.vue'
 import { useServerIdParam } from 'src/composables/route-param.composables'
 
 export default defineComponent({
-  // TODO implement cursor-based pagination
   setup() {
     const api = useApi()
     const serverId = useServerIdParam()
