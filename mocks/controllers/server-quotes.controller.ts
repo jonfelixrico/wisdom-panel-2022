@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { Quote } from 'src/stores/quote-store'
 import { generateQuoteListData, generateQuote } from '../data/quote.data'
+import { date } from 'quasar'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
@@ -71,6 +72,7 @@ export function serverQuotesController(app: Router) {
         approvalRequirements: {
           requiredVoteCount: 3,
           voters: [],
+          deadline: date.addToDate(new Date(), { day: 1 }),
         },
       } as Quote)
     }

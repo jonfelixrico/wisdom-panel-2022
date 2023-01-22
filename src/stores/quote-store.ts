@@ -11,6 +11,7 @@ export interface QuoteReceive {
 export interface ApprovalRequirements {
   requiredVoteCount: number
   voters: string[]
+  deadline: Date
 }
 
 export interface Quote {
@@ -76,7 +77,15 @@ export const useQuoteStore = defineStore('quote', {
         LOGGER.debug(`Fetching quote ${serverId}/${quoteId}`)
 
         const { data } = await api.get<Quote>(url)
-        data.submitDt = new Date(data.submitDt) // deserialize the date
+
+        // deserialization of dates
+        data.submitDt = new Date(data.submitDt)
+        if (data.approvalRequirements) {
+          data.approvalRequirements.deadline = new Date(
+            data.approvalRequirements.deadline
+          )
+        }
+
         this.servers[serverId][quoteId] = data
 
         LOGGER.info(`Fetched and stored quote ${serverId}/${quoteId}`)
