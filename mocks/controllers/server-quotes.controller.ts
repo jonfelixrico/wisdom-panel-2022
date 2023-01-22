@@ -57,10 +57,23 @@ export function serverQuotesController(app: Router) {
       return
     }
 
-    res.json({
-      ...generateQuote(serverId, quoteId),
-      status: statusCtr++ % 2 === 0 ? 'ACCEPTED' : 'PENDING',
-    } as Quote)
+    const generated = generateQuote(serverId, quoteId)
+
+    if (statusCtr++ % 2 === 0) {
+      res.json({
+        ...generated,
+        status: 'ACCEPTED',
+      } as Quote)
+    } else {
+      res.json({
+        ...generated,
+        status: 'PENDING',
+        approvalRequirements: {
+          voteCount: 3,
+          voters: [],
+        },
+      } as Quote)
+    }
   })
 
   app.use('', router)
