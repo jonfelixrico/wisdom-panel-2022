@@ -17,11 +17,11 @@
             />
           </div>
           <i18n-t
-            keypath="quote.authorFormat"
+            keypath="quote.authorFormatWithYear"
             tag="div"
             class="text-weight-regular text-grey-5 row pre items-center"
           >
-            <template #author>
+            <template #user>
               <CQuoteUserBadge
                 class="text-white"
                 :user="{ userId: quote.authorId, serverId }"
