@@ -11,3 +11,12 @@ export class PromiseCache {
     return fnPromise
   }
 }
+
+let instance: PromiseCache
+export function usePromiseCache() {
+  if (!instance) {
+    instance = new PromiseCache()
+  }
+
+  return instance
+}
