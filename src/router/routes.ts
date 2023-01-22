@@ -68,9 +68,17 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'quotes',
+            path: 'quote',
             name: 'server-quotes',
             component: () => import('pages/ServerQuoteList.vue'),
+            meta: {
+              moduleKey: ['quote-list'],
+            },
+          },
+          {
+            path: 'quote/:quoteId',
+            name: 'server-quote-details',
+            component: () => import('pages/ServerQuoteDetails.vue'),
             meta: {
               moduleKey: ['quote-list'],
             },
