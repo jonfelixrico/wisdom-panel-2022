@@ -10,7 +10,7 @@
       </template>
 
       <template v-else>
-        <CServerItem
+        <CServerSelectionListItem
           v-for="server of serverList"
           :key="server.serverId"
           :server="server"
@@ -30,12 +30,12 @@ import { orderBy } from 'lodash'
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, onMounted } from 'vue'
 import { getLogger } from 'src/boot/pino-logger'
-import CServerItem from './CServerItem.vue'
+import CServerSelectionListItem from './CServerSelectionListItem.vue'
 
 const LOGGER = getLogger('component:server-selection-list')
 
 export default defineComponent({
-  components: { CServerItem },
+  components: { CServerSelectionListItem },
   setup() {
     const store = useServerStore()
     const $router = useRouter()
