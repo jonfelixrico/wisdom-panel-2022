@@ -1,7 +1,7 @@
 <template>
   <q-page class="column">
     <q-toolbar class="shadow-1">
-      <q-btn icon="arrow_back" flat round dense />
+      <q-btn icon="arrow_back" flat round dense @click="goBackToList" />
       <q-toolbar-title>{{ $t('quote.detailsPage.title') }}</q-toolbar-title>
     </q-toolbar>
     <div class="col">
@@ -72,6 +72,14 @@ export default defineComponent({
         serverId,
         userId: authorId,
       }
+    },
+  },
+
+  methods: {
+    goBackToList() {
+      this.$router.push({
+        name: 'server-quote-list',
+      })
     },
   },
 
