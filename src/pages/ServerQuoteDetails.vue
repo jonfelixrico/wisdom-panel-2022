@@ -6,28 +6,7 @@
     </q-toolbar>
     <div class="col">
       <div class="content-max-width q-mx-auto q-py-sm">
-        <q-card flat>
-          <q-card-section class="row">
-            <div class="col">
-              <div class="text-h5">"{{ quote.content }}"</div>
-              <i18n-t
-                keypath="quote.authorFormat"
-                class="pre row text-secondary"
-                tag="div"
-              >
-                <template #user>
-                  <CQuoteUserBadge :user="author" class="text-white" />
-                </template>
-              </i18n-t>
-            </div>
-
-            <div class="row items-start" v-if="quote.status === 'PENDING'">
-              <q-badge color="warning" text-color="black">{{
-                $t('quote.status.pending')
-              }}</q-badge>
-            </div>
-          </q-card-section>
-        </q-card>
+        <CQuoteDetailsMainCard :quote="quote" />
       </div>
     </div>
   </q-page>
@@ -35,7 +14,7 @@
 
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
-import CQuoteUserBadge from 'src/components/quote/CQuoteUserBadge.vue'
+import CQuoteDetailsMainCard from 'src/components/quote-details/CQuoteDetailsMainCard.vue'
 import { useQuoteStore } from 'src/stores/quote-store'
 import { defineComponent, computed } from 'vue'
 import { RouteParams, useRoute } from 'vue-router'
@@ -96,6 +75,6 @@ export default defineComponent({
       next(false)
     }
   },
-  components: { CQuoteUserBadge },
+  components: { CQuoteDetailsMainCard },
 })
 </script>
