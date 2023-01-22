@@ -20,7 +20,19 @@ export interface Quote {
 
   receives: QuoteReceive[]
 
+  /**
+   * @deprecated
+   * Deprecated in favor of `pendingRequirements`.
+   */
   status: 'PENDING' | 'ACCEPTED'
+
+  /**
+   * If not null, then it means that the quote is still pending.
+   */
+  pendingRequirements?: {
+    requiredVoteCount: number
+    votes: string[]
+  }
 }
 
 interface Store {
