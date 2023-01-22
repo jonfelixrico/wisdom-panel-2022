@@ -15,8 +15,12 @@
       <div>
         This has received {{ requirements.voters.length }} out of
         {{ requirements.requiredVoteCount }} votes.
-        <span class="text-negative text-weight-medium">
-          Voting is only open until 5pm!
+        <span class="text-negative">
+          Voting is only open until
+          <span class="text-weight-bold">{{
+            requirements.deadline.toLocaleString()
+          }}</span
+          >.
         </span>
       </div>
       <div v-if="requirements.voters.length">Upvoted by</div>
