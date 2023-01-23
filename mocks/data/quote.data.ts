@@ -36,6 +36,7 @@ export function generateFodderQuote(serverId: string, seq: number) {
   }
 
   // we need to manipulate the data a bit if we want pending quotes
+  generated.statusDeclaration = null
   generated.requiredVoteCount = 3
   generated.votes = {
     'user-1': new Date('2022-01-01'),
