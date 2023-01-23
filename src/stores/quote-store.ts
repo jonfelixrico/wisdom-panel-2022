@@ -1,42 +1,10 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 import { getLogger } from 'src/boot/pino-logger'
+import { CoreAPIQuote } from 'src/types/core-api/core-api-quote.interface'
+import { Quote } from 'src/types/quote.interface'
+import { consumeAPIQuote } from 'src/utils/core-api-quote.utils'
 import { usePromiseCache } from 'src/utils/promise-cache.utils'
-
-export interface QuoteReceive {
-  id: string
-  userId: string
-}
-
-export interface ApprovalRequirements {
-  requiredVoteCount: number
-  voters: string[]
-  deadline: Date
-}
-
-export interface Quote {
-  id: string
-  content: string
-  authorId: string
-
-  submitterId: string
-  submitDt: Date
-
-  serverId: string
-
-  receives: QuoteReceive[]
-
-  /**
-   * @deprecated
-   * Deprecated in favor of `pendingRequirements`.
-   */
-  status: 'PENDING' | 'ACCEPTED'
-
-  /**
-   * If not null, then it means that the quote is still pending.
-   */
-  approvalRequirements?: ApprovalRequirements
-}
 
 interface Store {
   servers: {
@@ -55,6 +23,19 @@ export const useQuoteStore = defineStore('quote', {
   }),
 
   actions: {
+    setQuote(quote: Quote) {
+      const serverQuotes = this.servers[quote.serverId]
+
+      if (serverQuotes) {
+        serverQuotes[quote.id] = quote
+        return
+      }
+
+      this.servers[quote.serverId] = {
+        [quote.id]: quote,
+      }
+    },
+
     async getQuote(quoteId: string, serverId: string) {
       const quote = this.servers[serverId]?.[quoteId]
       if (quote) {
@@ -69,24 +50,10 @@ export const useQuoteStore = defineStore('quote', {
        * call at any given time.
        */
       return await promiseCache.wrap(url, async () => {
-        if (!this.servers[serverId]) {
-          this.servers[serverId] = {}
-          LOGGER.debug(`Created sub-object for ${serverId}.`)
-        }
-
         LOGGER.debug(`Fetching quote ${serverId}/${quoteId}`)
 
-        const { data } = await api.get<Quote>(url)
-
-        // deserialization of dates
-        data.submitDt = new Date(data.submitDt)
-        if (data.approvalRequirements) {
-          data.approvalRequirements.deadline = new Date(
-            data.approvalRequirements.deadline
-          )
-        }
-
-        this.servers[serverId][quoteId] = data
+        const { data } = await api.get<CoreAPIQuote>(url)
+        this.setQuote(consumeAPIQuote(data))
 
         LOGGER.info(`Fetched and stored quote ${serverId}/${quoteId}`)
 
