@@ -8,8 +8,14 @@
       <div class="content-max-width q-mx-auto q-py-sm">
         <div class="q-gutter-y-sm">
           <CQuoteDetailsMainCard :quote="quote" />
+
           <CQuoteDetailsPendingCard
             v-if="isPendingQuote(quote)"
+            :quote="quote"
+          />
+
+          <CQuoteDetailsApprovedSection
+            v-if="isApprovedQuote(quote)"
             :quote="quote"
           />
         </div>
@@ -20,10 +26,11 @@
 
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
+import CQuoteDetailsApprovedSection from 'src/components/quote-details/CQuoteDetailsApprovedSection.vue'
 import CQuoteDetailsMainCard from 'src/components/quote-details/CQuoteDetailsMainCard.vue'
 import CQuoteDetailsPendingCard from 'src/components/quote-details/CQuoteDetailsPendingCard.vue'
 import { useQuoteStore } from 'src/stores/quote-store'
-import { isPendingQuote } from 'src/types/quote.interface'
+import { isApprovedQuote, isPendingQuote } from 'src/types/quote.interface'
 import { defineComponent, computed } from 'vue'
 import { RouteParams, useRoute } from 'vue-router'
 
@@ -52,6 +59,7 @@ export default defineComponent({
       }),
 
       isPendingQuote,
+      isApprovedQuote,
     }
   },
 
@@ -76,6 +84,10 @@ export default defineComponent({
       next(false)
     }
   },
-  components: { CQuoteDetailsMainCard, CQuoteDetailsPendingCard },
+  components: {
+    CQuoteDetailsMainCard,
+    CQuoteDetailsPendingCard,
+    CQuoteDetailsApprovedSection,
+  },
 })
 </script>
