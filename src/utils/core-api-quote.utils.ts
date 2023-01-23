@@ -14,8 +14,8 @@ class CoreAPIQuoteReceiveTransformer implements CoreAPIQuoteReceive {
 
   userId!: string
   serverId!: string
-  channelId?: string
-  messageId?: string
+  channelId!: string | null
+  messageId!: string | null
   isLegacy!: boolean
 }
 
@@ -39,14 +39,14 @@ class CoreAPIQuoteTransformer implements CoreAPIQuote {
   submitDt!: Date
 
   serverId!: string
-  channelId?: string
-  messageId?: string
+  channelId!: string | null
+  messageId!: string | null
 
   @Type(() => CoreAPIQuoteReceiveTransformer)
   receives!: CoreAPIQuoteReceiveTransformer[]
 
   @Type(() => CoreAPIQuoteStatusDeclarationTransformer)
-  statusDeclaration?: CoreAPIQuoteStatusDeclarationTransformer
+  statusDeclaration!: CoreAPIQuoteStatusDeclarationTransformer | null
 
   votes!: Record<string, Date>
   requiredVoteCount!: number

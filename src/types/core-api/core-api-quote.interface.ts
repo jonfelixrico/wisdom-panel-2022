@@ -10,18 +10,18 @@ export interface CoreAPIQuote {
   /**
    * Nullish if `isLegacy` is true.
    */
-  channelId?: string
+  channelId: string | null
   /**
    * Nullish if `isLegacy` is true.
    */
-  messageId?: string
+  messageId: string | null
 
   receives: CoreAPIQuoteReceive[]
 
   /**
    * If null, then Quote is still pending.
    */
-  statusDeclaration?: CoreAPIQuoteStatusDeclaration
+  statusDeclaration: CoreAPIQuoteStatusDeclaration | null
 
   votes: Record<string, Date>
   requiredVoteCount: number
@@ -44,11 +44,11 @@ export interface CoreAPIQuoteReceive {
   /**
    * Nullish if `isLegacy` is true.
    */
-  channelId?: string
+  channelId: string | null
   /**
    * Nullish if `isLegacy` is true.
    */
-  messageId?: string
+  messageId: string | null
 
   isLegacy: boolean
 }
