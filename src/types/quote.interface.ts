@@ -1,18 +1,18 @@
 /**
  * Base interface for quotes.
  */
-export interface BaseQuote {
+interface BaseQuote {
   id: string
   content: string
   authorId: string
   submitterId: Date
   submitDt: Date
   serverId: string
-  type: 'APPROVED' | 'PENDING'
+  status: string
 }
 
 export interface ApprovedQuote extends BaseQuote {
-  type: 'APPROVED'
+  status: 'APPROVED'
 
   receives: {
     id: string
@@ -22,9 +22,17 @@ export interface ApprovedQuote extends BaseQuote {
 }
 
 export interface PendingQuote extends BaseQuote {
-  type: 'PENDING'
+  status: 'PENDING'
 
   expirationDt: Date
   votes: Record<string, Date>
   requiredVoteCount: number
+}
+
+export function isPendingQuote(quote: BaseQuote): quote is PendingQuote {
+  return quote.status === 'PENDING'
+}
+
+export function isApprovedQuote(quote: BaseQuote): quote is ApprovedQuote {
+  return quote.status === 'APPROVED'
 }
