@@ -21,5 +21,11 @@ export default {
         'This quote has received {count} out of {total} vote. | This quote has received {count} out of {total} votes.',
       upvotedBy: 'Upvoted by {users}',
     },
+
+    approvedSection: {
+      title: 'Received 1 time | Received {count} times',
+      message:
+        'The receive count increases each time this quote is shown whenever someone uses the receive command.',
+    },
   },
 }
