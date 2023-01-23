@@ -40,6 +40,17 @@ const routes: RouteRecordRaw[] = [
     },
   },
 
+  /*
+   * TODO remove this once the bot has caught up
+   */
+  {
+    path: '/preview/server/:serverId/quote/:quoteId',
+    name: 'quote-preview',
+    redirect: {
+      name: 'server-quote-details',
+    },
+  },
+
   {
     path: '/server',
     component: () => import('layouts/MainLayout.vue'),
