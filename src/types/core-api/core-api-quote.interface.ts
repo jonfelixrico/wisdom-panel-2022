@@ -6,8 +6,15 @@ export interface CoreAPIQuote {
   submitDt: Date
 
   serverId: string
-  channelId: string
-  messageId: string
+
+  /**
+   * Nullish if `isLegacy` is true.
+   */
+  channelId?: string
+  /**
+   * Nullish if `isLegacy` is true.
+   */
+  messageId?: string
 
   receives: CoreAPIQuoteReceive[]
 
@@ -31,7 +38,13 @@ export interface CoreAPIQuoteReceive {
 
   serverId: string
 
+  /**
+   * Nullish if `isLegacy` is true.
+   */
   channelId?: string
+  /**
+   * Nullish if `isLegacy` is true.
+   */
   messageId?: string
 
   isLegacy: boolean
