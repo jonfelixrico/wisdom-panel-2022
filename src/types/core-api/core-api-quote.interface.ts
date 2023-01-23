@@ -41,3 +41,6 @@ export interface CoreAPIQuoteStatusDeclaration {
   status: 'EXPIRED' | 'APPROVED'
   timestamp: Date
 }
+
+export type CoreRESTGetQuoteResult = CoreAPIQuote
+export type CoreRESTGetQuoteList = CoreAPIQuote[]
