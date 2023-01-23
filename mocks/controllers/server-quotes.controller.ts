@@ -32,7 +32,7 @@ export function serverQuotesController(app: Router) {
     }
   })
 
-  router.get('/server/:serverId/quote/quote-fodder-:seq', (req, res) => {
+  router.get('/server/:serverId/quote/fodder-quote-:seq', (req, res) => {
     const { serverId, seq } = req.params
     res.json(generateFodderQuote(serverId, Number(seq)))
   })
