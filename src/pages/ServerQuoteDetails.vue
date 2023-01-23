@@ -7,9 +7,9 @@
     <div class="col">
       <div class="content-max-width q-mx-auto q-py-sm">
         <div class="q-gutter-y-sm">
-          <CQuoteDetailsMainCard :quote="quote" />
+          <CQuoteDetailsMainSection :quote="quote" />
 
-          <CQuoteDetailsPendingCard
+          <CQuoteDetailsPendingSection
             v-if="isPendingQuote(quote)"
             :quote="quote"
           />
@@ -27,8 +27,8 @@
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
 import CQuoteDetailsApprovedSection from 'src/components/quote-details/CQuoteDetailsApprovedSection.vue'
-import CQuoteDetailsMainCard from 'src/components/quote-details/CQuoteDetailsMainCard.vue'
-import CQuoteDetailsPendingCard from 'src/components/quote-details/CQuoteDetailsPendingCard.vue'
+import CQuoteDetailsMainSection from 'src/components/quote-details/CQuoteDetailsMainSection.vue'
+import CQuoteDetailsPendingSection from 'src/components/quote-details/CQuoteDetailsPendingSection.vue'
 import { useQuoteStore } from 'src/stores/quote-store'
 import { isApprovedQuote, isPendingQuote } from 'src/types/quote.interface'
 import { defineComponent, computed } from 'vue'
@@ -85,8 +85,8 @@ export default defineComponent({
     }
   },
   components: {
-    CQuoteDetailsMainCard,
-    CQuoteDetailsPendingCard,
+    CQuoteDetailsMainSection,
+    CQuoteDetailsPendingSection,
     CQuoteDetailsApprovedSection,
   },
 })
