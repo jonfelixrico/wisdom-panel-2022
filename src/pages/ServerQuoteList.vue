@@ -74,8 +74,8 @@ export default defineComponent({
         count: COUNT_PER_FETCH,
       }
 
-      if (arr.length === 0) {
-        // This means that we are still on the first page
+      if (arr.length !== 0) {
+        // This means that we're on page 2 onwards
         params.cursorId = arr[arr.length - 1].id
       }
 
