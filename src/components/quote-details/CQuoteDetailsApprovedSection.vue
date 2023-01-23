@@ -22,21 +22,22 @@
         <template #count>{{ receiveCount }}</template>
         <template #users>
           <div
-            v-for="(receive, index) of quote.receives"
-            :key="receive.id"
+            v-for="({ userId, lastReceived, count }, index) of perUserTally"
+            :key="userId"
             :class="{
               'q-ml-xs': index > 0,
             }"
           >
-            <CQuoteUserBadge
+            <CQuoteReceiverChip
               :user="{
                 serverId: quote.serverId,
-                userId: receive.userId,
+                userId,
               }"
+              :count="count"
             />
             <q-tooltip>{{
               $t('quote.detailsPage.approvedSection.lastReceived', {
-                date: receive.timestamp.toLocaleString(),
+                date: lastReceived.toLocaleString(),
               })
             }}</q-tooltip>
           </div>
@@ -47,9 +48,16 @@
 </template>
 
 <script lang="ts">
+import { groupBy, maxBy, orderBy } from 'lodash'
 import { ApprovedQuote } from 'src/types/quote.interface'
 import { defineComponent, PropType } from 'vue'
-import CQuoteUserBadge from '../quote/CQuoteUserBadge.vue'
+import CQuoteReceiverChip from './CQuoteReceiverChip.vue'
+
+interface Tally {
+  userId: string
+  count: number
+  lastReceived: Date
+}
 
 export default defineComponent({
   props: {
@@ -63,8 +71,25 @@ export default defineComponent({
     receiveCount() {
       return this.quote.receives.length
     },
+
+    perUserTally(): Tally[] {
+      const grouped = groupBy(this.quote.receives, (r) => r.userId)
+      const tally: Tally[] = []
+
+      for (const userId in grouped) {
+        const max =
+          maxBy(grouped[userId], (r) => r.timestamp) ?? grouped[userId][0]
+        tally.push({
+          userId,
+          count: grouped[userId].length,
+          lastReceived: max.timestamp,
+        })
+      }
+
+      return orderBy(tally, ['count'], ['desc'])
+    },
   },
 
-  components: { CQuoteUserBadge },
+  components: { CQuoteReceiverChip },
 })
 </script>
