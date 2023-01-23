@@ -16,14 +16,14 @@ export interface CoreAPIQuote {
    */
   messageId: string | null
 
-  receives: CoreAPIQuoteReceive[]
+  receives: CoreAPIQuoteReceive[] | null
 
   /**
    * If null, then Quote is still pending.
    */
   statusDeclaration: CoreAPIQuoteStatusDeclaration | null
 
-  votes: Record<string, Date>
+  votes: Record<string, Date> | null
   requiredVoteCount: number
   /**
    * Voting deadline.
