@@ -18,6 +18,9 @@ export interface CoreAPIQuote {
 
   receives: CoreAPIQuoteReceive[]
 
+  /**
+   * If null, then Quote is still pending.
+   */
   statusDeclaration?: CoreAPIQuoteStatusDeclaration
 
   votes: Record<string, Date>
