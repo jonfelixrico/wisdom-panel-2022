@@ -29,12 +29,6 @@ const routes: RouteRecordRaw[] = [
           isPublicRoute: true,
         },
       },
-      {
-        name: 'receive-preview',
-        path: '/preview/server/:serverId/quote/:quoteId',
-        component: () =>
-          import('pages/preview/receive/ReceiveQuickPreviewPage.vue'),
-      },
     ],
   },
 
