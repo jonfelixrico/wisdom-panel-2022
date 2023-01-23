@@ -1,4 +1,12 @@
-import type { CoreAPIQuote } from 'src/types/core-api/core-api-quote.interface'
+import { range } from 'lodash'
+import type {
+  CoreAPIQuote,
+  CoreAPIQuoteReceive,
+} from 'src/types/core-api/core-api-quote.interface'
+
+type MockType = Partial<Omit<CoreAPIQuote, 'receives'>> & {
+  receives: Partial<CoreAPIQuoteReceive>[]
+}
 
 /**
  * Generates approved quotes by default.
@@ -6,10 +14,7 @@ import type { CoreAPIQuote } from 'src/types/core-api/core-api-quote.interface'
  * @param seq
  * @returns
  */
-function generateBaseQuote(
-  serverId: string,
-  seq: number
-): Partial<CoreAPIQuote> {
+function generateBaseQuote(serverId: string, seq: number): MockType {
   const quoteId = `fodder-quote-${seq}`
   return {
     id: `fodder-quote-${seq}`,
@@ -17,7 +22,12 @@ function generateBaseQuote(
     authorId: 'user-1',
     submitterId: 'user-2',
     content: `Fodder -- id ${quoteId} of server ${serverId}`,
-    receives: [],
+    receives: range(seq % 5).map((_, index) => {
+      return {
+        id: `receive-${index}`,
+        userId: `user-${index % 2}`,
+      } as Partial<CoreAPIQuoteReceive>
+    }),
     submitDt: new Date('2022-01-01'),
     statusDeclaration: {
       status: 'APPROVED',
@@ -52,8 +62,8 @@ export function generateFodderQuote(serverId: string, seq: number) {
   return generated
 }
 
-export function generateQuoteListData(count: number): Partial<CoreAPIQuote>[] {
-  const list: Partial<CoreAPIQuote>[] = []
+export function generateQuoteListData(count: number): Partial<MockType>[] {
+  const list: MockType[] = []
 
   for (let seq = 1; seq <= count; seq++) {
     list.push(generateFodderQuote('to_be_replaced', seq))
