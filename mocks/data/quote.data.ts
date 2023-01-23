@@ -1,4 +1,5 @@
 import { range } from 'lodash'
+import { date } from 'quasar'
 import type {
   CoreAPIQuote,
   CoreAPIQuoteReceive,
@@ -26,6 +27,7 @@ function generateBaseQuote(serverId: string, seq: number): MockType {
       return {
         id: `receive-${index}`,
         userId: `user-${index % 3}`,
+        timestamp: date.addToDate(new Date('2022-01-01'), { days: index }),
       } as Partial<CoreAPIQuoteReceive>
     }),
     submitDt: new Date('2022-01-01'),
