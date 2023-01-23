@@ -20,7 +20,7 @@ export function serverQuotesController(app: Router) {
         })
       )
     } else {
-      const idx = QUOTE_LIST_DATA.findIndex((id) => id === cursorId)
+      const idx = QUOTE_LIST_DATA.findIndex(({ id }) => id === cursorId)
       res.json(
         QUOTE_LIST_DATA.slice(idx + 1, idx + Number(count) + 1).map((data) => {
           return {

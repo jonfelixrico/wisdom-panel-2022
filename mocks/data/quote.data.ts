@@ -22,10 +22,10 @@ function generateBaseQuote(serverId: string, seq: number): MockType {
     authorId: 'user-1',
     submitterId: 'user-2',
     content: `Fodder -- id ${quoteId} of server ${serverId}`,
-    receives: range(seq % 5).map((_, index) => {
+    receives: range(seq % 10).map((_, index) => {
       return {
         id: `receive-${index}`,
-        userId: `user-${index % 2}`,
+        userId: `user-${index % 3}`,
       } as Partial<CoreAPIQuoteReceive>
     }),
     submitDt: new Date('2022-01-01'),
