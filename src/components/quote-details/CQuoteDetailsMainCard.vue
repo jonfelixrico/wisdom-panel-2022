@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { Quote } from 'src/stores/quote-store'
+import { Quote } from 'src/types/quote.interface'
 import { defineComponent, PropType } from 'vue'
 import CQuoteUserBadge from '../quote/CQuoteUserBadge.vue'
 
