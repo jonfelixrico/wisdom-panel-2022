@@ -24,7 +24,7 @@
             <template #user>
               <CQuoteUserBadge
                 class="text-white"
-                :user="{ userId: quote.authorId, serverId }"
+                :user="{ userId: quote.authorId, serverId: quote.serverId }"
               />
             </template>
             <template #year>
@@ -52,30 +52,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { Quote } from 'src/types/quote.interface'
+import { defineComponent, PropType } from 'vue'
 import CQuoteUserBadge from './CQuoteUserBadge.vue'
-import { useQuoteLoader } from './quote.composables'
 
-/**
- * @deprecated
- */
 export default defineComponent({
   props: {
-    quoteId: {
-      type: String,
+    quote: {
+      type: Object as PropType<Quote>,
       required: true,
     },
-    serverId: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const quote = useQuoteLoader(props)
-
-    return {
-      quote,
-    }
   },
 
   methods: {
@@ -83,8 +69,8 @@ export default defineComponent({
       this.$router.push({
         name: 'server-quote-details',
         params: {
-          serverId: this.serverId,
-          quoteId: this.quoteId,
+          serverId: this.quote.serverId,
+          quoteId: this.quote.id,
         },
       })
     },
