@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { Quote } from 'src/stores/quote-store'
-import { generateQuoteListData, generateQuote } from '../data/quote.data'
-import { date } from 'quasar'
+import { generateQuoteListData, generateFodderQuote } from '../data/quote.data'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
@@ -54,27 +53,31 @@ export function serverQuotesController(app: Router) {
 
   router.get('/server/:serverId/quote/quote-fodder-:quoteNo', (req, res) => {
     const { serverId, quoteNo } = req.params
-    const generated = generateQuote(serverId, quoteNo)
+    const generated = generateFodderQuote(serverId, quoteNo)
 
     const parsedId = parseInt(quoteNo)
 
     if (parsedId % 2 === 0) {
-      res.json({
-        ...generated,
-        status: 'ACCEPTED',
-      } as Quote)
-      return
+      generated.statusDeclaration = {
+        status: 'APPROVED',
+        timestamp: new Date('2022-01-01'),
+      }
+      return res.json(generated)
     }
 
-    res.json({
-      ...generated,
-      status: 'PENDING',
-      approvalRequirements: {
-        requiredVoteCount: 3,
-        voters: ['user-1', 'user-2'],
-        deadline: date.addToDate(new Date(), { day: 1 }),
-      },
-    } as Quote)
+    generated.requiredVoteCount = 3
+    generated.votes = {
+      'user-1': new Date('2022-01-01'),
+      'user-2': new Date('2022-01-01'),
+    }
+    generated.submitDt = new Date('2022-01-01')
+    /*
+     * Technically the quote would be expired by now since this date has passed,
+     * but since we're not bothering with expired quotes for now this is good enough.
+     */
+    generated.expirationDt = new Date('2022-01-02')
+
+    res.json(generated)
   })
 
   app.use('', router)

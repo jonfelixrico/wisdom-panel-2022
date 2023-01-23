@@ -34,7 +34,7 @@ export function generateQuote(
 
 export function generateFodderQuote(
   serverId: string,
-  seq: number
+  seq: number | string
 ): Partial<CoreAPIQuote> {
   const quoteId = `fodder-quote-${seq}`
   return {
