@@ -32,6 +32,12 @@ export function generateQuote(
   }
 }
 
+/**
+ * Generates approved quotes by default.
+ * @param serverId
+ * @param seq
+ * @returns
+ */
 export function generateFodderQuote(
   serverId: string,
   seq: number | string
@@ -45,7 +51,9 @@ export function generateFodderQuote(
     content: `Fodder -- id ${quoteId} of server ${serverId}`,
     receives: [],
     submitDt: new Date('2022-01-01'),
-    statusDeclaration: null,
-    votes: {},
+    statusDeclaration: {
+      status: 'APPROVED',
+      timestamp: new Date('2022-01-01'),
+    },
   }
 }
