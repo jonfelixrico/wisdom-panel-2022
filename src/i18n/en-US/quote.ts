@@ -26,13 +26,9 @@ export default {
       title: 'Received 1 time | Received {count} times',
       message:
         'The receive count increases each time this quote is shown whenever someone uses the receive command.',
-      tabs: {
-        tally: 'Tally',
-        history: 'History',
-      },
       lastReceived: 'Last received on {date}',
-      receiver: 'Receiver',
-      receiveFormat: 'Received by {user} on {date}',
+      receivedByFormat:
+        'Received by 1 user: {users} | Received by {count} users: {users}',
     },
   },
 }
