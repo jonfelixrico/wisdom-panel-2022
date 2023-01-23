@@ -23,7 +23,7 @@ export default {
     },
 
     approvedSection: {
-      title: 'Received 1 time | Received {count} times',
+      title: 'No receives yet | Received 1 time | Received {count} times',
       message:
         'The receive count increases each time this quote is shown whenever someone uses the receive command.',
       lastReceived: 'Last received on {date}',

@@ -1,23 +1,25 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="q-mb-md">
-        <div class="text-h6 text-warning row items-center pre">
-          <q-icon name="warning" />
-          {{ $t('quote.detailsPage.approvedSection.title') }}
-        </div>
-        <div class="text-secondary">
-          {{ $t('quote.detailsPage.approvedSection.message') }}
-        </div>
+      <div class="text-h6">
+        {{
+          $t('quote.detailsPage.approvedSection.title', {
+            count: receiveCount,
+          })
+        }}
+      </div>
+      <div class="text-secondary">
+        {{ $t('quote.detailsPage.approvedSection.message') }}
       </div>
 
       <i18n-t
+        v-if="receiveCount"
         keypath="quote.detailsPage.approvedSection.receivedByFormat"
-        :plural="quote.receives.length"
+        :plural="receiveCount"
         tag="div"
         class="pre row"
       >
-        <template #count>{{ quote.receives.length }}</template>
+        <template #count>{{ receiveCount }}</template>
         <template #users>
           <div
             v-for="(receive, index) of quote.receives"
@@ -54,6 +56,12 @@ export default defineComponent({
     quote: {
       type: Object as PropType<ApprovedQuote>,
       required: true,
+    },
+  },
+
+  computed: {
+    receiveCount() {
+      return this.quote.receives.length
     },
   },
 
