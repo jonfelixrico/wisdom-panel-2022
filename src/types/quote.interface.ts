@@ -29,10 +29,12 @@ export interface PendingQuote extends BaseQuote {
   requiredVoteCount: number
 }
 
-export function isPendingQuote(quote: BaseQuote): quote is PendingQuote {
+export type Quote = PendingQuote | ApprovedQuote
+
+export function isPendingQuote(quote: Quote): quote is PendingQuote {
   return quote.status === 'PENDING'
 }
 
-export function isApprovedQuote(quote: BaseQuote): quote is ApprovedQuote {
+export function isApprovedQuote(quote: Quote): quote is ApprovedQuote {
   return quote.status === 'APPROVED'
 }
