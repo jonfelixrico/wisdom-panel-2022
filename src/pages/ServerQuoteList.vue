@@ -38,6 +38,7 @@ import { Quote } from 'src/types/quote.interface'
 import { CoreAPIQuote } from 'src/types/core-api/core-api-quote.interface'
 import { consumeAPIQuote } from 'src/utils/core-api-quote.utils'
 import CQuoteListCard from 'src/components/quote/CQuoteListCard.vue'
+import { useQuoteStore } from 'src/stores/quote-store'
 
 interface QueryParams {
   cursorId: string
@@ -51,8 +52,16 @@ export default defineComponent({
   setup() {
     const api = useApi()
     const serverId = useServerIdParam()
+    const store = useQuoteStore()
     const quotes = ref<Quote[]>([])
     const isLoading = ref(false)
+
+    function setQuotes(quotes: Quote[]) {
+      for (const q of quotes) {
+        store.setQuote(q)
+      }
+    }
+
     /**
      * This method will be fed into QInfiniteScroll
      * @param index See documentation of QInfiniteScroll for this. For our case, we don't need this since
@@ -78,6 +87,9 @@ export default defineComponent({
           `server/${serverId.value}/quote`,
           { params }
         )
+        const consumed = data.map(consumeAPIQuote)
+        setQuotes(consumed)
+
         quotes.value.push(...data.map(consumeAPIQuote))
         hasNoDataLeft = data.length < COUNT_PER_FETCH
 
