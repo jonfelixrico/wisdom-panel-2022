@@ -2,7 +2,7 @@ export interface CoreAPIQuote {
   id: string
   content: string
   authorId: string
-  submitterId: Date
+  submitterId: string
   submitDt: Date
 
   serverId: string
