@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { groupBy, maxBy, orderBy } from 'lodash'
+import { groupBy, orderBy } from 'lodash'
 import { ApprovedQuote } from 'src/types/quote.interface'
 import { defineComponent, PropType } from 'vue'
 import CQuoteReceiverChip from './CQuoteReceiverChip.vue'
@@ -73,16 +73,24 @@ export default defineComponent({
     },
 
     perUserTally(): Tally[] {
+      const { receives } = this.quote
+      if (receives.length) {
+        return []
+      }
+
       const grouped = groupBy(this.quote.receives, (r) => r.userId)
       const tally: Tally[] = []
 
       for (const userId in grouped) {
-        const max =
-          maxBy(grouped[userId], (r) => r.timestamp) ?? grouped[userId][0]
+        const maxMillis = Math.max(
+          ...grouped[userId].map(({ timestamp }) => timestamp.getTime())
+        )
+        const lastReceived = new Date(maxMillis)
+
         tally.push({
           userId,
           count: grouped[userId].length,
-          lastReceived: max.timestamp,
+          lastReceived,
         })
       }
 
