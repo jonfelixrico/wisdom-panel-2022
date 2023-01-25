@@ -5,7 +5,7 @@ import { getLogger } from 'src/boot/pino-logger'
 const CACHE_EXPIRE_THRESHOLD = 60 * 1000
 
 export interface Server {
-  serverId: string
+  id: string
   name: string
   iconUrl: string
 

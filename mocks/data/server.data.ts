@@ -5,12 +5,12 @@ function generateServerList(serverCount: number) {
 
   for (let i = 1; i <= serverCount; i++) {
     const server: Server = {
-      serverId: `server-${i}`,
+      id: `server-${i}`,
       name: `Dummy server ${i}`,
       iconUrl: '/api/dummy-avatar',
     }
 
-    serverMap[server.serverId] = server
+    serverMap[server.id] = server
   }
   return serverMap
 }
