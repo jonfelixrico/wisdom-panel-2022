@@ -1,7 +1,7 @@
 <template>
   <q-scroll-area>
     <q-list>
-      <CServerMenuItem
+      <CServerNavigationItem
         v-for="item of ITEMS"
         :key="item.labelKey"
         :label="$t(item.labelKey)"
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { RouteLocationRaw } from 'vue-router'
 import { defineComponent } from 'vue'
-import CServerMenuItem from './CServerMenuItem.vue'
+import CServerNavigationItem from './CServerNavigationItem.vue'
 
 interface MenuItem {
   labelKey: string
@@ -27,14 +27,14 @@ const ITEMS: MenuItem[] = [
   {
     labelKey: 'server.menuItems.quoteList',
     location: {
-      name: 'quote-list',
+      name: 'server-quote-list',
     },
     moduleKeys: ['quote-list'],
   },
 ]
 
 export default defineComponent({
-  components: { CServerMenuItem },
+  components: { CServerNavigationItem },
 
   setup() {
     return {

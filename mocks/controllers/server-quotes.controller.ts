@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { Quote } from 'src/stores/quote-store'
 import { generateQuoteListData, generateQuote } from '../data/quote.data'
+import { date } from 'quasar'
 
 function generateReceives() {
   const RECEIVE_COUNT = 30
@@ -34,32 +35,45 @@ export function serverQuotesController(app: Router) {
     }
   })
 
-  let statusCtr = 0
-  router.get('/server/:serverId/quote/:quoteId', (req, res) => {
-    const { serverId, quoteId } = req.params
+  router.get('/server/:serverId/quote/dummy', (req, res) => {
+    res.json({
+      id: 'dummy',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 
-    if (quoteId === 'dummy') {
-      // TODO move this to the data file
+      authorId: 'user-1',
+      submitterId: 'user-2',
+
+      serverId: req.params.serverId,
+
+      receives: generateReceives(),
+      status: 'ACCEPTED',
+      submitDt: new Date('2022-01-01'),
+    } as Quote)
+  })
+
+  router.get('/server/:serverId/quote/quote-fodder-:quoteNo', (req, res) => {
+    const { serverId, quoteNo } = req.params
+    const generated = generateQuote(serverId, quoteNo)
+
+    const parsedId = parseInt(quoteNo)
+
+    if (parsedId % 2 === 0) {
       res.json({
-        id: 'dummy',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-
-        authorId: 'user-1',
-        submitterId: 'user-2',
-
-        serverId: 'dummy',
-
-        receives: generateReceives(),
+        ...generated,
         status: 'ACCEPTED',
-        submitDt: new Date('2022-01-01'),
       } as Quote)
       return
     }
 
     res.json({
-      ...generateQuote(serverId, quoteId),
-      status: statusCtr++ % 2 === 0 ? 'ACCEPTED' : 'PENDING',
+      ...generated,
+      status: 'PENDING',
+      approvalRequirements: {
+        requiredVoteCount: 3,
+        voters: ['user-1', 'user-2'],
+        deadline: date.addToDate(new Date(), { day: 1 }),
+      },
     } as Quote)
   })
 

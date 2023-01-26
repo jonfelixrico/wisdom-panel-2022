@@ -17,7 +17,7 @@
             @click="$router.push({ name: 'no-server-selected' })"
           />
         </q-toolbar>
-        <CServerMenu class="col" />
+        <CServerNavigation class="col" />
       </q-drawer>
 
       <q-page-container>
@@ -30,7 +30,7 @@
 <script lang="ts">
 import { useServerStore } from 'src/stores/server-store'
 import { computed, defineComponent, ref } from 'vue'
-import CServerMenu from 'src/components/server/CServerMenu.vue'
+import CServerNavigation from 'src/components/server/CServerNavigation.vue'
 import { useServerIdParam } from 'src/composables/route-param.composables'
 
 export default defineComponent({
@@ -46,6 +46,6 @@ export default defineComponent({
     }
   },
 
-  components: { CServerMenu },
+  components: { CServerNavigation },
 })
 </script>

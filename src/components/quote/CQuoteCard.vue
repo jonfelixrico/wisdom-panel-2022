@@ -9,7 +9,7 @@
               text-color="black"
               v-if="quote.status === 'PENDING'"
             >
-              {{ $t('quote.pending') }}
+              {{ $t('quote.status.pending') }}
             </q-badge>
             <div
               class="text-h6 text-weight-regular pre"
@@ -17,11 +17,11 @@
             />
           </div>
           <i18n-t
-            keypath="quote.authorFormat"
+            keypath="quote.authorFormatWithYear"
             tag="div"
             class="text-weight-regular text-grey-5 row pre items-center"
           >
-            <template #author>
+            <template #user>
               <CQuoteUserBadge
                 class="text-white"
                 :user="{ userId: quote.authorId, serverId }"
@@ -41,6 +41,7 @@
             unelevated
             :label="$t('quote.toDetailsPage')"
             no-caps
+            @click="goToDetailsPage"
           />
         </div>
       </template>
@@ -73,6 +74,19 @@ export default defineComponent({
       quote,
     }
   },
+
+  methods: {
+    goToDetailsPage() {
+      this.$router.push({
+        name: 'server-quote-details',
+        params: {
+          serverId: this.serverId,
+          quoteId: this.quoteId,
+        },
+      })
+    },
+  },
+
   components: { CQuoteUserBadge },
 })
 </script>

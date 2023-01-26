@@ -43,7 +43,7 @@ interface QueryParams {
 }
 
 const COUNT_PER_FETCH = 20
-const LOGGER = getLogger('ServerQuotesPage')
+const LOGGER = getLogger('ServerQuoteList')
 
 export default defineComponent({
   setup() {

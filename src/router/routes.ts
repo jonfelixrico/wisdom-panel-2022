@@ -54,7 +54,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'no-server-selected',
-        component: () => import('pages/NoServerSelectedPage.vue'),
+        component: () => import('pages/MainIndex.vue'),
       },
       {
         path: ':serverId',
@@ -64,13 +64,21 @@ const routes: RouteRecordRaw[] = [
             path: '',
             name: 'server-index',
             redirect: {
-              name: 'server-quotes',
+              name: 'server-quote-list',
             },
           },
           {
-            path: 'quotes',
-            name: 'server-quotes',
-            component: () => import('pages/ServerQuotesPage.vue'),
+            path: 'quote',
+            name: 'server-quote-list',
+            component: () => import('pages/ServerQuoteList.vue'),
+            meta: {
+              moduleKey: ['quote-list'],
+            },
+          },
+          {
+            path: 'quote/:quoteId',
+            name: 'server-quote-details',
+            component: () => import('pages/ServerQuoteDetails.vue'),
             meta: {
               moduleKey: ['quote-list'],
             },
@@ -78,13 +86,6 @@ const routes: RouteRecordRaw[] = [
         ],
       },
     ],
-  },
-
-  // TODO remove once we have a proper home page
-  {
-    path: '/landing',
-    name: 'landing-page',
-    component: () => import('pages/LandingPage.vue'),
   },
 
   // Always leave this as last one,
