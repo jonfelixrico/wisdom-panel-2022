@@ -75,7 +75,7 @@ export default defineComponent({
 
   computed: {
     votes() {
-      const { votes = {} } = this.quote
+      const { votes } = this.quote
       const arr: Voter[] = []
 
       for (const userId in votes) {
