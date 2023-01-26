@@ -13,32 +13,27 @@
 
       <i18n-t
         keypath="quote.detailsPage.pendingSection.voteCount"
-        :plural="requirements.requiredVoteCount"
+        :plural="quote.requiredVoteCount"
         tag="div"
       >
         <template #count>
-          <span class="text-weight-bold">{{ requirements.voters.length }}</span>
+          <span class="text-weight-bold">{{ votes.length }}</span>
         </template>
         <template #total>
-          <span class="text-weight-bold">{{
-            requirements.requiredVoteCount
-          }}</span>
+          <span class="text-weight-bold">{{ quote.requiredVoteCount }}</span>
         </template>
       </i18n-t>
 
       <i18n-t
-        v-if="requirements.voters.length"
+        v-if="votes.length"
         keypath="quote.detailsPage.pendingSection.upvotedBy"
         tag="div"
         class="pre row"
       >
         <template #users>
-          <template
-            v-for="(voterId, index) of requirements.voters"
-            :key="voterId"
-          >
+          <template v-for="(vote, index) of votes" :key="vote.userId">
             <CQuoteUserBadge
-              :user="{ serverId, userId: voterId }"
+              :user="{ serverId: quote.serverId, userId: vote.userId }"
               :class="{ 'q-ml-xs': index > 0 }"
             />
           </template>
@@ -52,7 +47,7 @@
       >
         <template #date>
           <span class="text-weight-bold">
-            {{ requirements.deadline.toLocaleString() }}
+            {{ quote.expirationDt.toLocaleString() }}
           </span>
         </template>
       </i18n-t>
@@ -61,21 +56,39 @@
 </template>
 
 <script lang="ts">
-import { ApprovalRequirements } from 'src/stores/quote-store'
+import { PendingQuote } from 'src/types/quote.interface'
 import { defineComponent, PropType } from 'vue'
 import CQuoteUserBadge from '../quote/CQuoteUserBadge.vue'
 
+interface Voter {
+  userId: string
+  timestamp: Date
+}
+
 export default defineComponent({
   props: {
-    requirements: {
+    quote: {
+      type: Object as PropType<PendingQuote>,
       required: true,
-      type: Object as PropType<ApprovalRequirements>,
-    },
-    serverId: {
-      required: true,
-      type: String,
     },
   },
+
+  computed: {
+    votes() {
+      const { votes } = this.quote
+      const arr: Voter[] = []
+
+      for (const userId in votes) {
+        arr.push({
+          userId,
+          timestamp: votes[userId],
+        })
+      }
+
+      return arr
+    },
+  },
+
   components: { CQuoteUserBadge },
 })
 </script>

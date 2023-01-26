@@ -8,11 +8,10 @@
         <q-infinite-scroll @load="load">
           <template #default>
             <div class="q-mx-auto q-pa-sm content-max-width q-gutter-y-sm">
-              <CQuoteCard
-                v-for="quoteId of listItems"
-                :key="quoteId"
-                :quote-id="quoteId"
-                :server-id="serverId"
+              <CQuoteListCard
+                v-for="quote of quotes"
+                :key="quote.id"
+                :quote="quote"
               />
 
               <!-- TODO skeletons while there are no quotes loaded -->
@@ -33,9 +32,13 @@
 <script lang="ts">
 import { useApi } from 'src/composables/use-api.composable'
 import { defineComponent, ref } from 'vue'
-import CQuoteCard from 'src/components/quote/CQuoteCard.vue'
 import { useServerIdParam } from 'src/composables/route-param.composables'
 import { getLogger } from 'src/boot/pino-logger'
+import { Quote } from 'src/types/quote.interface'
+import { CoreAPIQuote } from 'src/types/core-api/core-api-quote.interface'
+import { consumeAPIQuote } from 'src/utils/core-api-quote.utils'
+import CQuoteListCard from 'src/components/quote/CQuoteListCard.vue'
+import { useQuoteStore } from 'src/stores/quote-store'
 
 interface QueryParams {
   cursorId: string
@@ -49,8 +52,8 @@ export default defineComponent({
   setup() {
     const api = useApi()
     const serverId = useServerIdParam()
-
-    const quoteIdArr = ref<string[]>([])
+    const store = useQuoteStore()
+    const quotes = ref<Quote[]>([])
     const isLoading = ref(false)
 
     /**
@@ -60,26 +63,30 @@ export default defineComponent({
      * @param done
      */
     async function load(index: number, done: (stop: boolean) => void) {
-      const arr = quoteIdArr.value
-
+      const arr = quotes.value
       const params: Partial<QueryParams> = {
         count: COUNT_PER_FETCH,
       }
 
-      if (arr.length === 0) {
-        // This means that we are still on the first page
-        params.cursorId = arr[arr.length - 1]
+      if (arr.length !== 0) {
+        // This means that we're on page 2 onwards
+        params.cursorId = arr[arr.length - 1].id
       }
 
       isLoading.value = true
       let hasNoDataLeft = false
+
       try {
-        const { data } = await api.get<string[]>(
+        const { data } = await api.get<CoreAPIQuote[]>(
           `server/${serverId.value}/quote`,
           { params }
         )
-        quoteIdArr.value.push(...data)
+        const consumed = data.map(consumeAPIQuote)
+        store.setQuote(...consumed)
+
+        quotes.value.push(...data.map(consumeAPIQuote))
         hasNoDataLeft = data.length < COUNT_PER_FETCH
+
         if (hasNoDataLeft) {
           LOGGER.debug('Reached the end of the data to fetch.')
         }
@@ -92,13 +99,12 @@ export default defineComponent({
     }
 
     return {
-      listItems: quoteIdArr,
-      serverId,
+      quotes,
       load,
       isLoading,
     }
   },
 
-  components: { CQuoteCard },
+  components: { CQuoteListCard },
 })
 </script>
