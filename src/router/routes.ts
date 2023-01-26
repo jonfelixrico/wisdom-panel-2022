@@ -29,12 +29,6 @@ const routes: RouteRecordRaw[] = [
           isPublicRoute: true,
         },
       },
-      {
-        name: 'receive-preview',
-        path: '/preview/server/:serverId/quote/:quoteId',
-        component: () =>
-          import('pages/preview/receive/ReceiveQuickPreviewPage.vue'),
-      },
     ],
   },
 
@@ -43,6 +37,17 @@ const routes: RouteRecordRaw[] = [
     name: 'home',
     redirect: {
       name: 'server-selection',
+    },
+  },
+
+  /*
+   * TODO remove this once the bot has caught up
+   */
+  {
+    path: '/preview/server/:serverId/quote/:quoteId',
+    name: 'quote-preview',
+    redirect: {
+      name: 'server-quote-details',
     },
   },
 

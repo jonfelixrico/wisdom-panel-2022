@@ -20,7 +20,7 @@ export function serverQuotesController(app: Router) {
         })
       )
     } else {
-      const idx = QUOTE_LIST_DATA.findIndex((id) => id === cursorId)
+      const idx = QUOTE_LIST_DATA.findIndex(({ id }) => id === cursorId)
       res.json(
         QUOTE_LIST_DATA.slice(idx + 1, idx + Number(count) + 1).map((data) => {
           return {
@@ -32,7 +32,7 @@ export function serverQuotesController(app: Router) {
     }
   })
 
-  router.get('/server/:serverId/quote/quote-fodder-:seq', (req, res) => {
+  router.get('/server/:serverId/quote/fodder-quote-:seq', (req, res) => {
     const { serverId, seq } = req.params
     res.json(generateFodderQuote(serverId, Number(seq)))
   })
