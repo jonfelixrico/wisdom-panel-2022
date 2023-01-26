@@ -23,16 +23,23 @@ export const useQuoteStore = defineStore('quote', {
   }),
 
   actions: {
-    setQuote(quote: Quote) {
-      const serverQuotes = this.servers[quote.serverId]
+    /**
+     * Pushes one or more quotes into the store.
+     * @param quote
+     * @returns
+     */
+    setQuote(...quotes: Quote[]) {
+      for (const quote of quotes) {
+        const serverQuotes = this.servers[quote.serverId]
 
-      if (serverQuotes) {
-        serverQuotes[quote.id] = quote
-        return
-      }
+        if (serverQuotes) {
+          serverQuotes[quote.id] = quote
+          return
+        }
 
-      this.servers[quote.serverId] = {
-        [quote.id]: quote,
+        this.servers[quote.serverId] = {
+          [quote.id]: quote,
+        }
       }
     },
 

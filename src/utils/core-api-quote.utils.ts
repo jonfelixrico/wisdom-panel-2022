@@ -1,4 +1,4 @@
-import { plainToInstance, Type } from 'class-transformer'
+import { plainToInstance, Transform, Type } from 'class-transformer'
 import {
   CoreAPIQuote,
   CoreAPIQuoteReceive,
@@ -43,11 +43,13 @@ class CoreAPIQuoteTransformer implements CoreAPIQuote {
   messageId!: string | null
 
   @Type(() => CoreAPIQuoteReceiveTransformer)
+  @Transform(({ value }) => value ?? [])
   receives!: CoreAPIQuoteReceiveTransformer[]
 
   @Type(() => CoreAPIQuoteStatusDeclarationTransformer)
   statusDeclaration!: CoreAPIQuoteStatusDeclarationTransformer | null
 
+  @Transform(({ value }) => value ?? {})
   votes!: Record<string, Date>
   requiredVoteCount!: number
 

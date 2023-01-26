@@ -56,12 +56,6 @@ export default defineComponent({
     const quotes = ref<Quote[]>([])
     const isLoading = ref(false)
 
-    function setQuotes(quotes: Quote[]) {
-      for (const q of quotes) {
-        store.setQuote(q)
-      }
-    }
-
     /**
      * This method will be fed into QInfiniteScroll
      * @param index See documentation of QInfiniteScroll for this. For our case, we don't need this since
@@ -88,7 +82,7 @@ export default defineComponent({
           { params }
         )
         const consumed = data.map(consumeAPIQuote)
-        setQuotes(consumed)
+        store.setQuote(...consumed)
 
         quotes.value.push(...data.map(consumeAPIQuote))
         hasNoDataLeft = data.length < COUNT_PER_FETCH
