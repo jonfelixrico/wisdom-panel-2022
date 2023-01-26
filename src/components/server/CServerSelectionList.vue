@@ -12,10 +12,10 @@
       <template v-else>
         <CServerSelectionListItem
           v-for="server of serverList"
-          :key="server.serverId"
+          :key="server.id"
           :server="server"
-          :is-active="server.serverId === selectedServerId"
-          @click="selectedServerId = server.serverId"
+          :is-active="server.id === selectedServerId"
+          @click="selectedServerId = server.id"
         />
       </template>
 
