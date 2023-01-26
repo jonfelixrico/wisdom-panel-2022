@@ -74,7 +74,7 @@ export default defineComponent({
 
     perUserTally(): Tally[] {
       const { receives } = this.quote
-      if (receives.length) {
+      if (!receives.length) {
         return []
       }
 
