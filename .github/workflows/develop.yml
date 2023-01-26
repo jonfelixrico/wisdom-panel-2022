@@ -7,7 +7,7 @@ on:
   push:
     branches: ['develop-*']
   pull_request:
-    branches: ['develop-*']
+    # run all merge requests made in the repository
 
 jobs:
   run-tests:
