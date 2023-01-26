@@ -14,13 +14,6 @@ const routes: RouteRecordRaw[] = [
       },
       // TODO remove once we have a proper home page
       {
-        path: 'home',
-        redirect: {
-          name: 'landing-page',
-        },
-        name: 'home',
-      },
-      {
         name: 'login',
         path: 'login',
         component: () => import('pages/LoginPage.vue'),
@@ -41,6 +34,32 @@ const routes: RouteRecordRaw[] = [
         path: '/preview/server/:serverId/quote/:quoteId',
         component: () =>
           import('pages/preview/receive/ReceiveQuickPreviewPage.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/home',
+    name: 'home',
+    redirect: {
+      name: 'server-selection',
+    },
+  },
+
+  {
+    path: '/server',
+    component: () => import('layouts/MainLayout.vue'),
+    name: 'server-selection',
+    children: [
+      {
+        path: '',
+        name: 'no-server-selected',
+        component: () => import('pages/NoServerSelectedPage.vue'),
+      },
+      {
+        path: ':serverId',
+        name: 'server-index',
+        component: () => import('pages/ServerIndexPage.vue'),
       },
     ],
   },
