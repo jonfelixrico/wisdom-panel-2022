@@ -8,7 +8,7 @@ export function useServerMember(props: { user: ServerMember }) {
   watch(
     toRef(props, 'user'),
     (user) => {
-      store.fetchServerMember(user.serverId, user.userId)
+      store.getServerMember(user.serverId, user.userId)
     },
     {
       immediate: true,

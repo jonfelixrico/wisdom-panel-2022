@@ -58,8 +58,24 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: ':serverId',
-        name: 'server-index',
-        component: () => import('pages/ServerIndexPage.vue'),
+        component: () => import('layouts/ServerLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'server-index',
+            redirect: {
+              name: 'server-quotes',
+            },
+          },
+          {
+            path: 'quotes',
+            name: 'server-quotes',
+            component: () => import('pages/ServerQuotesPage.vue'),
+            meta: {
+              moduleKey: ['quote-list'],
+            },
+          },
+        ],
       },
     ],
   },
