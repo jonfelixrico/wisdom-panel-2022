@@ -1,3 +1,4 @@
+import { keyBy } from 'lodash'
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 import { getLogger } from 'src/boot/pino-logger'
@@ -50,11 +51,13 @@ export const useServerStore = defineStore('server', {
       }
 
       LOGGER.debug('Fetching the servers list...')
-      const { data } = await api.get<Record<string, Server>>('server')
-      this.servers = data
+      const { data } = await api.get<Server[]>('server')
+      const indexed = keyBy(data, (server) => server.id)
+
+      this.servers = indexed
       this.lastListFetch = new Date()
       LOGGER.info('Finished pulling the server list.')
-      return data
+      return indexed
     },
   },
 })
