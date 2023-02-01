@@ -1,1 +1,6 @@
 // app global css in SCSS form
+@import './custom-colors.scss';
+
+.pre {
+  white-space: pre;
+}

@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers'
 import { createI18n } from 'vue-i18n'
 
 import messages from 'src/i18n'
+import { getLogger } from './pino-logger'
 
 export type MessageLanguages = keyof typeof messages
 // Type-define 'en-US' as the master schema for the resource
@@ -21,13 +22,17 @@ declare module 'vue-i18n' {
 }
 /* eslint-enable @typescript-eslint/no-empty-interface */
 
-export default boot(({ app }) => {
-  const i18n = createI18n({
-    locale: 'en-US',
-    legacy: false,
-    messages,
-  })
-
-  // Set i18n instance on app
-  app.use(i18n)
+const i18nSource = createI18n({
+  locale: 'en-US',
+  legacy: false,
+  messages,
 })
+
+export default boot(({ app }) => {
+  // Set i18n instance on app
+  app.use(i18nSource)
+
+  getLogger('boot').debug('i18n initialized')
+})
+
+export const i18n = i18nSource.global

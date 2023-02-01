@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO i18nize these -->
   <div
     class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
   >

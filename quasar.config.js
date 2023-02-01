@@ -11,7 +11,12 @@
 const { configure } = require('quasar/wrappers')
 const path = require('path')
 
-module.exports = configure(function (/* ctx */) {
+const { hideBin } = require('yargs/helpers')
+const yargs = require('yargs')
+
+module.exports = configure(function (ctx) {
+  const args = yargs(hideBin(process.argv)).argv
+
   return {
     eslint: {
       // fix: true,
@@ -28,7 +33,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios'],
+    boot: ['pino-logger', 'i18n', 'axios', 'router-logging', 'route-guards'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -54,7 +59,7 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -63,7 +68,10 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: require('dotenv-defaults').config({
+        defaults: './.env.defaults',
+        debug: ctx.dev,
+      }).parsed,
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -82,6 +90,13 @@ module.exports = configure(function (/* ctx */) {
 
             // you need to set i18n resource including paths !
             include: path.resolve(__dirname, './src/i18n/**'),
+
+            /*
+             * Without this, i18n seems to be breaking during prod.
+             * See https://github.com/quasarframework/quasar/issues/13229#issuecomment-1115905093 for the
+             * solution and the thread for context.
+             */
+            runtimeOnly: false,
           },
         ],
       ],
@@ -91,11 +106,27 @@ module.exports = configure(function (/* ctx */) {
     devServer: {
       // https: true
       open: true, // opens browser window automatically
+      port: 9080,
+      strictPort: true,
+      proxy: {
+        '/api': {
+          target: args.proxyTargetUrl || 'http://localhost:9081',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+      hmr: {
+        port: args.hmrPort || 9080,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        screen: {
+          bodyClasses: true,
+        },
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -108,7 +139,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['LocalStorage', 'Dialog', 'Loading'],
     },
 
     // animations: 'all', // --- includes all animations

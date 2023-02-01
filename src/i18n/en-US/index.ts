@@ -1,7 +1,9 @@
-// This is just an example,
-// so you can safely delete all default props below
+import auth from './auth'
+import quote from './quote'
+import common from './common'
 
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful',
+  auth,
+  quote,
+  common,
 }
