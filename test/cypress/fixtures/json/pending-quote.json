@@ -1,0 +1,17 @@
+{
+  "id": "quote-1",
+  "content": "test",
+  "authorId": "1027869184190849074",
+  "submitterId": "230718956900450304",
+  "submitDt": "2023-02-01T16:01:54.603Z",
+  "expirationDt": "2023-02-04T16:01:54.603Z",
+  "serverId": "server-1",
+  "channelId": "807471703496065037",
+  "messageId": "1070373442488115210",
+  "receives": [],
+  "statusDeclaration": null,
+  "votes": {},
+  "requiredVoteCount": 3,
+  "isLegacy": false,
+  "revision": 0
+}

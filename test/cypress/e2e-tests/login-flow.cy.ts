@@ -106,8 +106,8 @@ describe('Login flow', () => {
      */
     cy.dataCy('redirect-href').click()
 
-    cy.intercept('HEAD', '/api/server/server-1/quote/quote-1', {
-      statusCode: 200,
+    cy.intercept('GET', '/api/server/server-1/quote/quote-1', {
+      fixture: 'json/pending-quote.json',
     })
 
     cy.wait('@getSession200')
