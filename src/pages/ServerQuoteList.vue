@@ -42,7 +42,7 @@ import { useQuoteStore } from 'src/stores/quote-store'
 
 interface QueryParams {
   cursorId: string
-  count: number
+  limit: number
 }
 
 const COUNT_PER_FETCH = 20
@@ -65,7 +65,7 @@ export default defineComponent({
     async function load(index: number, done: (stop: boolean) => void) {
       const arr = quotes.value
       const params: Partial<QueryParams> = {
-        count: COUNT_PER_FETCH,
+        limit: COUNT_PER_FETCH,
       }
 
       if (arr.length !== 0) {
