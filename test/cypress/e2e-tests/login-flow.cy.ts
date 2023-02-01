@@ -26,9 +26,9 @@ describe('Login flow', () => {
      */
     cy.dataCy('redirect-href').click()
 
-    // callback page will redirect user to the landing page
+    // callback page will redirect user to the home page
     cy.wait(200)
-    cy.url().should('contain', 'landing')
+    cy.url().should('contain', 'server')
   })
 
   it('should be able to handle oauth error', () => {
@@ -112,9 +112,9 @@ describe('Login flow', () => {
 
     cy.wait('@getSession200')
 
-    // callback page will redirect user to the landing page
+    // callback page will redirect user to the home page
     cy.wait(200)
-    cy.url().should('contain', 'preview/server/server-1/quote/quote-1')
+    cy.url().should('contain', 'server/server-1/quote/quote-1')
   })
 })
 
