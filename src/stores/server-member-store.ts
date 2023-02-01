@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
+import { usePromiseCache } from 'src/utils/promise-cache.utils'
+
+const promiseCache = usePromiseCache()
 
 interface ServerMember {
   username: string
@@ -21,7 +24,7 @@ export const userServerMemberStore = defineStore('server-member', {
     }
   },
   actions: {
-    async fetchServerMember(
+    async getServerMember(
       serverId: string,
       userId: string
     ): Promise<ServerMember> {
@@ -30,18 +33,26 @@ export const userServerMemberStore = defineStore('server-member', {
         return member
       }
 
-      let server = this.servers[serverId]
-      if (!server) {
-        this.servers[serverId] = {}
-        server = this.servers[serverId]
-      }
+      const url = `server/${serverId}/user/${userId}`
 
-      const { data } = await api.get<ServerMember>(
-        `server/${serverId}/user/${userId}`
-      )
+      /*
+       * We're using this util so that there will always be at most one active HTTP request for each server member
+       * for any given time. We're anticipating that simultaneous calls for a single user can occur within the app.
+       */
+      return await promiseCache.wrap(url, async () => {
+        let server = this.servers[serverId]
+        if (!server) {
+          this.servers[serverId] = {}
+          server = this.servers[serverId]
+        }
 
-      server[userId] = data
-      return data
+        const { data } = await api.get<ServerMember>(
+          `server/${serverId}/user/${userId}`
+        )
+
+        server[userId] = data
+        return data
+      })
     },
   },
 })

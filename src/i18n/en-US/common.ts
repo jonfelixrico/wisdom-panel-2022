@@ -1,4 +1,5 @@
 export default {
+  appName: 'Wisdom',
   dialog: {
     genericError: {
       title: 'Oops!',

@@ -1,37 +1,41 @@
 import { Router } from 'express'
+import { generateFodderQuote, generateQuoteListData } from '../data/quote.data'
 
-function generateReceives() {
-  const RECEIVE_COUNT = 30
-  const UNIQUE_USER_COUNT = 10
-  const receives: { id: string; userId: string }[] = []
-
-  for (let receiveNo = 1; receiveNo <= RECEIVE_COUNT; receiveNo++) {
-    receives.push({
-      id: `receive-${receiveNo}`,
-      userId: `user-${receiveNo % UNIQUE_USER_COUNT || UNIQUE_USER_COUNT}`,
-    })
-  }
-
-  return receives
-}
+const QUOTE_LIST_DATA = generateQuoteListData(100)
 
 export function serverQuotesController(app: Router) {
   const router = Router()
 
-  router.get('/dummy', (req, res) => {
-    res.json({
-      id: 'dummy',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  router.get('/server/:serverId/quote', (req, res) => {
+    const { cursorId, limit } = req.query
+    const { serverId } = req.params
 
-      authorId: 'user-1',
-      submitterId: 'user-2',
-
-      serverId: 'dummy',
-
-      receives: generateReceives(),
-    })
+    if (!cursorId) {
+      res.json(
+        QUOTE_LIST_DATA.slice(0, Number(limit)).map((data) => {
+          return {
+            ...data,
+            serverId,
+          }
+        })
+      )
+    } else {
+      const idx = QUOTE_LIST_DATA.findIndex(({ id }) => id === cursorId)
+      res.json(
+        QUOTE_LIST_DATA.slice(idx + 1, idx + Number(limit) + 1).map((data) => {
+          return {
+            ...data,
+            serverId,
+          }
+        })
+      )
+    }
   })
 
-  app.use('/server/:serverId/quote', router)
+  router.get('/server/:serverId/quote/fodder-quote-:seq', (req, res) => {
+    const { serverId, seq } = req.params
+    res.json(generateFodderQuote(serverId, Number(seq)))
+  })
+
+  app.use('', router)
 }

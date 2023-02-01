@@ -14,13 +14,6 @@ const routes: RouteRecordRaw[] = [
       },
       // TODO remove once we have a proper home page
       {
-        path: 'home',
-        redirect: {
-          name: 'landing-page',
-        },
-        name: 'home',
-      },
-      {
         name: 'login',
         path: 'login',
         component: () => import('pages/LoginPage.vue'),
@@ -36,20 +29,68 @@ const routes: RouteRecordRaw[] = [
           isPublicRoute: true,
         },
       },
-      {
-        name: 'receive-preview',
-        path: '/preview/server/:serverId/quote/:quoteId',
-        component: () =>
-          import('pages/preview/receive/ReceiveQuickPreviewPage.vue'),
-      },
     ],
   },
 
-  // TODO remove once we have a proper home page
   {
-    path: '/landing',
-    name: 'landing-page',
-    component: () => import('pages/LandingPage.vue'),
+    path: '/home',
+    name: 'home',
+    redirect: {
+      name: 'server-selection',
+    },
+  },
+
+  /*
+   * TODO remove this once the bot has caught up
+   */
+  {
+    path: '/preview/server/:serverId/quote/:quoteId',
+    name: 'quote-preview',
+    redirect: {
+      name: 'server-quote-details',
+    },
+  },
+
+  {
+    path: '/server',
+    component: () => import('layouts/MainLayout.vue'),
+    name: 'server-selection',
+    children: [
+      {
+        path: '',
+        name: 'no-server-selected',
+        component: () => import('pages/MainIndex.vue'),
+      },
+      {
+        path: ':serverId',
+        component: () => import('layouts/ServerLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'server-index',
+            redirect: {
+              name: 'server-quote-list',
+            },
+          },
+          {
+            path: 'quote',
+            name: 'server-quote-list',
+            component: () => import('pages/ServerQuoteList.vue'),
+            meta: {
+              moduleKey: ['quote-list'],
+            },
+          },
+          {
+            path: 'quote/:quoteId',
+            name: 'server-quote-details',
+            component: () => import('pages/ServerQuoteDetails.vue'),
+            meta: {
+              moduleKey: ['quote-list'],
+            },
+          },
+        ],
+      },
+    ],
   },
 
   // Always leave this as last one,
