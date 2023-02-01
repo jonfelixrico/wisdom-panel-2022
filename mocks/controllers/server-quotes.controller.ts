@@ -7,10 +7,10 @@ export function serverQuotesController(app: Router) {
   const router = Router()
 
   router.get('/server/:serverId/quote', (req, res) => {
-    const { cursorId, limit } = req.query
+    const { after, limit } = req.query
     const { serverId } = req.params
 
-    if (!cursorId) {
+    if (!after) {
       res.json(
         QUOTE_LIST_DATA.slice(0, Number(limit)).map((data) => {
           return {
@@ -20,7 +20,7 @@ export function serverQuotesController(app: Router) {
         })
       )
     } else {
-      const idx = QUOTE_LIST_DATA.findIndex(({ id }) => id === cursorId)
+      const idx = QUOTE_LIST_DATA.findIndex(({ id }) => id === after)
       res.json(
         QUOTE_LIST_DATA.slice(idx + 1, idx + Number(limit) + 1).map((data) => {
           return {

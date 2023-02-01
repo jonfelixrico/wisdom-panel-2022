@@ -41,7 +41,7 @@ import CQuoteListCard from 'src/components/quote/CQuoteListCard.vue'
 import { useQuoteStore } from 'src/stores/quote-store'
 
 interface QueryParams {
-  cursorId: string
+  after: string
   limit: number
 }
 
@@ -70,7 +70,7 @@ export default defineComponent({
 
       if (arr.length !== 0) {
         // This means that we're on page 2 onwards
-        params.cursorId = arr[arr.length - 1].id
+        params.after = arr[arr.length - 1].id
       }
 
       isLoading.value = true
