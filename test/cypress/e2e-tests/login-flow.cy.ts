@@ -26,9 +26,9 @@ describe('Login flow', () => {
      */
     cy.dataCy('redirect-href').click()
 
-    // callback page will redirect user to the landing page
+    // callback page will redirect user to the home page
     cy.wait(200)
-    cy.url().should('contain', 'landing')
+    cy.url().should('contain', 'server')
   })
 
   it('should be able to handle oauth error', () => {
@@ -106,15 +106,15 @@ describe('Login flow', () => {
      */
     cy.dataCy('redirect-href').click()
 
-    cy.intercept('HEAD', '/api/server/server-1/quote/quote-1', {
-      statusCode: 200,
+    cy.intercept('GET', '/api/server/server-1/quote/quote-1', {
+      fixture: 'json/pending-quote.json',
     })
 
     cy.wait('@getSession200')
 
-    // callback page will redirect user to the landing page
+    // callback page will redirect user to the home page
     cy.wait(200)
-    cy.url().should('contain', 'preview/server/server-1/quote/quote-1')
+    cy.url().should('contain', 'server/server-1/quote/quote-1')
   })
 })
 
