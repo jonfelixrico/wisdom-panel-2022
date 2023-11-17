@@ -5,7 +5,7 @@
         <div class="text-h1">Wisdom</div>
         <q-btn
           :disable="!discordLoginUrl"
-          :label="$t('auth.loginWithDiscord')"
+          :label="$t('login.loginWithDiscord')"
           color="primary"
           unelevated
           :href="discordLoginUrl || ''"
