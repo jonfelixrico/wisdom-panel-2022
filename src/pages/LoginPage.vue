@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center q-px-md">
-    <q-card flat class="flex flex-center">
+    <q-card flat>
       <q-card-section class="row justify-center">
         <div class="text-h1">Wisdom</div>
         <q-btn
