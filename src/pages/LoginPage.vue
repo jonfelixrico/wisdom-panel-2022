@@ -13,18 +13,20 @@
           no-caps
           data-cy="discord-login-btn"
           class="col-12 text-h6 q-mt-md"
+          dense
         />
 
         <q-btn
           v-if="BOT_INVITE_URL"
           :disable="!discordLoginUrl"
           :label="$t('login.inviteBot')"
-          color="primary"
           unelevated
           :href="BOT_INVITE_URL"
           no-caps
           data-cy="discord-login-btn"
           class="col-12 text-h6 q-mt-md"
+          flat
+          dense
         />
       </q-card-section>
     </q-card>
