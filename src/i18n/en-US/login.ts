@@ -1,5 +1,6 @@
 export default {
   loginWithDiscord: 'Log in with Discord',
+  inviteBot: 'Add Wisdom to your server',
   dialogs: {
     discordOAuthFailed: {
       title: 'Login unsuccessful',
