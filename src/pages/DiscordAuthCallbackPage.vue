@@ -51,15 +51,15 @@ export default defineComponent({
       message = String(errorDescription)
     } else if (error) {
       message = i18n.t(
-        'auth.dialogs.discordOAuthFailed.message.genericWithCode',
+        'login.dialogs.discordOAuthFailed.message.genericWithCode',
         { errorCode: error }
       )
     } else {
-      message = i18n.t('auth.dialogs.discordOAuthFailed.message.generic')
+      message = i18n.t('login.dialogs.discordOAuthFailed.message.generic')
     }
 
     Dialog.create({
-      title: i18n.t('auth.dialogs.discordOAuthFailed.title'),
+      title: i18n.t('login.dialogs.discordOAuthFailed.title'),
       message,
       noRouteDismiss: true,
       ok: {

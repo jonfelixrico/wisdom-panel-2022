@@ -1,17 +1,32 @@
 <template>
   <q-page class="flex flex-center q-px-md">
-    <q-card flat class="flex flex-center">
+    <q-card flat>
       <q-card-section class="row justify-center">
         <div class="text-h1">Wisdom</div>
+
         <q-btn
           :disable="!discordLoginUrl"
-          :label="$t('auth.loginWithDiscord')"
+          :label="$t('login.loginWithDiscord')"
           color="primary"
           unelevated
           :href="discordLoginUrl || ''"
           no-caps
           data-cy="discord-login-btn"
           class="col-12 text-h6 q-mt-md"
+          dense
+        />
+
+        <q-btn
+          v-if="BOT_INVITE_URL"
+          :disable="!discordLoginUrl"
+          :label="$t('login.inviteBot')"
+          unelevated
+          :href="BOT_INVITE_URL"
+          no-caps
+          data-cy="discord-login-btn"
+          class="col-12 text-h6 q-mt-md"
+          flat
+          dense
         />
       </q-card-section>
     </q-card>
@@ -25,6 +40,7 @@ import { defineComponent } from 'vue'
 
 const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
 const LOGGER = getLogger('login-page')
+const BOT_INVITE_URL = process.env.BOT_INVITE_URL
 
 export default defineComponent({
   computed: {
@@ -56,6 +72,12 @@ export default defineComponent({
     } catch (e) {
       LOGGER.error(e, 'Error encountered while trying to fetch the session')
       next(true)
+    }
+  },
+
+  setup() {
+    return {
+      BOT_INVITE_URL,
     }
   },
 })
