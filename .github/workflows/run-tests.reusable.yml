@@ -23,7 +23,8 @@ jobs:
         with:
           node-version: 18.x
           cache: pnpm
-      - uses: cypress-io/github-action@v6
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v6
         with:
           start: pnpm start:dev
           wait-on: 'http://localhost:9080'
