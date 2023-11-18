@@ -22,10 +22,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Force-install Cypress binaries
-        run: pnpm cypress install
-      - name: Run E2E tests
-        run: pnpm test:e2e:ci
+          cache: pnpm
+      - uses: cypress-io/github-action@v6
+        with:
+          start: pnpm start:dev
+          wait-on: 'http://localhost:9080'
