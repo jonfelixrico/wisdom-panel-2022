@@ -29,8 +29,6 @@ COPY /app/nginx/templates /etc/nginx/templates
 
 EXPOSE 80
 
-ENV API_BASE_URL http://host.docker.internal:9085;
-
 STOPSIGNAL SIGTERM
 
 CMD ["nginx", "-g", "daemon off;"]
