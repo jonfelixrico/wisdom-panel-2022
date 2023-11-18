@@ -17,11 +17,11 @@
         />
 
         <q-btn
-          v-if="DISCORD_BOT_INVITE_URL"
+          v-if="syspars?.discordBotInviteUrl"
           :disable="!discordLoginUrl"
           :label="$t('login.inviteBot')"
           unelevated
-          :href="DISCORD_BOT_INVITE_URL"
+          :href="syspars.discordBotInviteUrl"
           no-caps
           data-cy="discord-login-btn"
           class="col-12 text-h6 q-mt-md"
@@ -41,7 +41,6 @@ import { defineComponent } from 'vue'
 
 const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
 const LOGGER = getLogger('login-page')
-const DISCORD_BOT_INVITE_URL = process.env.DISCORD_BOT_INVITE_URL
 
 export default defineComponent({
   computed: {
@@ -80,7 +79,7 @@ export default defineComponent({
     const { syspars } = useSysparStore()
 
     return {
-      DISCORD_BOT_INVITE_URL: syspars?.DISCORD_BOT_INVITE_URL,
+      syspars,
     }
   },
 })

@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
+import { SystemParamters } from 'src/types/system-parameters.interface'
 
 interface Store {
-  syspars: null | Record<string, string>
+  syspars: null | SystemParamters
 }
 
 export const useSysparStore = defineStore('syspars', {
@@ -9,7 +10,7 @@ export const useSysparStore = defineStore('syspars', {
     syspars: null,
   }),
   actions: {
-    setSyspars(syspars: Record<string, string>) {
+    setSyspars(syspars: SystemParamters) {
       this.syspars = syspars
     },
   },

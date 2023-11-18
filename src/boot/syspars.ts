@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers'
 import { useSysparStore } from 'src/stores/syspar-store'
 import { getLogger } from './pino-logger'
 import { api } from './axios'
+import { SystemParamters } from 'src/types/system-parameters.interface'
 
 const LOGGER = getLogger('boot:syspars')
 
@@ -15,7 +16,7 @@ export default boot(async () => {
   try {
     LOGGER.debug('Fetching syspars...')
 
-    const { data } = await api.get<Record<string, string>>('/system-parameters')
+    const { data } = await api.get<SystemParamters>('/system-parameters')
     sysparStore.setSyspars(data)
 
     LOGGER.info('Finished fetching syspars')
