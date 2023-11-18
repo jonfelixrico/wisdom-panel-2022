@@ -25,7 +25,7 @@ RUN pnpm prune --prod
 # Stage 4: actually deploy the thing via nginx
 FROM nginx AS deploy
 COPY --from=build /app/dist/spa /usr/share/nginx/html
-COPY /app/nginx/templates /etc/nginx/templates
+COPY nginx/templates /etc/nginx/templates
 
 EXPOSE 80
 
