@@ -40,6 +40,7 @@ module.exports = configure(function (ctx) {
       'axios',
       'router-logging',
       'route-guards',
+      'syspars',
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
