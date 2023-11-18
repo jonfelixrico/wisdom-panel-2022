@@ -12,6 +12,14 @@ export default boot(async () => {
     return
   }
 
-  const { data } = await api.get<Record<string, string>>('/system-parameters')
-  sysparStore.setSyspars(data)
+  try {
+    LOGGER.debug('Fetching syspars...')
+
+    const { data } = await api.get<Record<string, string>>('/system-parameters')
+    sysparStore.setSyspars(data)
+
+    LOGGER.info('Finished fetching syspars')
+  } catch (e) {
+    LOGGER.error(e, 'Error encountered while fetching syspars')
+  }
 })
