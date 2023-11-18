@@ -23,10 +23,10 @@
           unelevated
           :href="syspars.discordBotInviteUrl"
           no-caps
-          data-cy="discord-login-btn"
           class="col-12 text-h6 q-mt-md"
           flat
           dense
+          data-cy="bot-invite"
         />
       </q-card-section>
     </q-card>

@@ -16,9 +16,8 @@ describe('login elements', () => {
 
     cy.visit('/login')
 
-    cy.dataCy('bot-invite').should('exist')
-    cy.dataCy('bot-inivite')
-      .find('a')
+    cy.dataCy('bot-invite')
+      .should('exist')
       .should('have.attr', 'href', 'http://some-discord-bot-invite-url')
   })
 })
