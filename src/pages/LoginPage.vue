@@ -17,11 +17,11 @@
         />
 
         <q-btn
-          v-if="BOT_INVITE_URL"
+          v-if="DISCORD_BOT_INVITE_URL"
           :disable="!discordLoginUrl"
           :label="$t('login.inviteBot')"
           unelevated
-          :href="BOT_INVITE_URL"
+          :href="DISCORD_BOT_INVITE_URL"
           no-caps
           data-cy="discord-login-btn"
           class="col-12 text-h6 q-mt-md"
@@ -36,11 +36,12 @@
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
 import { useSessionStore } from 'src/stores/session-store'
+import { useSysparStore } from 'src/stores/syspar-store'
 import { defineComponent } from 'vue'
 
 const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
 const LOGGER = getLogger('login-page')
-const BOT_INVITE_URL = process.env.BOT_INVITE_URL
+const DISCORD_BOT_INVITE_URL = process.env.DISCORD_BOT_INVITE_URL
 
 export default defineComponent({
   computed: {
@@ -76,8 +77,10 @@ export default defineComponent({
   },
 
   setup() {
+    const { syspars } = useSysparStore()
+
     return {
-      BOT_INVITE_URL,
+      DISCORD_BOT_INVITE_URL: syspars?.DISCORD_BOT_INVITE_URL,
     }
   },
 })
