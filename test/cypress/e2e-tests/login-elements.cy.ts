@@ -1,5 +1,6 @@
 import { SystemParamters } from 'src/types/system-parameters.interface'
 
+// TODO use component testing instead
 describe('login elements', () => {
   before(() => {
     cy.intercept('HEAD', '/api/session', {
