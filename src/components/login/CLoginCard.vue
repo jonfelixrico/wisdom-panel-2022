@@ -1,6 +1,6 @@
 <template>
   <q-card flat>
-    <q-card-section class="row justify-center">
+    <q-card-section class="column">
       <div class="text-h1">Wisdom</div>
 
       <q-btn
@@ -11,7 +11,7 @@
         :href="discordLoginUrl || ''"
         no-caps
         data-cy="discord-login-btn"
-        class="col-12 text-h6 q-mt-md"
+        class="text-h6 q-mt-md"
         dense
       />
 
@@ -22,7 +22,7 @@
         unelevated
         :href="syspars.discordBotInviteUrl"
         no-caps
-        class="col-12 text-h6 q-mt-md"
+        class="text-h6 q-mt-md"
         flat
         dense
         data-cy="bot-invite"
