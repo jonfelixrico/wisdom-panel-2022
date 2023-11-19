@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-center">
-    <CLoginCard class="card-width" />
+    <CLoginCard class="card-width" :discord-oauth-url-query="$route.query" />
   </q-page>
 </template>
 

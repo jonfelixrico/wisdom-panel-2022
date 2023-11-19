@@ -32,34 +32,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { PropType, computed, defineComponent } from 'vue'
 import { useSysparStore } from 'src/stores/syspar-store'
+import { LocationQuery } from 'vue-router'
 
 const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
 
 export default defineComponent({
-  computed: {
-    discordLoginUrl() {
+  props: {
+    discordOauthUrlQuery: {
+      type: Object as PropType<LocationQuery>,
+    },
+  },
+
+  setup(props) {
+    const { syspars } = useSysparStore()
+
+    const discordLoginUrl = computed(() => {
       if (!DISCORD_OAUTH_URL) {
         return null
       }
 
       const url = new URL(DISCORD_OAUTH_URL, window.location.origin)
 
-      const { query } = this.$route
+      const query = props.discordOauthUrlQuery
       if (query && Object.keys(query).length) {
         url.searchParams.append('state', JSON.stringify(query))
       }
 
       return url.toString()
-    },
-  },
-
-  setup() {
-    const { syspars } = useSysparStore()
+    })
 
     return {
       syspars,
+      discordLoginUrl,
     }
   },
 })
