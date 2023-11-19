@@ -15,14 +15,8 @@
 
 import './commands'
 
-before(() => {
-  cy.intercept(
-    {
-      method: 'GET',
-      pathname: '/api/system-parameters',
-    },
-    {
-      fixture: 'syspars.json',
-    }
-  )
+beforeEach(() => {
+  cy.intercept('GET', '/api/system-parameters', {
+    fixture: 'syspars.json',
+  })
 })
