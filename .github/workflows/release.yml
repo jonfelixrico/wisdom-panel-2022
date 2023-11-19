@@ -18,15 +18,14 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v3
 
-      - name: Get branch name
-        id: branch-name
-        uses: tj-actions/branch-names@v6
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: Parse semver string
         id: semver_parser
         uses: booxmedialtd/ws-action-parse-semver@v1
         with:
-          input_string: ${{ steps.branch-name.outputs.base_ref_branch || steps.branch-name.outputs.current_branch }}
-          version_extractor_regex: '.*develop-(.*)$'
+          input_string: ${{ steps.package-version.outputs.current-version }}
       - name: Show semver string
         shell: bash
         run: |
