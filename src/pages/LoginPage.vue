@@ -1,65 +1,19 @@
 <template>
-  <q-page class="flex flex-center q-px-md">
-    <q-card flat>
-      <q-card-section class="row justify-center">
-        <div class="text-h1">Wisdom</div>
-
-        <q-btn
-          :disable="!discordLoginUrl"
-          :label="$t('login.loginWithDiscord')"
-          color="primary"
-          unelevated
-          :href="discordLoginUrl || ''"
-          no-caps
-          data-cy="discord-login-btn"
-          class="col-12 text-h6 q-mt-md"
-          dense
-        />
-
-        <q-btn
-          v-if="syspars?.discordBotInviteUrl"
-          :disable="!discordLoginUrl"
-          :label="$t('login.inviteBot')"
-          unelevated
-          :href="syspars.discordBotInviteUrl"
-          no-caps
-          class="col-12 text-h6 q-mt-md"
-          flat
-          dense
-          data-cy="bot-invite"
-        />
-      </q-card-section>
-    </q-card>
+  <q-page class="row items-center justify-center">
+    <CLoginCard class="card-width" />
   </q-page>
 </template>
 
 <script lang="ts">
 import { getLogger } from 'src/boot/pino-logger'
 import { useSessionStore } from 'src/stores/session-store'
-import { useSysparStore } from 'src/stores/syspar-store'
 import { defineComponent } from 'vue'
+import CLoginCard from 'src/components/login/CLoginCard.vue'
 
-const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
 const LOGGER = getLogger('login-page')
 
 export default defineComponent({
-  computed: {
-    discordLoginUrl() {
-      if (!DISCORD_OAUTH_URL) {
-        return null
-      }
-
-      const url = new URL(DISCORD_OAUTH_URL, window.location.origin)
-
-      const { query } = this.$route
-      if (query && Object.keys(query).length) {
-        url.searchParams.append('state', JSON.stringify(query))
-      }
-
-      return url.toString()
-    },
-  },
-
+  components: { CLoginCard },
   async beforeRouteEnter(to, from, next) {
     const sessionStore = useSessionStore()
     try {
@@ -74,13 +28,12 @@ export default defineComponent({
       next(true)
     }
   },
-
-  setup() {
-    const { syspars } = useSysparStore()
-
-    return {
-      syspars,
-    }
-  },
 })
 </script>
+
+<style lang="scss" scoped>
+.card-width {
+  max-width: 80dvw;
+  width: 600px;
+}
+</style>
