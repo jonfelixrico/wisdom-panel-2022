@@ -59,6 +59,7 @@ jobs:
           build-args: BUILD_SCRIPT_NAME=build:debug
 
   create-release:
+    if: github.event_name == 'push'
     needs: [run-tests, build-and-publish]
     runs-on: ubuntu-latest
     steps:
