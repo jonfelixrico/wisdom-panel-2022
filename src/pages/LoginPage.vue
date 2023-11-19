@@ -1,35 +1,6 @@
 <template>
-  <q-page class="flex flex-center q-px-md">
-    <q-card flat>
-      <q-card-section class="row justify-center">
-        <div class="text-h1">Wisdom</div>
-
-        <q-btn
-          :disable="!discordLoginUrl"
-          :label="$t('login.loginWithDiscord')"
-          color="primary"
-          unelevated
-          :href="discordLoginUrl || ''"
-          no-caps
-          data-cy="discord-login-btn"
-          class="col-12 text-h6 q-mt-md"
-          dense
-        />
-
-        <q-btn
-          v-if="BOT_INVITE_URL"
-          :disable="!discordLoginUrl"
-          :label="$t('login.inviteBot')"
-          unelevated
-          :href="BOT_INVITE_URL"
-          no-caps
-          data-cy="discord-login-btn"
-          class="col-12 text-h6 q-mt-md"
-          flat
-          dense
-        />
-      </q-card-section>
-    </q-card>
+  <q-page class="row items-center justify-center">
+    <CLoginCard class="card-width" :discord-oauth-url-query="$route.query" />
   </q-page>
 </template>
 
@@ -37,29 +8,12 @@
 import { getLogger } from 'src/boot/pino-logger'
 import { useSessionStore } from 'src/stores/session-store'
 import { defineComponent } from 'vue'
+import CLoginCard from 'src/components/login/CLoginCard.vue'
 
-const DISCORD_OAUTH_URL = process.env.DISCORD_OAUTH_URL
 const LOGGER = getLogger('login-page')
-const BOT_INVITE_URL = process.env.BOT_INVITE_URL
 
 export default defineComponent({
-  computed: {
-    discordLoginUrl() {
-      if (!DISCORD_OAUTH_URL) {
-        return null
-      }
-
-      const url = new URL(DISCORD_OAUTH_URL, window.location.origin)
-
-      const { query } = this.$route
-      if (query && Object.keys(query).length) {
-        url.searchParams.append('state', JSON.stringify(query))
-      }
-
-      return url.toString()
-    },
-  },
-
+  components: { CLoginCard },
   async beforeRouteEnter(to, from, next) {
     const sessionStore = useSessionStore()
     try {
@@ -74,11 +28,12 @@ export default defineComponent({
       next(true)
     }
   },
-
-  setup() {
-    return {
-      BOT_INVITE_URL,
-    }
-  },
 })
 </script>
+
+<style lang="scss" scoped>
+.card-width {
+  max-width: 80dvw;
+  width: 600px;
+}
+</style>

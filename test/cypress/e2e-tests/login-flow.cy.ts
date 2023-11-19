@@ -27,7 +27,6 @@ describe('Login flow', () => {
     cy.dataCy('redirect-href').click()
 
     // callback page will redirect user to the home page
-    cy.wait(200)
     cy.url().should('contain', 'server')
   })
 
@@ -113,7 +112,6 @@ describe('Login flow', () => {
     cy.wait('@getSession200')
 
     // callback page will redirect user to the home page
-    cy.wait(200)
     cy.url().should('contain', 'server/server-1/quote/quote-1')
   })
 })

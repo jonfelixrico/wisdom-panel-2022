@@ -14,3 +14,9 @@
 // ***********************************************************
 
 import './commands'
+
+beforeEach(() => {
+  cy.intercept('GET', '/api/system-parameters', {
+    fixture: 'syspars.json',
+  })
+})

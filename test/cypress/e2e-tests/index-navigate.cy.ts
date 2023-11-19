@@ -5,8 +5,6 @@ describe('Navigation to index', () => {
     })
 
     cy.visit('/')
-    cy.wait(500)
-
     cy.url().should('contain', 'server')
   })
 
@@ -16,8 +14,6 @@ describe('Navigation to index', () => {
     })
 
     cy.visit('/')
-    cy.wait(500)
-
     cy.url().should('contain', 'login')
   })
 })
