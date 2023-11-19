@@ -1,7 +1,7 @@
 <template>
   <q-card flat>
-    <q-card-section class="column">
-      <div class="text-h1">Wisdom</div>
+    <q-card-section class="column justify-center">
+      <div class="text-h1 text-center">Wisdom</div>
 
       <q-btn
         :disable="!discordLoginUrl"
